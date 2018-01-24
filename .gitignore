@@ -2,6 +2,5 @@
 /.setting/
 .classpath
 .project
-.gitignore
 generatorConfig.xml
 jdbc.properties
