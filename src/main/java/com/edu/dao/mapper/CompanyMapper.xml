@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.ICompanyDao">
+	<resultMap type="com.edu.entity.Company" id="baseResultMap">
+		<id column="co_id" property="coId" />
+		<result column="id" property="id" />
+		<result column="co_simple_name" property="coSimpleName" />
+		<result column="co_name" property="coName" />
+		<result column="co_add_code" property="coAddCode" />
+		<result column="co_type" property="coType" />
+		<result column="co_unique_id" property="coUniqueId" />
+		<result column="co_add" property="coAdd" />
+	</resultMap>
+	<parameterMap type="com.edu.entity.Company" id="baseParameterMap"></parameterMap>
+	<sql id="baseList">
+		id,co_id,co_simple_name,co_name,co_add_code,co_type,co_unique_id,co_add
+	</sql>
+	<select id="selCompany" resultMap="baseResultMap">
+		select <include refid="baseList" /> 
+		from company
+		<where>
+			<if test="id!=0">
+				and id = #{id}
+			</if>
+			<if test="coId !=null and coId !=''">
+				and co_id = #{coId}
+			</if>
+			<if test="coSimpleName !=null and coSimpleName !=''">
+				and co_simpleName = #{coSimpleName}
+			</if>
+			<if test="coName !=null and coName != ''">
+				and co_name = #{coName}
+			</if>
+			<if test="coAddCode !=null and coAddCode !=''">
+				and co_add_code = #{coAddCode}
+			</if>
+			<if test="coType!=null and coType !=''">
+				and co_type = #{coType}
+			</if>
+			<if test="coUniqueId !=null and coUniqueId !=''">
+				and co_unique_id = #{coUniqueId}
+			</if>
+		</where>
+	</select>
+
+	<update id="uptCompany" parameterType="com.edu.entity.Company">
+		update company
+		<set>
+			<if test="coName!=null and coName !=''">
+				co_name = #{coName},
+			</if>
+			<if test="coAdd !=null and coAdd !=''">
+				co_add = #{coAdd},
+			</if>
+		</set>
+		where id= #{id}
+	</update>
+
+	<delete id="delCompany">
+		delete from company
+		where
+		<trim prefixOverrides="and ">
+			<if test="id !=0">
+				id = #{id}
+			</if>
+			<if test="coId !=null and coId !=''">
+				and co_id = #{coId}
+			</if>
+		</trim>
+	</delete>
+	<insert id="insCompany" parameterType="list">
+		insert into company values
+		<foreach collection="companys" item="obj" separator=",">
+			(com_seq.nextval,
+			#{obj.comId},
+			#{obj.coSimpleName},
+			#{obj.coName},
+			#{obj.coAddCode},
+			#{obj.coType},
+			#{obj.coUniqueId},
+			<choose>
+				<when test="obj.coAdd !=null ">
+					#{obj.coAdd}
+				</when>
+				<otherwise>
+					''
+				</otherwise>
+			</choose>
+			)
+		</foreach>
+	</insert>
+</mapper>

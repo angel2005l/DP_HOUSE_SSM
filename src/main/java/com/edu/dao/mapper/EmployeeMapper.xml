@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.IEmployeeDao">
+	<resultMap type="com.edu.entity.Employee" id="baseResultMap">
+		<id column="emp_id" property="empId" />
+		<result column="id" property="id" />
+		<result column="emp_account" property="empAccount" />
+		<result column="emp_name" property="empName" />
+		<result column="emp_phone" property="empPhone" />
+		<result column="emp_email" property="empEmail" />
+		<result column="emp_pass" property="empPass" />
+		<result column="emp_salt" property="empSalt" />
+		<result column="emp_permission" property="empPermission" />
+		<result column="co_id" property="coId" />
+	</resultMap>
+	<sql id="baseList">
+		id,emp_id,emp_account,emp_name,emp_phone,emp_email,emp_pass,emp_salt,emp_permission,co_id
+	</sql>
+
+	<select id="selEmployee">
+		select <include refid="baseList"/>
+		from employee 
+		<where>
+		
+		</where>
+	</select>
+	<update id="uptEmployee"></update>
+	<delete id="delEmployee"></delete>
+	<insert id="insEmployee"></insert>
+
+</mapper>
