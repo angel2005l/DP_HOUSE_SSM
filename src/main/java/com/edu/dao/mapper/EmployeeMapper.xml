@@ -17,15 +17,38 @@
 		id,emp_id,emp_account,emp_name,emp_phone,emp_email,emp_pass,emp_salt,emp_permission,co_id
 	</sql>
 
-	<select id="selEmployee">
-		select <include refid="baseList"/>
-		from employee 
+	<select id="selEmployee" resultMap="baseResultMap">
+		select
+		<include refid="baseList" />
+		from employee
 		<where>
-		
+			<if test="empId !=null and empId !=''">
+				empId = #{empId}
+			</if>
+			and co_id = #{coId}
 		</where>
 	</select>
-	<update id="uptEmployee"></update>
-	<delete id="delEmployee"></delete>
-	<insert id="insEmployee"></insert>
-
+	<update id="uptEmployee">
+		update employee
+		<set>
+			emp_name =#{empName}
+		</set>
+		where emp_id = #{emp_id}
+	</update>
+	<delete id="delEmployee" parameterType="string">
+		delete from employee
+		where emp_id =#{empId}
+	</delete>
+	<insert id="insEmployee">
+		insert into employee values
+		<foreach collection="insObjs" item="obj" separator=",">
+			(emp_seq.nextval,#{obj.empId},#{obj.empAccount},#{obj.empName}
+			,#{obj.empPhone},#{obj.empEmail},#{obj.empPass},#{obj.empSalt},#{obj.empPermission},#{obj.coId}
+			)
+		</foreach>
+	</insert>
+	<select id="selMaxEmpId" parameterType="string" resultType="string">
+		select emp_id from employee where id = 
+		(select max(id) from employee where co_id = #{coId}) 
+	</select>
 </mapper>

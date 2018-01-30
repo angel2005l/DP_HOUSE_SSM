@@ -61,7 +61,19 @@ public class MyTest {
 		System.err.println(salt);
 		String md5EncryptPass = MD5Util.getMD5EncryptPass("sa", salt.getBytes());
 		System.err.println(md5EncryptPass);
-		
+	}
+	@Test
+	public void test4(){
+		String str = "a";
+		//left
+		String substring2 = str.substring(str.length()-1);
+		System.err.println(1+substring2);
+		//right
+		String substring3 = str.substring(0, str.length()-2);
+		System.err.println(2+substring3);
+		//center
+		String substring = str.substring(0, str.length()-2);
+		System.err.println(3+substring);
 		
 	}
 }
