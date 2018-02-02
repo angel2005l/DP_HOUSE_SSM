@@ -35,11 +35,11 @@
 		</set>
 		where emp_id = #{emp_id}
 	</update>
-	<delete id="delEmployee" parameterType="string">
-		delete from employee
-		where emp_id =#{empId}
+	<delete id="delEmployee">
+	delete from employee
+	where emp_id =#{empId} and co_id = #{coId}
 	</delete>
-	<insert id="insEmployee">
+	<insert id="insEmployees">
 		insert into employee values
 		<foreach collection="insObjs" item="obj" separator=",">
 			(emp_seq.nextval,#{obj.empId},#{obj.empAccount},#{obj.empName}
@@ -51,4 +51,22 @@
 		select emp_id from employee where id = 
 		(select max(id) from employee where co_id = #{coId}) 
 	</select>
+	<insert id="insEmployee" parameterType="com.edu.dao.Employee">
+		insert into employee values
+		(
+		emp_seq.nextval,#{empId},#{empAccount},#{empName}
+			,#{empPhone},#{empEmail},#{empPass},#{empSalt},#{empPermission},#{coId}
+		)
+	</insert>
+	
+	<select id="employeeExist" resultMap="baseResultMap">
+		select count(id)
+		from employee 
+		where emp_id = #{empId} and co_id = #{coId}
+	</select>
+	<update id="uptEmployeeByPass">
+	update employee set emp_pass = empPass where emp_id = #{empId} and co_id = #{coId}
+	</update>
+	
+	
 </mapper>
