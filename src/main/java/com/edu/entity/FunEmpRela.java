@@ -1,9 +1,9 @@
 package com.edu.entity;
 
 public class FunEmpRela {
-	private int id;
-	private String empPermission;
-	private String funId;
+	private int id;// id
+	private String empPermission;// 权限
+	private String funId;// 功能编号
 
 	/**
 	 * 

@@ -38,7 +38,18 @@ public final class MD5Util {
 		random.nextBytes(salt);
 		return myEncoding(salt);
 	}
-
+	/**
+	 * 
+	 * @Title: check   
+	 * @Description: 校验密码密文
+	 * @param: @param str
+	 * @param: @param salt
+	 * @param: @param checkedStr
+	 * @param: @return 
+	 * @author: MR.H
+	 * @return: boolean      
+	 * @throws
+	 */
 	public static final boolean check(String str, String salt, String checkedStr) {
 		if (checkedStr.equals(getMD5EncryptPass(str, salt.getBytes()))) {
 			return true;

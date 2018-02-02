@@ -1,11 +1,11 @@
 package com.edu.entity;
 
 public class FunctionDIY {
-	private int id;
-	private String funId;
-	private String funName;
-	private String funUrl;
-
+	private int id;//id
+	private String funId;//功能编号
+	private String funName;//功能名称
+	private String funUrl;//功能url
+	
 	/**
 	 * 
 	 */

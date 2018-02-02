@@ -1,7 +1,5 @@
 package com.edu.util;
 
-import com.edu.base.Constant;
-
 public final class StrUtil {
 	/**
 	 * 
@@ -57,103 +55,6 @@ public final class StrUtil {
 	 */
 	public static final boolean iPositiveNum(String str) {
 		return str.matches("^[1-9]\\d*\\.\\d*\\|0\\.\\d*[1-9]\\d*$");
-	}
-
-	/**
-	 * 
-	 * @Title: integerForIdAdd   
-	 * @Description: 获取id后面的自增数值 并在前面补零 （端点）
-	 * @param: @param str
-	 * @param: @param size
-	 * @param: @param type
-	 * @param: @param isNeedFrontZero
-	 * @param: @return 
-	 * @author: MR.H
-	 * @return: String      
-	 * @throws
-	 */
-	public static final Integer integerForIdAdd(String str, int size, String type) {
-		String result = cutString(str, size, type);
-		return isPositiveInteger(result) ? Integer.parseInt(result) : null;
-	}
-
-	/**
-	 * 
-	 * @Title: integerForIdAddForCenter   
-	 * @Description: 获取id后面的自增数值并在前面补零（中间）
-	 * @param: @param str
-	 * @param: @param beginIndex
-	 * @param: @param size
-	 * @param: @param isNeedFrontZero
-	 * @param: @return 
-	 * @author: MR.H
-	 * @return: String      
-	 * @throws
-	 */
-	public static final Integer integerForIdAddForCenter(String str, int beginIndex, int size) {
-		String result = cutStringForCenter(str, beginIndex, size);
-		return isPositiveInteger(result) ? Integer.parseInt(result) : null;
-	}
-
-	/**
-	 * 
-	 * @Title: cutString   
-	 * @Description: 切割字符串 （端点）
-	 * @param: @param str
-	 * @param: @param size
-	 * @param: @param type
-	 * @param: @return 
-	 * @author: MR.H
-	 * @return: String      
-	 * @throws
-	 */
-	public static final String cutString(String str, int size, String type) {
-		String result = null;
-		int strSize = str.length();
-		if (strSize == size) {
-			return str;
-		} else if (strSize < size) {
-			return strAddSpace(str, strSize);
-		}
-		switch (type) {
-		case Constant.RIGHT:
-			result = str.substring(strSize - size);
-			break;
-		case Constant.LEFT:
-			result = str.substring(0, size);
-			break;
-		default:
-			result = str;
-			break;
-		}
-		return result;
-	}
-
-	/**
-	 * 
-	 * @Title: cutStringForRight   
-	 * @Description: 右边  
-	 * @param: @param str
-	 * @param: @param size
-	 * @param: @param fixedHeight
-	 * @param: @param isfixed
-	 * @param: @return 
-	 * @author: MR.H
-	 * @return: String      
-	 * @throws
-	 */
-	public static final String cutStringForRight(String str, int size, int fixedHeight, boolean isfixed) {
-		Result<String> checkResult = checkStrSize(str, size);
-		if (1 == checkResult.getStatus()) {
-			return checkResult.getData();
-		}
-		String result = null;
-		if (isfixed) {
-			result = str.substring(1);
-		} else {
-
-		}
-
 	}
 
 	/**
@@ -224,21 +125,10 @@ public final class StrUtil {
 		return zeroStr + str;
 	}
 
-	private static final Result<String> checkStrSize(String str, int size) {
-		int strSize = str.length();
-		if (strSize == size) {
-			return new Result<String>(1, "", str);
-		} else if (strSize < size) {
-			return new Result<String>(1, "", strAddSpace(str, size));
-		}
-		return new Result<>(0);
-
-	}
-
 	/**
 	 * 
 	 * @Title: cutStringForLeft   
-	 * @Description: 左边  
+	 * @Description: 左边 定长
 	 * @param: @param str
 	 * @param: @param size
 	 * @param: @param fixedHeight
@@ -248,21 +138,139 @@ public final class StrUtil {
 	 * @return: String      
 	 * @throws
 	 */
-	public static final String cutStringForLeftFixS(String str, int size, boolean isfixed) {
-		Result<String> checkResult = checkStrSize(str, size);
-		if (1 == checkResult.getStatus()) {
-			return checkResult.getData();
-		}
-		String result = "";
-		if (isfixed) {
-			result = str.substring(0, size);
+	public static final String cutStringForLeftFixS(String str, int size) {
+		String result = null;
+		if (isShort(str, size)) {
+			result = str;
 		} else {
-			result = str.substring(0, str.length() - size);
+			result = str.substring(0, size);
 		}
 		return result;
 	}
-	
-	public static final String cutStringForLeft(String str,int fixedHeight){
-		return "";
+
+	/**
+	 * 
+	 * @Title: cutStringForLeft   
+	 * @Description: 左边 非定长
+	 * @param: @param str
+	 * @param: @param fixedHeight
+	 * @param: @return 
+	 * @author: MR.H
+	 * @return: String      
+	 * @throws
+	 */
+	public static final String cutStringForLeft(String str, int fixedHeight) {
+		String result = null;
+		if (isShort(str, fixedHeight)) {
+			result = "";
+		} else {
+			result = str.substring(0, str.length() - fixedHeight);
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @Title: cutStringLeftRtnInteger   
+	 * @Description: 左边截取字符串 返回一个Integer  默认值为null
+	 * @param: @param str
+	 * @param: @param size
+	 * @param: @param isFixed
+	 * @param: @return 
+	 * @author: MR.H
+	 * @return: Integer      
+	 * @throws
+	 */
+	public static final Integer cutStringLeftRtnInteger(String str, int size, boolean isFixed) {
+		return Integer.getInteger(isFixed ? cutStringForLeftFixS(str, size) : cutStringForLeft(str, size), null);
+	}
+
+	/**
+	 * 
+	 * @Title: cutStringRightRtnInteger   
+	 * @Description: 左边截取字符串 返回一个Integer  默认值为null
+	 * @param: @param str
+	 * @param: @param size
+	 * @param: @param isFixed
+	 * @param: @return 
+	 * @author: MR.H
+	 * @return: Integer      
+	 * @throws
+	 */
+	public static final Integer cutStringRightRtnInteger(String str, int size, boolean isFixed) {
+		return Integer.getInteger(isFixed ? cutStringForRightFixS(str, size) : cutStringForRight(str, size), null);
+	}
+
+	/**
+	 * 
+	 * @Title: cutStringForRightFixS   
+	 * @Description: 右边 定长
+	 * @param: @param str
+	 * @param: @param size
+	 * @param: @return 
+	 * @author: MR.H
+	 * @return: String      
+	 * @throws
+	 */
+	public static final String cutStringForRightFixS(String str, int size) {
+		String result = null;
+		if (isShort(str, size)) {
+			result = str;
+		} else {
+			int strLenght = str.length();
+			result = str.substring(strLenght - size, strLenght);
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @Title: cutStringForRight   
+	 * @Description: 右边 非定长
+	 * @param: @param str
+	 * @param: @param fixedHeight
+	 * @param: @return 
+	 * @author: MR.H
+	 * @return: String      
+	 * @throws
+	 */
+	public static final String cutStringForRight(String str, int fixedHeight) {
+		String result = null;
+		if (isShort(str, fixedHeight)) {
+			result = "";
+		} else {
+			result = str.substring(fixedHeight);
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @Title: isShort   
+	 * @Description: 判断字符串长度  （小于或等于）
+	 * @param: @param str
+	 * @param: @param size
+	 * @param: @return 
+	 * @author: MR.H
+	 * @return: boolean      
+	 * @throws
+	 */
+	public static final boolean isShort(String str, int size) {
+		return isBlank(str) ? true : size >= str.length();
+	}
+
+	/**
+	 * 
+	 * @Title: notshort   
+	 * @Description: 判断字符串长度  （大于）
+	 * @param: @param str
+	 * @param: @param size
+	 * @param: @return 
+	 * @author: MR.H
+	 * @return: boolean      
+	 * @throws
+	 */
+	public static final boolean notshort(String str, int size) {
+		return isBlank(str) ? false : !isBlank(str);
 	}
 }

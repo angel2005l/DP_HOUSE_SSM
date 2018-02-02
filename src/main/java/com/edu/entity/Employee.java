@@ -2,16 +2,16 @@ package com.edu.entity;
 
 public class Employee {
 
-	private int id;
-	private String empId;
-	private String empAccount;
-	private String empName;
-	private String empPhone;
-	private String empEmail;
-	private String empPass;
-	private String empSalt;
-	private String empPermission;
-	private String coId;
+	private int id;// id
+	private String empId;// 员工/个人编号
+	private String empAccount;// 员工账号
+	private String empName;// 姓名
+	private String empPhone;// 联系电话
+	private String empEmail;// 邮箱
+	private String empPass; // 密码
+	private String empSalt;// 盐值
+	private String empPermission;// 权限
+	private String coId;// 单位编号
 
 	/**
 	 * 

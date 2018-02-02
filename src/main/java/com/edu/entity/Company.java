@@ -1,14 +1,14 @@
 package com.edu.entity;
 
 public class Company {
-	private int id;
-	private String coId;
-	private String coSimpleName;
-	private String coName;
-	private String coAddCode;
-	private String coType;
-	private String coUniqueId;
-	private String coAdd;
+	private int id;// id
+	private String coId;// 单位编号
+	private String coSimpleName;// 单位别名
+	private String coName;// 单位名称
+	private String coAddCode;// 所属地区号
+	private String coType;// 性质
+	private String coUniqueId; // 单位唯一识别码
+	private String coAdd;// 单位地址
 
 	/**
 	 * 
