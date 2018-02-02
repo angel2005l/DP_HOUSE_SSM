@@ -16,6 +16,10 @@ public class Result<T> implements Serializable {
 	public Result() {
 	}
 
+	public Result(int status) {
+		this.status = status;
+	}
+
 	public Result(int status, String msg) {
 		this.status = status;
 		this.msg = msg;
@@ -50,5 +54,4 @@ public class Result<T> implements Serializable {
 	public void setData(T data) {
 		this.data = data;
 	}
-
 }
