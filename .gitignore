@@ -1,7 +1,9 @@
 /target/
 /.setting/
+/.settings/
 .classpath
 .project
 .gitignore
 generatorConfig.xml
 jdbc.properties
+README.md
