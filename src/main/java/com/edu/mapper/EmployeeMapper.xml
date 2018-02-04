@@ -51,7 +51,7 @@
 		select emp_id from employee where id = 
 		(select max(id) from employee where co_id = #{coId}) 
 	</select>
-	<insert id="insEmployee" parameterType="com.edu.dao.Employee">
+	<insert id="insEmployee" parameterType="com.edu.entity.Employee">
 		insert into employee values
 		(
 		emp_seq.nextval,#{empId},#{empAccount},#{empName}
