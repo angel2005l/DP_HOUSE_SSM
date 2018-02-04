@@ -25,7 +25,6 @@ public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService 
 	IEmployeeDao employeeDao;
 
 	@Override
-	@Transactional
 	public boolean login(String userId, String userPass) {
 
 		try {
@@ -58,7 +57,7 @@ public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService 
 					return rtnFailResult("插入失败,无法获得当前最大值");
 				// 进行加密和自增列添加
 				for (Employee empObj : datas) {
-					empObj.setEmpId(comSimpleCode + (++maxId));
+					empObj.setEmpId(comSimpleCode +StrUtil.strAddLeftZero((++maxId)+"", 5) );
 					// 随机盐
 					String salt = MD5Util.getRandomSalt();
 					// 加密密码

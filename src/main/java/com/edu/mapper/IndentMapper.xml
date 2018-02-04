@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.IIndentDao">
+	<resultMap type="com.edu.entity.Indent" id="baseResultMap">
+		<id column="ind_id" property="indId" />
+		<result column="id" property="id" />
+		<result column="ind_date" property="indDate" />
+		<result column="ind_type" property="indType" />
+		<result column="ind_info" property="indInfo" />
+		<result column="hou_id" property="houId" />
+		<result column="hou_money" property="houMoney" />
+		<result column="ind_money" property="indMoney" />
+		<result column="bar_id" property="barId" />
+		<result column="cus_id" property="cusId" />
+		<result column="co_id" property="coId" />
+	</resultMap>
+
+	<sql id="baseList">
+		id,ind_id,ind_date,ind_type,ind_info,hou_id,hou_money,ind_money,ind_discount,bar_id,cus_id,co_id
+	</sql>
+	<!-- <select id="selIndentForEmp" resultMap="baseResultMap"> select id,ind_id,ind_date,ind_type,ind_info,hou_id,hou_money, 
+		ind_money,ind_discount,bar_id,cus_id,co_id from indent a inner join company 
+		b on a.co_id = b.co_id inner join employee c on c. </select> -->
+
+	<select id="selIndentForEmp" resultMap="baseResultMap">
+		select
+		id,ind_id,ind_date,ind_type,ind_info,hou_id,hou_money,
+		ind_money,ind_discount,bar_id,cus_id,a.co_id
+		from indent a
+		inner join
+		house b on a.hou_id and b.hou_id
+		inner join
+		employee c b.emp_id =
+		c.emp_id and a.co_id = c.co_id
+		<where>
+			c.emp_id = #{emp_id}
+			and c.co_id = #{co_id}
+			<if test="indId != null and indId != ''">
+				and ind_id = #{indId}
+			</if>
+		</where>
+	</select>
+	<select id="selIndentForAdmin" resultMap="baseResultMap">
+		select
+		<include refid="baseList" />
+		from indent
+		<where>
+			co_id =#{co_id}
+			<if test="indId != null and indId != ''">
+				and ind_id = #{indId}
+			</if>
+		</where>
+	</select>
+	<select id="indentExist">
+		select count(ind_id) from indent where ind_id =
+		#{indId} and co_id = #{coId}
+	</select>
+	<update id="uptIndentType">
+		update indent set ind_type = #{indType} where ind_id
+		= #{indId}
+	</update>
+	<delete id="delIndent">
+		delete indent where ind_id = #{indId} and co_id =
+		#{coId} and int_type =
+		'审核中'
+	</delete>
+	<insert id="insIndent" parameterType="com.edu.entity.Indent">
+		insert into indent values
+		(ind_seq.nextval,#{indId},#{indDate},#{indType},#{indInfo},#{houId},#{houMoney},#{indMoney},
+		#{indDiscount},#{barId},#{cusId},#{coId})
+	</insert>
+	<select id="maxIndentId">
+		select ind_id from indent where id = (
+		select max(id)
+		from indent where co_id = #{coId})
+	</select>
+
+	<select id="selIndentType" resultType="string">
+		Select ind_type from
+		indent where ind_id = #{indId} and co_id = #{coId}
+	</select>
+</mapper>
