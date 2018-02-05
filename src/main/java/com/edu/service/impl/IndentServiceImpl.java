@@ -2,7 +2,6 @@ package com.edu.service.impl;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,16 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.edu.base.BaseSevice;
+import com.edu.base.Constant;
 import com.edu.dao.IIndentDao;
 import com.edu.entity.Indent;
 import com.edu.service.IIndentService;
+import com.edu.util.DateUtil;
 import com.edu.util.Result;
 import com.edu.util.StrUtil;
 
 @Service
 public class IndentServiceImpl extends BaseSevice implements IIndentService {
 	private static final Logger log = LoggerFactory.getLogger(IndentServiceImpl.class);
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	@Autowired
 	IIndentDao indentDao;
 
@@ -94,26 +94,41 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 	}
 
 	@Override
-	public Result<Object> addIndent(Indent insObj, String coId) {
+	public Result<Object> addIndent(Indent insObj) {
 		if (null == insObj) {
 			return rtnFailResult("订单添加失败，参数异常");
 		}
-		try {
-			// I+yyyyMMdd+5位自增
-			String maxId = indentDao.maxIndentId(coId);
-			if(StrUtil.isBlank(maxId)){
-				return rtnFailResult("订单添加失败,自增参数获取失败");
+		synchronized (this) {
+			try {
+				// I+yyyyMMdd+5位自增
+				String maxId = indentDao.maxIndentId();
+				int addMaxId = 0;
+				if (StrUtil.isBlank(maxId)) {
+					addMaxId = 0;
+				} else {
+					addMaxId = StrUtil.cutStringRightRtnInteger(maxId, 5, true);
+				}
+				String indId = Constant.INDENTTAG + DateUtil.curDateYMDForservice() + StrUtil.strAddLeftZero(
+						(++addMaxId) + "", 5);
+
+				// 添加订单编号
+				insObj.setIndId(indId);
+				// 添加时间
+				insObj.setIndDate(DateUtil.curDateByStr());
+				// 订单状态
+				insObj.setIndType(Constant.INDENTTYPE[0]);
+
+				// add insert jie
+				if (indentDao.insIndent(insObj) > 0) {
+					return rtnSuccessResult();
+				} else {
+					return rtnFailResult("订单添加失败");
+				}
+			} catch (SQLException e) {
+				log.error("订单添加异常");
+				return rtnFailResult("订单添加异常,异常原因:" + e.getMessage());
 			}
-			Integer addMaxId = StrUtil.cutStringRightRtnInteger(maxId, 5, true);
-			String dateStr = sdf.format(new Date(System.currentTimeMillis()));
-			//insObj.setIndId(I);
-			
-			indentDao.insIndent(insObj);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		return null;
 	}
 
 }

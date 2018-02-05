@@ -16,6 +16,6 @@ public interface IIndentService {
 	public Result<Object> delIndent(String indId, String coId);
 
 	// 添加订单
-	public Result<Object> addIndent(Indent insObj,String coId);
+	public Result<Object> addIndent(Indent insObj);
 
 }

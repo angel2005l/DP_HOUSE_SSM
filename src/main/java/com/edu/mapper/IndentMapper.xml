@@ -69,10 +69,9 @@
 		(ind_seq.nextval,#{indId},#{indDate},#{indType},#{indInfo},#{houId},#{houMoney},#{indMoney},
 		#{indDiscount},#{barId},#{cusId},#{coId})
 	</insert>
-	<select id="maxIndentId">
+	<select id="maxIndentId" resultType="_int">
 		select ind_id from indent where id = (
-		select max(id)
-		from indent where co_id = #{coId})
+		select max(id) from indent where ind_date>=trunc(sysdate) and ind_date &lt; trunc(sysdate)+1)
 	</select>
 
 	<select id="selIndentType" resultType="string">

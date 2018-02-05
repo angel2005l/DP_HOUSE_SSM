@@ -31,7 +31,7 @@ public interface IIndentDao {
 	public int insIndent(Indent indObj) throws SQLException;
 
 	// 获得当前该公司maxId
-	public String maxIndentId(String coId) throws SQLException;
+	public String maxIndentId() throws SQLException;
 
 	// 获得订单的状态
 	public String selIndentType(@Param("indId") String indId, @Param("coId") String coId) throws SQLException;
