@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.IBargainDao">
+	<resultMap type="com.edu.entity.Bargain" id="baseResultMap">
+		<id column="bar_id" property="barId" />
+		<result column="id" property="id" />
+		<result column="bar_name" property="barName" />
+		<result column="bar_date" property="barDate" />
+		<result column="bar_context" property="barContext" />
+		<result column="cus_name" property="cusName" />
+		<result column="co_name" property="coName" />
+		<result column="ind_id" property="indId" />
+	</resultMap>
+	<sql id="baseList">
+		id,bar_id,bar_name,bar_date,bar_context,cus_name,co_name,ind_id
+	</sql>
+
+	<select id="selBargain" resultMap="baseResultMap">
+		select
+		a.id,bar_id,bar_name,bar_date,bar_context,cus_name,co_name,a.ind_id
+		from bargain a inner join indent b on a.ind_id = b.ind_id
+		<where>
+			<if test="barId != null and barId != ''">
+				bar_id = #{barId}
+			</if>
+			and b.co_id = #{coId}
+		</where>
+	</select>
+
+	<delete id="delBargain" parameterType="string">
+		delete from
+		bargain where
+		bar_id = #{barId}
+	</delete>
+
+	<insert id="insBargain" parameterMap="baseResultMap">
+		insert into bargain values(
+		bar_seq.nextval,#{barId},#{barName},#{barDate},#{barContext},#{cusName},#{coName},#{indId}
+		)
+	</insert>
+
+	<select id="maxBarId">
+		select bar_id from bargain where id = (select max(id)
+		from bargain where bar_date>=trunc(sysdate) and bar_date &lt;
+		trunc(sysdate)+1)
+	</select>
+
+	<select id="isBargainExist">
+		select count(bar_id) from bargain a inner join indent b on a.ind_id =
+		b.ind_id
+		<where>
+			<if test="barId !=null and barId != ''">
+				bar_id = #{barId}
+			</if>
+			and b.co_id = #{coId}
+		</where>
+	</select>
+
+</mapper>
