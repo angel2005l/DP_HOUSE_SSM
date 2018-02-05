@@ -48,10 +48,13 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 			try {
 				// 获得当天最大的max
 				String maxBarId = bargainDao.maxBarId();
+				Indent indent = null;
 				// 获得订单信息
-				List<Indent> enterIndentInfo = indentDao.selIndentForAdmin(coId, indId);
-				if (null == enterIndentInfo || enterIndentInfo.isEmpty() || enterIndentInfo.size() > 1) {
+				List<Indent> indList = indentDao.selIndentForAdmin(coId, indId);
+				if (null == indList || indList.isEmpty() || indList.size() > 1) {
 					return rtnFailResult("合同更新失败");
+				} else {
+					indent = indList.get(0);
 				}
 				int maxAddId = 0;
 				if (StrUtil.isBlank(maxBarId)) {
@@ -69,7 +72,7 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 				// 合同时间
 				barObj.setBarDate(DateUtil.curDateByStr());
 				// 合同内容
-				barObj.setBarContext("	日期：" + DateUtil.curDateYMD() + "房屋信息" + "共计：" + "金额");
+				barObj.setBarContext("	日期：" + DateUtil.curDateYMD() + "房屋信息" + "共计：【" + indent.getIndMoney().toString()+"】元");
 				// 合同甲方
 				barObj.setCoName(companyDao.selCompanyName(coId));
 				// 合同乙方
