@@ -10,14 +10,15 @@
 		<result column="cus_name" property="cusName" />
 		<result column="co_name" property="coName" />
 		<result column="ind_id" property="indId" />
+		<result column="bar_end_date" property="barEndDate" />
 	</resultMap>
 	<sql id="baseList">
-		id,bar_id,bar_name,bar_date,bar_context,cus_name,co_name,ind_id
+		id,bar_id,bar_name,bar_date,bar_context,cus_name,co_name,ind_id,bar_end_date
 	</sql>
 
 	<select id="selBargain" resultMap="baseResultMap">
 		select
-		a.id,bar_id,bar_name,bar_date,bar_context,cus_name,co_name,a.ind_id
+		a.id,bar_id,bar_name,bar_date,bar_context,cus_name,co_name,a.ind_id,bar_end_date
 		from bargain a inner join indent b on a.ind_id = b.ind_id
 		<where>
 			<if test="barId != null and barId != ''">

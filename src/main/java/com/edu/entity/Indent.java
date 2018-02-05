@@ -16,6 +16,7 @@ public class Indent {
 	private BigDecimal indDiscount;// 折扣率
 	private String cusId;// 会员编号
 	private String coId;// 单位编号
+	private Integer indDay; // 租赁时间
 
 	/**
 	 * 
@@ -111,11 +112,19 @@ public class Indent {
 		this.coId = coId;
 	}
 
+	public Integer getIndDay() {
+		return indDay;
+	}
+
+	public void setIndDay(Integer indDay) {
+		this.indDay = indDay;
+	}
+
 	@Override
 	public String toString() {
 		return "Indent [id=" + id + ", indId=" + indId + ", indDate=" + indDate + ", indType=" + indType + ", indInfo="
 				+ indInfo + ", houId=" + houId + ", houMoney=" + houMoney + ", indMoney=" + indMoney + ", indDiscount="
-				+ indDiscount + ", cusId=" + cusId + ", coId=" + coId + "]";
+				+ indDiscount + ", cusId=" + cusId + ", coId=" + coId + ", indDay=" + indDay + "]";
 	}
 
 }
