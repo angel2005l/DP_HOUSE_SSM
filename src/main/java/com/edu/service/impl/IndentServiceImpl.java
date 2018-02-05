@@ -1,7 +1,6 @@
 package com.edu.service.impl;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,6 +14,7 @@ import com.edu.base.BaseSevice;
 import com.edu.base.Constant;
 import com.edu.dao.IIndentDao;
 import com.edu.entity.Indent;
+import com.edu.service.IBargainService;
 import com.edu.service.IIndentService;
 import com.edu.util.DateUtil;
 import com.edu.util.Result;
@@ -25,6 +25,9 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 	private static final Logger log = LoggerFactory.getLogger(IndentServiceImpl.class);
 	@Autowired
 	IIndentDao indentDao;
+
+	@Autowired
+	IBargainService bargainService;
 
 	@Override
 	public List<Indent> selIndent(String permiType, String indId, String empId, String coId) {
@@ -65,7 +68,9 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			case "enterInd":
 				upNum = indentDao.uptIndentType(indId, "已完成");
 				// 调用合同服务层生成合同；
-				isInsBar = false;
+				Result<Object> barResult = bargainService.insBargain(indId, coId);
+				if (barResult.getStatus() != 0)
+					isInsBar = false;
 				break;
 			case "cancelInd":
 				upNum = indentDao.uptIndentType(indId, "已取消");
@@ -75,13 +80,13 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			}
 		} catch (SQLException e) {
 			log.error("订单状态更新异常,异常原因：" + e.getMessage());
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//回手动滚
 			return rtnFailResult("订单状态更新异常");
 		}
 		if (upNum > 0 && isInsBar) {
 			return rtnSuccessResult("订单更新成功");
 		} else {
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//回手动滚
 			return rtnFailResult("订单更新失败,数据库操作失败");
 		}
 	}
@@ -105,7 +110,7 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 	}
 
 	@Override
-	public Result<Object> addIndent(Indent insObj) {
+	public Result<Object> insIndent(Indent insObj) {
 		if (null == insObj) {
 			return rtnFailResult("订单添加失败，参数异常");
 		}

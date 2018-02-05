@@ -6,16 +6,58 @@ import com.edu.entity.Indent;
 import com.edu.util.Result;
 
 public interface IIndentService {
-	// 查询订单信息
+	/**
+	 * 
+	 * @Title: selIndent   
+	 * @Description: 查询订单信息 
+	 * @param permiType
+	 * @param indId
+	 * @param empId
+	 * @param coId
+	 * @return
+	 * @author: MR.H
+	 * @return: List<Indent>      
+	 * @throws
+	 */
 	public List<Indent> selIndent(String permiType, String indId, String empId, String coId);
 
-	// 更新订单 enter/cancel
-	public Result<Object> uptIndent(String indType, String indId,String coId);
+	/**
+	 * 
+	 * @Title: uptIndent   
+	 * @Description: 更新订单
+	 * @param indType
+	 * @param indId
+	 * @param coId
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>      
+	 * @throws
+	 */
+	public Result<Object> uptIndent(String indType, String indId, String coId);
 
-	// 删除订单 只能删除(审核中)的单子
+	/**
+	 * 
+	 * @Title: delIndent   
+	 * @Description: 删除订单 只能删除(审核中)的单子
+	 * @param indId
+	 * @param coId
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>      
+	 * @throws
+	 */
 	public Result<Object> delIndent(String indId, String coId);
 
-	// 添加订单
-	public Result<Object> addIndent(Indent insObj);
+	/**
+	 * 
+	 * @Title: insIndent   
+	 * @Description: 添加订单
+	 * @param insObj
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>      
+	 * @throws
+	 */
+	public Result<Object> insIndent(Indent insObj);
 
 }

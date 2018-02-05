@@ -9,6 +9,10 @@ public class Result<T> implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final int ERROR = 500;
+	public static final int SUCCESS = 0;
+	public static final int FAIL = 1;
+
 	private int status;
 	private String msg;
 	private T data;
