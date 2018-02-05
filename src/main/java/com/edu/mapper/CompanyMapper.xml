@@ -16,7 +16,8 @@
 		id,co_id,co_simple_name,co_name,co_add_code,co_type,co_unique_id,co_add
 	</sql>
 	<select id="selCompany" resultMap="baseResultMap">
-		select <include refid="baseList" /> 
+		select
+		<include refid="baseList" />
 		from company
 		<where>
 			<if test="id!=0">
@@ -89,4 +90,14 @@
 			)
 		</foreach>
 	</insert>
+	<select id="maxCoId" resultType="string">
+		select co_id from company where
+		id = (select max(id) from company)
+	</select>
+	<select id="selCompanyName" parameterType="string" resultType="string">
+		select co_name from company where co_id = #{coId}
+	</select>
+	<select id="isCompanyExist" parameterType="string" resultType="_int">
+		select count(co_id) from company where co_id = #{coId}
+	</select>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.edu.base.BaseSevice;
 import com.edu.base.Constant;
 import com.edu.dao.IBargainDao;
+import com.edu.dao.ICompanyDao;
 import com.edu.dao.IIndentDao;
 import com.edu.entity.Bargain;
 import com.edu.entity.Indent;
@@ -25,7 +26,10 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 
 	@Autowired
 	IBargainDao bargainDao;
+	@Autowired
 	IIndentDao indentDao;
+	@Autowired
+	ICompanyDao companyDao;
 
 	@Override
 	public List<Bargain> selBargain(String barId, String coId) {
@@ -67,8 +71,7 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 				// 合同内容
 				barObj.setBarContext("	日期：" + DateUtil.curDateYMD() + "房屋信息" + "共计：" + "金额");
 				// 合同甲方
-				barObj.setCoName("甲方公司全名");
-				// 甲方公司查询；
+				barObj.setCoName(companyDao.selCompanyName(coId));
 				// 合同乙方
 				barObj.setCusName(Constant.CUSNAME[(int) (Math.random() * 4)]);
 				// 订单编号
