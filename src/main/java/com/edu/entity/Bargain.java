@@ -1,17 +1,18 @@
 package com.edu.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Bargain {
 
-	private int id;//id
-	private String barId;//合同编号
-	private String barName;//合同名称
-	private Date barDate;//合同时间
-	private String barContext;//合同内容
-	private String cusName;//合同甲方
-	private String coName;//合同乙方
-	
+	private int id;// id
+	private String barId;// 合同编号
+	private String barName;// 合同名称
+	private Date barDate;// 合同时间
+	private String barContext;// 合同内容
+	private String cusName;// 合同甲方
+	private String coName;// 合同乙方
+	private String indId; // 订单编号
+
 	/**
 	 * 
 	 */
@@ -74,10 +75,19 @@ public class Bargain {
 		this.coName = coName;
 	}
 
+	public String getIndId() {
+		return indId;
+	}
+
+	public void setIndId(String indId) {
+		this.indId = indId;
+	}
+
 	@Override
 	public String toString() {
 		return "Bargain [id=" + id + ", barId=" + barId + ", barName=" + barName + ", barDate=" + barDate
-				+ ", barContext=" + barContext + ", cusName=" + cusName + ", coName=" + coName + "]";
+				+ ", barContext=" + barContext + ", cusName=" + cusName + ", coName=" + coName + ", indId=" + indId
+				+ "]";
 	}
 
 }

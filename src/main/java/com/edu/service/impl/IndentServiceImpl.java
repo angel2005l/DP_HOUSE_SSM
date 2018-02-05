@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.edu.base.BaseSevice;
 import com.edu.base.Constant;
@@ -42,13 +44,14 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 		} catch (SQLException e) {
 			log.error("查询订单异常,数据库异常." + e.getMessage());
 		}
-
 		return selData;
 	}
 
 	@Override
+	@Transactional(rollbackFor = { Exception.class })
 	public Result<Object> uptIndent(String indType, String indId, String coId) {
 		int upNum = 0;
+		boolean isInsBar = true;
 		try {
 			// 之前确认 订单是否存在
 			// 检查 订单状态是否是已完成
@@ -61,6 +64,8 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			switch (indType) {
 			case "enterInd":
 				upNum = indentDao.uptIndentType(indId, "已完成");
+				// 调用合同服务层生成合同；
+				isInsBar = false;
 				break;
 			case "cancelInd":
 				upNum = indentDao.uptIndentType(indId, "已取消");
@@ -70,9 +75,15 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			}
 		} catch (SQLException e) {
 			log.error("订单状态更新异常,异常原因：" + e.getMessage());
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return rtnFailResult("订单状态更新异常");
 		}
-		return upNum > 0 ? rtnSuccessResult("订单更新成功") : rtnFailResult("订单更新失败,数据库操作失败");
+		if (upNum > 0 && isInsBar) {
+			return rtnSuccessResult("订单更新成功");
+		} else {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return rtnFailResult("订单更新失败,数据库操作失败");
+		}
 	}
 
 	@Override

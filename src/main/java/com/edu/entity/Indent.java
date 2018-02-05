@@ -14,7 +14,6 @@ public class Indent {
 	private BigDecimal houMoney;// 房屋金额
 	private BigDecimal indMoney;// 实际金额
 	private BigDecimal indDiscount;// 折扣率
-	private String barId;// 合同编号
 	private String cusId;// 会员编号
 	private String coId;// 单位编号
 
@@ -96,14 +95,6 @@ public class Indent {
 		this.indDiscount = indDiscount;
 	}
 
-	public String getBarId() {
-		return barId;
-	}
-
-	public void setBarId(String barId) {
-		this.barId = barId;
-	}
-
 	public String getCusId() {
 		return cusId;
 	}
@@ -124,7 +115,7 @@ public class Indent {
 	public String toString() {
 		return "Indent [id=" + id + ", indId=" + indId + ", indDate=" + indDate + ", indType=" + indType + ", indInfo="
 				+ indInfo + ", houId=" + houId + ", houMoney=" + houMoney + ", indMoney=" + indMoney + ", indDiscount="
-				+ indDiscount + ", barId=" + barId + ", cusId=" + cusId + ", coId=" + coId + "]";
+				+ indDiscount + ", cusId=" + cusId + ", coId=" + coId + "]";
 	}
 
 }
