@@ -35,12 +35,22 @@ public final class Constant {
 	public static final String FINANCETAG = "F";
 
 	/**
-	 * 合同内标题
+	 * 公司头标识
 	 */
-	public static final String BARGAIN = "";
-	
+	public static final String COMPANYTAG = "C";
+
+	/**
+	 * 员工头标识
+	 */
+	public static final String EMPLOYEETAG = "E";
+
 	/**
 	 * 虚拟顾客
 	 */
-	public static final String[] CUSNAME = {"顾客A","顾客B","顾客C","顾客D"};
+	public static final String[] CUSNAME = { "顾客A", "顾客B", "顾客C", "顾客D" };
+	
+	/**
+	 * 默认密码
+	 */
+	public static final String[] PASSWORDDEFAULT = {"qwer","sa","123456"};
 }

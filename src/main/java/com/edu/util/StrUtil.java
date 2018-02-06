@@ -271,4 +271,32 @@ public final class StrUtil {
 	public static final boolean notshort(String str, int size) {
 		return isBlank(str) ? false : !isBlank(str);
 	}
+
+	/**
+	 * 
+	 * @Title: strToLower   
+	 * @Description: 将字符串变成小写 
+	 * @param str
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	public static final String strToLower(String str) {
+		return str.toLowerCase();
+	}
+
+	/**
+	 * 
+	 * @Title: strToUp   
+	 * @Description: 将字符串变成大写
+	 * @param str
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	public static final String strToUpper(String str) {
+		return str.toUpperCase();
+	}
 }

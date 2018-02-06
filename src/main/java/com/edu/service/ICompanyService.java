@@ -7,16 +7,54 @@ import com.edu.util.Result;
 
 public interface ICompanyService {
 
-	// 新增公司
+	/**
+	 * 
+	 * @Title: insCompany   
+	 * @Description: 新增公司
+	 * @param insObj
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	public Result<Object> insCompany(Company insObj);
 
-	// 更新公司
-	public Result<Object> uptCompany(String coId ,String SimpleName);
+	/**
+	 * 
+	 * @Title: uptCompany   
+	 * @Description: 更新公司
+	 * @param coId
+	 * @param SimpleName
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
+	public Result<Object> uptCompany(String coId, String simpleName);
 
-	// 删除公司
+	/**
+	 * 
+	 * @Title: delCompany   
+	 * @Description: 删除公司
+	 * @param coId
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	public Result<Object> delCompany(String coId);
 
-	// 查询公司
-	public List<Company> selCompany(String coId,String simpleName);
+	/**
+	 * 
+	 * @Title: selCompany   
+	 * @Description: 查询公司
+	 * @param coId
+	 * @param simpleName
+	 * @return
+	 * @author: MR.H
+	 * @return: List<Company>
+	 *
+	 */
+	public List<Company> selCompany(String coId, String simpleName);
 
 }

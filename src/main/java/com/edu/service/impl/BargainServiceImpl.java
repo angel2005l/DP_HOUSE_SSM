@@ -76,7 +76,7 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 				// 合同甲方
 				barObj.setCoName(companyDao.selCompanyName(coId));
 				// 合同乙方
-				barObj.setCusName(Constant.CUSNAME[(int) (Math.random() * 4)]);
+				barObj.setCusName(Constant.CUSNAME[(int) (Math.random() * 3)]);
 				// 订单编号
 				barObj.setIndId(indId);
 
