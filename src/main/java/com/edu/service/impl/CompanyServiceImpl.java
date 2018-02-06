@@ -11,6 +11,7 @@ import com.edu.dao.ICompanyDao;
 import com.edu.entity.Company;
 import com.edu.service.ICompanyService;
 import com.edu.util.Result;
+import com.edu.util.StrUtil;
 
 @Service
 public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
@@ -21,6 +22,18 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 	@Override
 	public Result<Object> insCompany(Company insObj) {
 		try {
+			//获得最大maxCoIdC+(4)区号+（8）自增编号
+			String coAddCode = StrUtil.strAddLeftZero(insObj.getCoAddCode(), 4);
+			String maxCoId = companyDao.maxCoId(coAddCode);
+			int maxId = 0;
+			if(StrUtil.isBlank(maxCoId)){
+				maxId = 0;
+			}else{
+//				StrUtil.cutStringRightRtnInteger(str, size, isFixed);
+			}
+			
+			
+			
 			int insCompany = companyDao.insCompany(insObj);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -10,12 +10,12 @@ public interface IBargainService {
 	 * 
 	 * @Title: selBargain   
 	 * @Description: 合同查询
-	 * @param: @param barId
-	 * @param: @param coId
-	 * @param: @return 
+	 * @param barId
+	 * @param coId
+	 * @return 
 	 * @author: MR.H
 	 * @return: List<Bargain>      
-	 * @throws
+	 *
 	 */
 	public List<Bargain> selBargain(String barId, String coId);
 
@@ -23,11 +23,11 @@ public interface IBargainService {
 	 * 
 	 * @Title: insBargain   
 	 * @Description: 合同添加
-	 * @param: @param coId
-	 * @param: @return 
+	 * @param coId
+	 * @return 
 	 * @author: MR.H
 	 * @return: Result<Object>      
-	 * @throws
+	 *
 	 */
 	public Result<Object> insBargain(String indId, String coId);
 }

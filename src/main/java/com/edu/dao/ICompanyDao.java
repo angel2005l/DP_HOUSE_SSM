@@ -12,7 +12,8 @@ import com.edu.entity.Company;
 public interface ICompanyDao {
 
 	// 查询公司信息
-	public List<Company> selCompany(@Param("coId") String coId,@Param("simpleName") String simpleName) throws SQLException;
+	public List<Company> selCompany(@Param("coId") String coId, @Param("simpleName") String simpleName)
+			throws SQLException;
 
 	// 更新公司
 	public int uptCompany(@Param("coId") String coId, @Param("simpleName") String simpleName) throws SQLException;
@@ -24,7 +25,7 @@ public interface ICompanyDao {
 	public int insCompany(Company insObj) throws SQLException;
 
 	// 获得最大公司ID
-	public String maxCoId() throws SQLException;
+	public String maxCoId(String addCode) throws SQLException;
 
 	// 获得公司名
 	public String selCompanyName(String coId) throws SQLException;

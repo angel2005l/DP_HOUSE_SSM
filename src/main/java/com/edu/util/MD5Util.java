@@ -48,7 +48,7 @@ public final class MD5Util {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: boolean      
-	 * @throws
+	 *
 	 */
 	public static final boolean check(String str, String salt, String checkedStr) {
 		if (checkedStr.equals(getMD5EncryptPass(str, salt.getBytes()))) {

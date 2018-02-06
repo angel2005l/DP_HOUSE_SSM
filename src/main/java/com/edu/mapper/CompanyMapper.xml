@@ -78,7 +78,7 @@
 	</insert>
 	<select id="maxCoId" resultType="string">
 		select co_id from company where
-		id = (select max(id) from company)
+		id = (select max(id) from company where co_add_code = #{addCode})
 	</select>
 	<select id="selCompanyName" parameterType="string" resultType="string">
 		select co_name from company where co_id = #{coId}

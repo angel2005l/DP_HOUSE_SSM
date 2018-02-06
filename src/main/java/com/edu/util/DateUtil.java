@@ -31,7 +31,7 @@ public final class DateUtil {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: boolean      
-	 * @throws
+	 *
 	 */
 	public static boolean isValidDate(String date, String pattern) {
 		if (StrUtil.isBlank(date) || StrUtil.isBlank(pattern)) {
@@ -58,7 +58,7 @@ public final class DateUtil {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: String      
-	 * @throws
+	 *
 	 */
 	public static String curDateYM() {
 		dateFormat.applyPattern(YM);
@@ -72,7 +72,7 @@ public final class DateUtil {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: String      
-	 * @throws
+	 *
 	 */
 	public static String curDateYMD() {
 		dateFormat.applyPattern(YMD);
@@ -86,7 +86,7 @@ public final class DateUtil {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: String      
-	 * @throws
+	 *
 	 */
 	public static String curDateYMDHMS() {
 		dateFormat.applyPattern(YMDHMS);
@@ -104,7 +104,7 @@ public final class DateUtil {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: String      
-	 * @throws
+	 *
 	 */
 	public static String curDateYMDForservice() {
 		dateFormat.applyPattern(JOINT_YMD);
@@ -118,7 +118,7 @@ public final class DateUtil {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: String      
-	 * @throws
+	 *
 	 */
 	public static String curDateYMDHMForService() {
 		dateFormat.applyPattern(JOINT_YMDHM);
@@ -135,7 +135,7 @@ public final class DateUtil {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: Date      
-	 * @throws
+	 *
 	 */
 	public static Date curDateByStr() {
 		dateFormat.applyPattern(YMDHMS);
@@ -156,7 +156,7 @@ public final class DateUtil {
 	 * @param: @return 
 	 * @author: MR.H
 	 * @return: Date      
-	 * @throws
+	 *
 	 */
 	public static Date curDateByStr(String date, String pattern) {
 		if (isValidDate(date, pattern)) {
@@ -182,7 +182,7 @@ public final class DateUtil {
 	// * @param: @return
 	// * @author: MR.H
 	// * @return: String
-	// * @throws
+	// *
 	// */
 	// public static String addDay() {
 	// return "";
@@ -195,7 +195,7 @@ public final class DateUtil {
 	// * @param: @return
 	// * @author: MR.H
 	// * @return: String
-	// * @throws
+	// *
 	// */
 	// public static String addMonth() {
 	//
@@ -209,7 +209,7 @@ public final class DateUtil {
 	// * @param: @return
 	// * @author: MR.H
 	// * @return: String
-	// * @throws
+	// *
 	// */
 	// public static String addYear() {
 	// return "";

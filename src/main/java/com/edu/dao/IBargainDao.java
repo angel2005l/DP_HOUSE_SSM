@@ -15,13 +15,13 @@ public interface IBargainDao {
 	 * 
 	 * @Title: selBargain   
 	 * @Description: 合同查询Dao
-	 * @param: @param barId
-	 * @param: @param coId
-	 * @param: @return
-	 * @param: @throws SQLException 
+	 * @param barId
+	 * @param coId
+	 * @return
+	 * @throws SQLException 
 	 * @author: MR.H
 	 * @return: List<Bargain>      
-	 * @throws
+	 *
 	 */
 	public List<Bargain> selBargain(@Param("barId") String barId, @Param("coId") String coId) throws SQLException;
 
