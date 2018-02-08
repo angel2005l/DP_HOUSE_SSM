@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.edu.dao.IHouseDao">
-	
+	<resultMap type="com.edu.entity.House" id="baseResultMap">
+		<id column="hou_id" property="houId" />
+		<result column="id" property="id" />
+		<result column="hou_name" property="houName" />
+		<result column="hou_status" property="houStatus" />
+		<result column="hou_type" property="houtype" />
+		<result column="hou_floor" property="houFloor" />
+		<result column="hou_build" property="houBuild" />
+		<result column="hou_money" property="houMoney" />
+		<result column="hou_add" property="houAdd" />
+		<result column="hou_img" property="houImg" />
+		<result column="hou_bed" property="houBed" />
+		<result column="hou_bath" property="houBath" />
+		<result column="hou_living" property="houLiving" />
+		<result column="emp_id" property="empId" />
+	</resultMap>
 
+	<sql id="baseList">
+		id,hou_id,hou_name,hou_status,hou_type,hou_floor,hou_build,hou_money,hou_add
+		,hou_img,hou_bed,hou_bath,hou_living,emp_id
+	</sql>
+
+
+	<select id="" resultMap="baseResultMap">
+		select * from 
+	</select>
 </mapper>
