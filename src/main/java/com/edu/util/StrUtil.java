@@ -26,7 +26,7 @@ public final class StrUtil {
 	 *
 	 */
 	public static final boolean notBlank(String str) {
-		return null != str && "".equals(str.trim());
+		return null != str && !"".equals(str.trim());
 	}
 
 	/**
