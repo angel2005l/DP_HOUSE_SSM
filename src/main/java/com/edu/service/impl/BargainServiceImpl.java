@@ -73,6 +73,8 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 				barObj.setBarDate(DateUtil.curDateByStr());
 				// 合同内容
 				barObj.setBarContext("	日期：" + DateUtil.curDateYMD() + "房屋信息" + "共计：【" + indent.getIndMoney().toString()+"】元");
+				// 合同租赁时间
+				barObj.setBarEndDate(DateUtil.addDay(indent.getIndDay()));
 				// 合同甲方
 				barObj.setCoName(companyDao.selCompanyName(coId));
 				// 合同乙方
@@ -86,6 +88,5 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 				return rtnFailResult("合同添加异常");
 			}
 		}
-
 	}
 }

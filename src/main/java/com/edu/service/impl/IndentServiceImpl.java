@@ -80,13 +80,13 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			}
 		} catch (SQLException e) {
 			log.error("订单状态更新异常,异常原因：" + e.getMessage());
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//回手动滚
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();// 回手动滚
 			return rtnFailResult("订单状态更新异常");
 		}
 		if (upNum > 0 && isInsBar) {
 			return rtnSuccessResult("订单更新成功");
 		} else {
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//回手动滚
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();// 回手动滚
 			return rtnFailResult("订单更新失败,数据库操作失败");
 		}
 	}
@@ -133,8 +133,6 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 				insObj.setIndDate(DateUtil.curDateByStr());
 				// 订单状态
 				insObj.setIndType(Constant.INDENTTYPE[0]);
-
-				// add insert jie
 				if (indentDao.insIndent(insObj) > 0) {
 					return rtnSuccessResult();
 				} else {
@@ -146,5 +144,4 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			}
 		}
 	}
-
 }
