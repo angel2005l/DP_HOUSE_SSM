@@ -6,8 +6,8 @@ public class House {
 	private int id;
 	private String houId;
 	private String houName;
-	private String houType;
-	private String houSell;
+	private String houStatus;
+	private String houtype;
 	private BigDecimal houFloor;
 	private BigDecimal houBuild;
 	private String houAdd;
@@ -48,19 +48,19 @@ public class House {
 	}
 
 	public String getHouType() {
-		return houType;
+		return houStatus;
 	}
 
 	public void setHouType(String houType) {
-		this.houType = houType;
+		this.houStatus = houType;
 	}
 
 	public String getHouSell() {
-		return houSell;
+		return houtype;
 	}
 
 	public void setHouSell(String houSell) {
-		this.houSell = houSell;
+		this.houtype = houSell;
 	}
 
 	public BigDecimal getHouFloor() {
@@ -129,8 +129,8 @@ public class House {
 
 	@Override
 	public String toString() {
-		return "House [id=" + id + ", houId=" + houId + ", houName=" + houName + ", houType=" + houType + ", houSell="
-				+ houSell + ", houFloor=" + houFloor + ", houBuild=" + houBuild + ", houAdd=" + houAdd + ", houImg="
+		return "House [id=" + id + ", houId=" + houId + ", houName=" + houName + ", houType=" + houStatus + ", houSell="
+				+ houtype + ", houFloor=" + houFloor + ", houBuild=" + houBuild + ", houAdd=" + houAdd + ", houImg="
 				+ houImg + ", houBed=" + houBed + ", houBath=" + houBath + ", houLiving=" + houLiving + ", empId="
 				+ empId + "]";
 	}
