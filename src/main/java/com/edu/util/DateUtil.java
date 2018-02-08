@@ -2,6 +2,7 @@ package com.edu.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -128,6 +129,7 @@ public final class DateUtil {
 	/*
 	 * 字符串转换Date
 	 */
+
 	/**
 	 * 
 	 * @Title: curDateByStr   
@@ -140,7 +142,7 @@ public final class DateUtil {
 	public static Date curDateByStr() {
 		dateFormat.applyPattern(YMDHMS);
 		try {
-			return dateFormat.parse(curDateYMD());
+			return dateFormat.parse(curDateYMDHMS());
 		} catch (ParseException e) {
 			log.error("时间工具类【curDateByStr】方法异常,异常原因:" + e.getMessage());
 			return null;
@@ -159,7 +161,7 @@ public final class DateUtil {
 	 *
 	 */
 	public static Date curDateByStr(String date, String pattern) {
-		if (isValidDate(date, pattern)) {
+		if (!isValidDate(date, pattern)) {
 			return null;
 		}
 		dateFormat.applyPattern(StrUtil.isBlank(pattern) ? YMDHMS : pattern);
@@ -175,19 +177,23 @@ public final class DateUtil {
 	 * 拓展方法
 	 */
 
-	// /**
-	// *
-	// * @Title: addDay
-	// * @Description: 几天后
-	// * @param: @return
-	// * @author: MR.H
-	// * @return: String
-	// *
-	// */
-	// public static String addDay() {
-	// return "";
-	// }
-	//
+	/**
+	 * 
+	 * @Title: addDay   
+	 * @Description: 几天后
+	 * @param day
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	public static Date addDay(int day) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(curDateByStr(curDateYMD(), DateUtil.YMD));
+		calendar.add(Calendar.DAY_OF_YEAR, day);
+		return calendar.getTime();
+	}
+
 	// /**
 	// *
 	// * @Title: addMonth
@@ -214,5 +220,4 @@ public final class DateUtil {
 	// public static String addYear() {
 	// return "";
 	// }
-
 }
