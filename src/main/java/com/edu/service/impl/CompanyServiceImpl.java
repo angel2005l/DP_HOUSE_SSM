@@ -109,15 +109,19 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 	@Override
 	public Result<Object> delCompany(String coId) {
 		try {
-
-			// 是否存在
-			// 删除操作
-			companyDao.delCompany(coId);
+			if (companyDao.isCompanyExist(coId, "") > 0) {
+				if (employeeDao.selEmpNum(coId) > 0) {
+					return rtnFailResult("公司状态不正确");
+				} else {
+					return companyDao.delCompany(coId) > 0 ? rtnSuccessResult("删除公司成功") : rtnFailResult("删除合同失败");
+				}
+			} else {
+				return rtnFailResult("无此公司信息");
+			}
 		} catch (SQLException e) {
 			log.error("公司查询异常");
 			return rtnErrorResult("公司删除失败");
 		}
-		return null;
 	}
 
 	@Override
@@ -129,5 +133,4 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 			return null;
 		}
 	}
-
 }

@@ -27,4 +27,6 @@ public interface IEmployeeDao {
 
 	public int uptEmployeeByPass(@Param("pass") String pass, @Param("empId") String empId, @Param("coId") String coId)
 			throws SQLException;
+	
+	public int selEmpNum(@Param("coId") String coId) throws SQLException;
 }

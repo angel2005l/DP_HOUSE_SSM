@@ -59,7 +59,7 @@
 		)
 	</insert>
 	
-	<select id="employeeExist" resultMap="baseResultMap">
+	<select id="employeeExist" resultMap="_int">
 		select count(id)
 		from employee 
 		where emp_id = #{empId} and co_id = #{coId}
@@ -67,6 +67,7 @@
 	<update id="uptEmployeeByPass">
 	update employee set emp_pass = empPass where emp_id = #{empId} and co_id = #{coId}
 	</update>
-	
-	
+	<select id="selEmpNum" parameterType="string" resultType="_int">
+		select count(id) from employee where co_id = #{coId}
+	</select>
 </mapper>
