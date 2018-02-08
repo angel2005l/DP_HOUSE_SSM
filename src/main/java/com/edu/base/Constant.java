@@ -48,9 +48,25 @@ public final class Constant {
 	 * 虚拟顾客
 	 */
 	public static final String[] CUSNAME = { "顾客A", "顾客B", "顾客C", "顾客D" };
-	
+
 	/**
 	 * 默认密码
 	 */
-	public static final String[] PASSWORDDEFAULT = {"qwer","sa","123456"};
+	public static final String[] PASSWORDDEFAULT = { "qwer", "sa", "123456" };
+
+	/**
+	 * excel文件MIME
+	 */
+	public static final String EXCELMIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+	/**
+	 * JPEG/JPG文件MIME
+	 */
+	public static final String JPEGMIME = "image/jpeg";
+
+	/**
+	 * PNG文件MIME
+	 */
+	public static final String PNGMIME = "image/png";
+
 }
