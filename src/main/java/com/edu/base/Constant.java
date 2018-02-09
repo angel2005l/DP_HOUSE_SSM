@@ -55,9 +55,14 @@ public final class Constant {
 	public static final String[] PASSWORDDEFAULT = { "qwer", "sa", "123456" };
 
 	/**
-	 * excel文件MIME
+	 * excel2007及以上文件MIME
 	 */
 	public static final String EXCELMIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+	/**
+	 * excel2003及以下文件MIME
+	 */
+	public static final String EXCELXLSMIME = "application/vnd.ms-excel";
 
 	/**
 	 * JPEG/JPG文件MIME
@@ -73,6 +78,16 @@ public final class Constant {
 	 * 员工导入列对应字段
 	 * （顺序不可随意改动）
 	 */
-	public static final String[] empExcelCol = { "empAccount", "empName", "empPhone", "empEmail", "empPass" };
+	public static final String[] EMPEXCELCOL = { "empAccount", "empName", "empPhone", "empEmail", "empPass" };
+
+	/**
+	 *	EXCEL2007及以上后缀名
+	 */
+	public static final String XLSXSUFFIX = ".xlsx";
+
+	/**
+	 * EXCEL2003及以下后缀名
+	 */
+	public static final String XLSSUFFIX = ".xls";
 
 }
