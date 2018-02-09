@@ -69,4 +69,10 @@ public final class Constant {
 	 */
 	public static final String PNGMIME = "image/png";
 
+	/**
+	 * 员工导入列对应字段
+	 * （顺序不可随意改动）
+	 */
+	public static final String[] empExcelCol = { "empAccount", "empName", "empPhone", "empEmail", "empPass" };
+
 }
