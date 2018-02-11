@@ -17,7 +17,7 @@ public interface IEmployeeService {
 	 * @return: boolean      
 	 *
 	 */
-	public boolean login(String userId, String userPass);
+	public Result<Employee> login(String empAccount, String userPass);
 
 	/**
 	 * 

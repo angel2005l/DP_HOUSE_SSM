@@ -70,4 +70,8 @@
 	<select id="selEmpNum" parameterType="string" resultType="_int">
 		select count(id) from employee where co_id = #{coId}
 	</select>
+	
+	<select id="loginEmp" parameterMap="string" resultMap="baseResultMap">
+	 select <include refid="baseList" /> from employee where emp_account = #{empAccount}
+	</select>
 </mapper>

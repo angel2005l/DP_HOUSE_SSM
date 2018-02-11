@@ -29,4 +29,6 @@ public interface IEmployeeDao {
 			throws SQLException;
 	
 	public int selEmpNum(@Param("coId") String coId) throws SQLException;
+	
+	public Employee loginEmp(String empAccount) throws SQLException;
 }

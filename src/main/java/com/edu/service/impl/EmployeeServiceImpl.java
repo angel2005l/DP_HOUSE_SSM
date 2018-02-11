@@ -20,24 +20,22 @@ import com.edu.util.StrUtil;
 @Service
 public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService {
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
-	private final int defaultIndex = 0;
+	// private final int defaultIndex = 0;
 	@Autowired
 	IEmployeeDao employeeDao;
 
 	@Override
-	public boolean login(String userId, String userPass) {
-
+	public Result<Employee> login(String empAccount, String userPass) {
 		try {
-			List<Employee> datas = employeeDao.selEmployee(userId, "");
-			if (datas != null && datas.isEmpty()) {
-				Employee empObj = datas.get(defaultIndex);
-				return MD5Util.check(userPass, empObj.getEmpSalt(), empObj.getEmpPass());
+			Employee employee = employeeDao.loginEmp(empAccount);
+			if (null == employee) {
+				return rtnFailResult("用户不存在");
 			}
-			return false;
+			return MD5Util.check(userPass, employee.getEmpSalt(), employee.getEmpPass()) ? rtnSuccessResultWithData(
+					"登录成功", employee) : rtnFailResult("登陆失败,密码错误");
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-			log.error(e.getMessage());
-			return false;
+			log.error("登录校验异常,异常原因:" + e.getMessage());
+			return rtnErrorResult("登录校验异常");
 		}
 	}
 
@@ -57,7 +55,7 @@ public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService 
 					return rtnFailResult("插入失败,无法获得当前最大值");
 				// 进行加密和自增列添加
 				for (Employee empObj : datas) {
-					empObj.setEmpId(comSimpleCode +StrUtil.strAddLeftZero((++maxId)+"", 5) );
+					empObj.setEmpId(comSimpleCode + StrUtil.strAddLeftZero((++maxId) + "", 5));
 					// 随机盐
 					String salt = MD5Util.getRandomSalt();
 					// 加密密码
