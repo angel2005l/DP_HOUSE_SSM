@@ -24,7 +24,37 @@
 	</sql>
 
 
-	<select id="" resultMap="baseResultMap">
-		select * from 
+	<select id="selHouse" resultMap="baseResultMap">
+		select * from house where co_Id= #{coId}
+		<if test="empId !=null and empId !=''">
+			and emp_id = #{empId}
+		</if>
+	</select>
+
+	<insert id="insHouse" parameterType="com.edu.entity.House">
+		insert into house values(
+		hou_seq.nextval
+		,#{houId},#{houName},#{houStatus},#{houType},#{houFloor},#{houBuild},#{houMoney},#{houAdd},#{houImg}
+		,#{houBed},#{houBath},#{houLiving},#{empId})
+	</insert>
+	<delete id="delHouse" parameterType="string">
+		delete from house where
+		hou_Id = #{houId}
+	</delete>
+
+	<update id="uptHouseStatus" parameterType="string">
+		update house set
+		hou_status = '未出租' where hou_id = #{houId}
+	</update>
+
+	<select id="selHouseExist" resultType="_int">
+		select count(hou_id) from
+		house where hou_id = #{houId} and co_id =#{coId}
+	</select>
+
+	<select id="selHouseMaxId" parameterType="string" resultType="string">
+		<bind name="houId" value="'H'+dateStr+'%'" />
+		select hou_id from house where id = (select max(id) from house
+		where hou_id LIKE #{houId})
 	</select>
 </mapper>

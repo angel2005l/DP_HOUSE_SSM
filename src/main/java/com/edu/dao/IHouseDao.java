@@ -26,5 +26,5 @@ public interface IHouseDao {
 	public int selHouseExist(@Param("houId") String houId, @Param("coId") String coId) throws SQLException;
 
 	// 获得最大房屋Id
-	public String selHouseMaxId() throws SQLException;
+	public String selHouseMaxId(String dateStr) throws SQLException;
 }
