@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.edu.dao.IFinanceDao">
-
+	<resultMap type="com.edu.entity.Finance" id="baseResult">
+		<id column="fin_id" property="finId" />
+		<result column="id" property="id" />
+		<result column="fin_type" property="finType" />
+		<result column="fin_date" property="funDate" />
+		<result column="fin_money" property="finMoney" javaType="java.math.BigDecimal" />
+		<result column="co_id" property="coId" />
+		<result column="ind_id" property="indId" />
+	</resultMap>
 </mapper>

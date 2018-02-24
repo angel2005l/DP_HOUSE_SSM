@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.IFunctionDIYDao">
+	<resultMap type="com.edu.entity.FunctionDIY" id="baseResult">
+		<id column="fun_id" property="funId" />
+		<result column="id" property="id" />
+		<result column="fun_name" property="funName" />
+		<result column="fun_url" property="funUrl" />
+	</resultMap>
+
+</mapper>
