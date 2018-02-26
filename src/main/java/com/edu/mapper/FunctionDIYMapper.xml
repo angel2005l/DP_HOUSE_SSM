@@ -8,4 +8,11 @@
 		<result column="fun_url" property="funUrl" />
 	</resultMap>
 
+
+	<select id="selFunction" parameterType="string" resultMap="baseResult">
+		select b.id,b.fun_id,fun_name,fun_url from funperrela a inner join
+		functiondiy b on a.fun_id =
+		b.fun_id where a.emp_permission =
+		#{permission}
+	</select>
 </mapper>

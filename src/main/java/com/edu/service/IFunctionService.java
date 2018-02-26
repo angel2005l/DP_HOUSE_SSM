@@ -1,13 +1,13 @@
 package com.edu.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.edu.entity.FunctionDIY;
+import com.edu.util.Result;
 
 public interface IFunctionService {
 
-	//根据用户对应的权限类别  显示全部的功能
-	public List<FunctionDIY> selFunction(String permission) throws SQLException;
-	
+	// 根据用户对应的权限类别 显示全部的功能
+	public Result<List<FunctionDIY>> functionForUser(String permission);
+
 }

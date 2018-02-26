@@ -20,28 +20,7 @@
 <script src="style/js/bootstrap.min.js"></script>
 <script src="style/js/site.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$("#subBtn").bind(
-				"click",
-				function() {
-					var wId = $("input[name='employeeWid']").val();
-					var wPwd = $("input[name='employeeWpwd']").val();
-					var flag = true;
-					if (wId == null || wId == "") {
-						$("#loginWiderr").text("账号为空").css("font-size", 10)
-								.css("color", "#FF6666");
-						flag = false;
-					}
-					if (wPwd == null || wPwd == "") {
-						$("#loginWpwderr").text("密码为空").css("font-size", 10)
-								.css("color", "#FF6666");
-						flag = false;
-					}
-					if (flag) {
-						$("#login-form").submit();
-					}
-				});
-	});
+	
 </script>
 </head>
 <!-- style="background-color: #049ec4" -->
@@ -65,4 +44,5 @@
 	</ul>
 </body>
 <link rel="stylesheet" type="text/css" href="style/css/body.css" />
+<script type="text/javascript" src="professionalJs/login.js"></script>
 </html>
