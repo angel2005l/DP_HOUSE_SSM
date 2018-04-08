@@ -59,7 +59,7 @@
 		)
 	</insert>
 	
-	<select id="employeeExist" resultMap="_int">
+	<select id="employeeExist" resultType="_int">
 		select count(id)
 		from employee 
 		where emp_id = #{empId} and co_id = #{coId}
@@ -71,7 +71,7 @@
 		select count(id) from employee where co_id = #{coId}
 	</select>
 	
-	<select id="loginEmp" parameterMap="string" resultMap="baseResultMap">
+	<select id="loginEmp" parameterType="string" resultMap="baseResultMap">
 	 select <include refid="baseList" /> from employee where emp_account = #{empAccount}
 	</select>
 </mapper>

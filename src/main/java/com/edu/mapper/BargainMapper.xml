@@ -34,7 +34,7 @@
 		bar_id = #{barId}
 	</delete>
 
-	<insert id="insBargain" parameterMap="baseResultMap">
+	<insert id="insBargain" parameterType="com.edu.entity.Bargain">
 		insert into bargain values(
 		bar_seq.nextval,#{barId},#{barName},#{barDate},#{barContext},#{cusName},#{coName},#{indId}
 		)

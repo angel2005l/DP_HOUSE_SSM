@@ -11,7 +11,6 @@
 		<result column="co_unique_id" property="coUniqueId" />
 		<result column="co_add" property="coAdd" />
 	</resultMap>
-	<parameterMap type="com.edu.entity.Company" id="baseParameterMap"></parameterMap>
 	<sql id="baseList">
 		id,co_id,co_simple_name,co_name,co_add_code,co_type,co_unique_id,co_add
 	</sql>
@@ -25,7 +24,7 @@
 		<if test="coUniqueId !=null and coUniqueId !=''"> and co_unique_id = #{coUniqueId} 
 		</if> </where> </select> -->
 
-	<select id="selCompany" resultMap="bserResultMap">
+	<select id="selCompany" resultMap="baseResultMap">
 		select
 		<include refid="baseList" />
 		from company
