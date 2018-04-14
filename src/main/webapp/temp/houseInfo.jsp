@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%-- <%
+<%
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath();
 %>
@@ -9,7 +9,7 @@
 	if (session.getAttribute("EmployeewId") == null || session.getAttribute("EmployeewId").toString() == "") {
 		response.sendRedirect("login.jsp");
 	}
-%> --%>
+%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]-->
 <!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]-->
@@ -18,18 +18,15 @@
 <!--[if (gt IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
-
 <head>
 <meta charset="utf-8">
-<title>主页 - 房屋租赁后台管理系统</title>
+<title>房屋详情-房屋租赁后台管理系统</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="/style/css/bootstrap.min.css" rel="stylesheet">
-<link href="/style/css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="/style/css/site.css" rel="stylesheet">
-<link href="/style/css/myStyle.css" rel="stylesheet" />
-<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<script type="text/javascript" src="/style/js/jquery-3.1.1.js"></script>
-<!-- <script type="text/javascript">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="css/site.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+<script type="text/javascript">
 	$(function() {
 		var permission = ${sessionScope.EmployeewPer };
 		if (permission == 2) {
@@ -37,14 +34,51 @@
 			$("#indent").attr("hidden", "false");
 			$("#insertHouse").attr("hidden", "false");
 			$("#budget").attr("hidden", "false");
-			$("#sellPanelh2").attr("hidden", "false");
-			$("#sellPanel").hide();
 		}else if(permission == 1){
 			$("#adminIndex").attr("hidden", "false");
 			$("#employee").attr("hidden", "false");
 		}
 	});
-</script> -->
+</script>
+<style type="text/css">
+#houseInfotable tbody tr th {
+	text-align: center;
+	width: 60px;
+}
+
+#houseInfotable tbody tr td {
+	text-align: center;
+	width: 100px;
+}
+
+#houseInfotable tbody tr td bttton {
+	text-align: left;
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+		//方法代替
+		/* var btntype = $('#houseType').html();
+		var flag = false;
+		if (btntype != "出租" || btntype != "出售" || btntype != "转租") {
+			flag = true;
+		}
+		if (flag) {
+			$("#deleteBtn").attr("disabled", true);
+		} */
+		var houseTypeLen = $("#houseType").text().length;
+		var deleteBtn = $("#deleteBtn")
+		if(houseTypeLen>2){
+			deleteBtn.attr("disabled", true);
+			}
+	});
+	function btn_delete() {
+		window.location.href = "/RentHouse/houseController?funParam=6&deleteHid=${houseInfo.hId }";
+	}
+	function btn_back() {
+		window.history.go(-1);
+	}
+</script>
 </head>
 
 <body>
@@ -55,15 +89,16 @@
 					<a class="btn btn-navbar" data-toggle="collapse"
 						data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
-					</a> <a class="brand" href="/index.do">Admin</a>
+					</a> <a class="brand" href="<%=basePath%>/houseController?funParam=1">Admin</a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li><a href="/index.do">主页</a></li>
+							<li><a href="<%=basePath%>/houseController?funParam=1">主页</a>
+							</li>
 							<li><a href=>帮助</a></li>
 						</ul>
 						<ul class="nav pull-right">
-							<li><a>欢迎 ,<span>${userName }</span></a></li>
-							<li><a href="/logout.do">登出</a></li>
+							<li><a>欢迎 ,<span>${sessionScope.EmployeewName }</span></a></li>
+							<li><a href="<%=basePath%>/login.jsp">登出</a></li>
 						</ul>
 					</div>
 				</div>
@@ -74,13 +109,8 @@
 				<div class="well" style="padding: 8px 0;">
 					<ul class="nav nav-list">
 						<li class="nav-header">菜单</li>
-						<c:forEach items="${funcs.data }" var="b" varStatus="s">
-							<li><a href="${b.funUrl }"><i class="${b.funIcon }"></i>
-									${b.funName }</a></li>
-						</c:forEach>
-
-						<%-- <li id="sellIndex">
-								<a href="<%=basePath%>/houseController?funParam=1">C</a>
+							<li id="sellIndex">
+								<a href="<%=basePath%>/houseController?funParam=1"><i class="icon-home"></i> 主页</a>
 							</li>
 							<li id="adminIndex" >
 								<a href="<%=basePath%>/houseController?funParam=5"><i class="icon-home"></i> 主页</a>
@@ -102,61 +132,67 @@
 							</li>
 							<li id="employee">
 								<a href="<%=basePath%>/employeeController?funParam=3"><i class="icon-book"></i> 员工管理</a>
-							</li> --%>
-						<li class="nav-header">账户设置</li>
-						<li><a href="#"><i class="icon-user"></i> 个人信息</a></li>
+							</li>
+					<li class="nav-header">账户设置</li>
+						<li>
+							<a href="#"><i class="icon-user"></i> 个人信息</a>
+						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="span9">
-				<h1>主页</h1>
-				<div style="color: #CCCC99" class="hero-unit mydivbimg">
-					<h3>
-						欢迎 <span style="color: #CC0033; text-decoration: underline">${sessionScope.EmployeewName }</span>
-						登录系统
+				<h1>租房详情</h1>
+				<div>
+					<table id="houseInfotable"
+						class="table table-bordered table-striped">
+						<thead>
 
-					</h3>
-					<p>您将体验便捷的房屋租赁管理服务</p>
-				</div>
-				<h2 id="sellPanelh2">消息</h2>
-				<div id="sellPanel" class="well summary">
-					<ul>
-						<li><a href="javascript:void(0);"><span class="count">${indentCount }</span>
-								订单</a></li>
-						<li><a href="javascript:void(0);"><span class="count">${houseCount }</span>
-								发布房源</a></li>
-						<li><a href="javascript:void(0);"><span class="count">${financeCount }</span>
-								收支消息</a></li>
-
-					</ul>
-				</div>
-				<h2>房源信息</h2>
-				<table class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th>房屋编号</th>
-							<th>房屋住宅面积</th>
-							<th>房源地址</th>
-							<th>房屋类型</th>
-							<th>详情</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${requestScope.houseList }" var="houseInfo">
+						</thead>
+						<tbody>
 							<tr>
+								<td rowspan="4" width="260px" height="180px">
+									<div>
+										<img src="img/HouseImageInfo/${houseInfo.hImg }" alt="房屋图片" />
+									</div>
+								</td>
+								<th>房屋编号</th>
 								<td>${houseInfo.hId }</td>
-								<td>${houseInfo.hBuild }平米</td>
-								<td>${houseInfo.hAdd }</td>
-								<td>${houseInfo.hType },${houseInfo.hBed }室,${houseInfo.hLiving }厅,${houseInfo.hBath }卫</td>
-								<td><a href="" class="view-link">详情</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-				<ul class="pager">
-					<li class="next"><a href="">更多 &rarr;</a></li>
-				</ul>
+								<th>状态</th>
+								<td id="houseType">${houseInfo.hSell }</td>
 
+							</tr>
+							<tr>
+
+								<th>房屋信息</th>
+								<td>${houseInfo.hName }</td>
+								<th>住宅面积</th>
+								<td>${houseInfo.hBuild }</td>
+							</tr>
+							<tr>
+
+								<th>地址</th>
+								<td>${houseInfo.hAdd }</td>
+								<th>价格</th>
+								<td>${houseInfo.hMoney }</td>
+							</tr>
+							<tr>
+
+								<th>类型</th>
+								<td>${houseInfo.hType },${houseInfo.hBed }室,${houseInfo.hLiving }厅,${houseInfo.hBath }卫</td>
+								<th>发布人编号</th>
+								<td>${houseInfo.wId }</td>
+							</tr>
+
+							<tr>
+							<td></td>
+								<td colspan="2"><button id="deleteBtn"
+										class="btn btn-danger" type="button" onclick="btn_delete();">删除</button></td>
+								<td colspan="2"><button type="button"
+										class="btn btn-primary" onclick="btn_back();">返回</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<ul class="pager">

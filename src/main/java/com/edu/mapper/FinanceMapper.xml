@@ -10,4 +10,22 @@
 		<result column="co_id" property="coId" />
 		<result column="ind_id" property="indId" />
 	</resultMap>
+	<select id="selFinanceCountByEmpInfo" resultType="int">
+		select count(1) from finance a 
+		<if test="empPer!='3'.toString()">
+			inner join company b on a.co_id = b.co_id
+			<if test="empPer=='1'.toString()">
+				inner join employee c on b.co_id = c.co_id
+			</if>
+		</if>
+		<where>
+			<if test="empPer=='1'.toString()">
+				and c.emp_id = #{empInfo}
+			</if>
+			<if test="empPer=='2'.toString()">
+				and b.co_id = #{empInfo}
+			</if>
+			and a.fin_date = trunc(sysdate)
+		</where>
+	</select>
 </mapper>

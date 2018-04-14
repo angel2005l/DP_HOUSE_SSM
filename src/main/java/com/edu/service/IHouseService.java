@@ -10,18 +10,16 @@ import com.edu.util.Result;
  *
  */
 public interface IHouseService {
-	
-	//查询房屋信息
-	public List<House> selHouse(String empId,String coId);
-	
-	//收回房屋重置房屋状态
+
+	// 查询房屋信息
+	public List<House> selHouse(String empId, String coId);
+
+	// 收回房屋重置房屋状态
 	public Result<Object> uptChangeHouseSellType(String houId);
-	
-	//新增房屋
-	
-	
-	
-	
-	
-	
+
+	// 新增房屋
+
+	//根据empId查询房屋数量
+	public int selHouseCountByEmpId(String empId) throws Exception;
+
 }

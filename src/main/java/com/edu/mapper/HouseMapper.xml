@@ -57,4 +57,8 @@
 		select hou_id from house where id = (select max(id) from house
 		where hou_id LIKE #{houId})
 	</select>
+	<select id="selHouseCountByEmpId" parameterType="string" resultType="int">
+		select count(1) from house where emp_id = #{empId}
+	</select>
+	
 </mapper>

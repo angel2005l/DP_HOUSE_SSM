@@ -144,4 +144,9 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			}
 		}
 	}
+
+	@Override
+	public int selIndentCountByEmpInfo(String empInfo, String empPer) throws Exception {
+		return indentDao.selIndentCountByEmpInfo(empInfo, empPer);
+	}
 }

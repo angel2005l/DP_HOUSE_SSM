@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%-- <%
+<%
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath();
 %>
@@ -9,7 +9,7 @@
 	if (session.getAttribute("EmployeewId") == null || session.getAttribute("EmployeewId").toString() == "") {
 		response.sendRedirect("login.jsp");
 	}
-%> --%>
+%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]-->
 <!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]-->
@@ -21,15 +21,13 @@
 
 <head>
 <meta charset="utf-8">
-<title>主页 - 房屋租赁后台管理系统</title>
+<title>文件管理 - 房屋租赁后台管理系统</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="/style/css/bootstrap.min.css" rel="stylesheet">
-<link href="/style/css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="/style/css/site.css" rel="stylesheet">
-<link href="/style/css/myStyle.css" rel="stylesheet" />
-<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<script type="text/javascript" src="/style/js/jquery-3.1.1.js"></script>
-<!-- <script type="text/javascript">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="css/site.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+<script type="text/javascript">
 	$(function() {
 		var permission = ${sessionScope.EmployeewPer };
 		if (permission == 2) {
@@ -37,14 +35,30 @@
 			$("#indent").attr("hidden", "false");
 			$("#insertHouse").attr("hidden", "false");
 			$("#budget").attr("hidden", "false");
-			$("#sellPanelh2").attr("hidden", "false");
-			$("#sellPanel").hide();
 		}else if(permission == 1){
 			$("#adminIndex").attr("hidden", "false");
 			$("#employee").attr("hidden", "false");
 		}
 	});
-</script> -->
+</script>
+<style type="text/css">
+#BargainTable th {
+	text-align: center;
+}
+
+#BargainTable td {
+	text-align: center;
+}
+#barContext {
+	white-space:normal; width:300px; 
+}
+#barName {
+	white-space:normal; width:150px; 
+}
+#barId {
+	white-space:normal; width:5px; 
+}
+</style>
 </head>
 
 <body>
@@ -55,15 +69,16 @@
 					<a class="btn btn-navbar" data-toggle="collapse"
 						data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
-					</a> <a class="brand" href="/index.do">Admin</a>
+					</a> <a class="brand" href="<%=basePath%>/houseController?funParam=1">Admin</a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li><a href="/index.do">主页</a></li>
+							<li><a href="<%=basePath%>/houseController?funParam=1">主页</a>
+							</li>
 							<li><a href=>帮助</a></li>
 						</ul>
 						<ul class="nav pull-right">
-							<li><a>欢迎 ,<span>${userName }</span></a></li>
-							<li><a href="/logout.do">登出</a></li>
+							<li><a>欢迎 ,<span>${sessionScope.EmployeewName }</span></a></li>
+							<li><a href="<%=basePath%>/login.jsp">登出</a></li>
 						</ul>
 					</div>
 				</div>
@@ -74,13 +89,8 @@
 				<div class="well" style="padding: 8px 0;">
 					<ul class="nav nav-list">
 						<li class="nav-header">菜单</li>
-						<c:forEach items="${funcs.data }" var="b" varStatus="s">
-							<li><a href="${b.funUrl }"><i class="${b.funIcon }"></i>
-									${b.funName }</a></li>
-						</c:forEach>
-
-						<%-- <li id="sellIndex">
-								<a href="<%=basePath%>/houseController?funParam=1">C</a>
+							<li id="sellIndex">
+								<a href="<%=basePath%>/houseController?funParam=1"><i class="icon-home"></i> 主页</a>
 							</li>
 							<li id="adminIndex" >
 								<a href="<%=basePath%>/houseController?funParam=5"><i class="icon-home"></i> 主页</a>
@@ -102,68 +112,96 @@
 							</li>
 							<li id="employee">
 								<a href="<%=basePath%>/employeeController?funParam=3"><i class="icon-book"></i> 员工管理</a>
-							</li> --%>
-						<li class="nav-header">账户设置</li>
-						<li><a href="#"><i class="icon-user"></i> 个人信息</a></li>
+							</li>
+					<li class="nav-header">账户设置</li>
+						<li>
+							<a href="#"><i class="icon-user"></i> 个人信息</a>
+						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="span9">
-				<h1>主页</h1>
-				<div style="color: #CCCC99" class="hero-unit mydivbimg">
-					<h3>
-						欢迎 <span style="color: #CC0033; text-decoration: underline">${sessionScope.EmployeewName }</span>
-						登录系统
+				<div id="box_border">
+					<div id="box_center">
 
-					</h3>
-					<p>您将体验便捷的房屋租赁管理服务</p>
+						<form id="selectForm" action="<%=basePath %>/indentABargainController?funParam=4" method="post">
+							<div style="float: left; padding-left: 20px;">
+								<h4>搜索</h4>
+								<input type="text" id="selectBid" name="indentBid"
+									class="ui_input_txt02" placeholder="请输入订单编号" />
+								<div style="float: right; padding-left: 20px;">
+									<button type="button" id="selectBtn" class="btn btn-primary"
+										style="width: 100px;">搜索</button>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
-				<h2 id="sellPanelh2">消息</h2>
-				<div id="sellPanel" class="well summary">
-					<ul>
-						<li><a href="javascript:void(0);"><span class="count">${indentCount }</span>
-								订单</a></li>
-						<li><a href="javascript:void(0);"><span class="count">${houseCount }</span>
-								发布房源</a></li>
-						<li><a href="javascript:void(0);"><span class="count">${financeCount }</span>
-								收支消息</a></li>
-
-					</ul>
-				</div>
-				<h2>房源信息</h2>
-				<table class="table table-bordered table-striped">
+			</div>
+			<div class="span9">
+				<c:if test="${!empty requestScope.barInfo }">
+				<h1>相关文件</h1>
+				<table id = "BargainTable" class="table table-bordered table-striped table-condensed">
 					<thead>
 						<tr>
-							<th>房屋编号</th>
-							<th>房屋住宅面积</th>
-							<th>房源地址</th>
-							<th>房屋类型</th>
-							<th>详情</th>
+							<th>合同编号</th>
+							<th>合同名称</th>
+
+							<th>合同内容</th>
+							<th>签订时间</th>
+							<th>甲方</th>
+							<th>乙方</th>
 						</tr>
+
 					</thead>
 					<tbody>
-						<c:forEach items="${requestScope.houseList }" var="houseInfo">
-							<tr>
-								<td>${houseInfo.hId }</td>
-								<td>${houseInfo.hBuild }平米</td>
-								<td>${houseInfo.hAdd }</td>
-								<td>${houseInfo.hType },${houseInfo.hBed }室,${houseInfo.hLiving }厅,${houseInfo.hBath }卫</td>
-								<td><a href="" class="view-link">详情</a></td>
+						<tr>
+							<td>${barInfo.barId }</td>
+							<td id="barName">${barInfo.barName }</td>
+							<td>
+								<p id="barContext">${barInfo.barContext }</p></td>
+								 <td>
+									${barInfo.barDate }
+								</td>
+								<td> 
+									${barInfo.wName }
+								</td>
+								<td>
+									${barInfo.vName }
+								</td>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-				<ul class="pager">
-					<li class="next"><a href="">更多 &rarr;</a></li>
-				</ul>
-
+						
+						</tbody>
+					</table>
+					</c:if>
+				</div>
 			</div>
-		</div>
-		<ul class="pager">
+			<ul class="pager">
 			<li class="next">
 				<h4>房屋租赁后台管理系统1.0</h4>
 			</li>
 		</ul>
-	</div>
+		</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/site.js"></script>
+<!-- <script type="text/javascript">
+	var barTable = document.getElementsById("BargainTable");
+	var barInfo = null;
+	barInfo = ${requestScope.barInfo };
+	if(barInfo==null || barInfo==""){
+		barTable.style.display="none";
+	}
+</script> -->
+<script type="text/javascript">
+	$(function(){
+		var indentValue = $("#selectBid").val();
+		if(indentValue!=null){
+			$("#selectBtn").bind("click",function(){
+				$("#selectForm").submit();
+			});}
+	});
+</script>
 </body>
+
 </html>

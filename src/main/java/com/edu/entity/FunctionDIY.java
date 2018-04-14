@@ -1,11 +1,12 @@
 package com.edu.entity;
 
 public class FunctionDIY {
-	private int id;//id
-	private String funId;//功能编号
-	private String funName;//功能名称
-	private String funUrl;//功能url
-	
+	private int id;// id
+	private String funId;// 功能编号
+	private String funName;// 功能名称
+	private String funUrl;// 功能url
+	private String funIcon;// 功能图标
+
 	/**
 	 * 
 	 */
@@ -18,11 +19,12 @@ public class FunctionDIY {
 	 * @param funName
 	 * @param funUrl
 	 */
-	public FunctionDIY(int id, String funId, String funName, String funUrl) {
+	public FunctionDIY(int id, String funId, String funName, String funUrl, String funIcon) {
 		this.id = id;
 		this.funId = funId;
 		this.funName = funName;
 		this.funUrl = funUrl;
+		this.funIcon = funIcon;
 	}
 
 	public int getId() {
@@ -57,9 +59,18 @@ public class FunctionDIY {
 		this.funUrl = funUrl;
 	}
 
+	public String getFunIcon() {
+		return funIcon;
+	}
+
+	public void setFunIcon(String funIcon) {
+		this.funIcon = funIcon;
+	}
+
 	@Override
 	public String toString() {
-		return "FunctionDIY [id=" + id + ", funId=" + funId + ", funName=" + funName + ", funUrl=" + funUrl + "]";
+		return "FunctionDIY [id=" + id + ", funId=" + funId + ", funName=" + funName + ", funUrl=" + funUrl
+				+ ", funIcon=" + funIcon + "]";
 	}
 
 }

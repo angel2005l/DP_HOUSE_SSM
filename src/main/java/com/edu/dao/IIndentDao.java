@@ -35,4 +35,8 @@ public interface IIndentDao {
 
 	// 获得订单的状态
 	public String selIndentType(@Param("indId") String indId, @Param("coId") String coId) throws SQLException;
+
+	// 根据empId获得未处理的订单
+	public int selIndentCountByEmpInfo(@Param("empInfo") String empInfo, @Param("empPer") String empPer)
+			throws SQLException;
 }

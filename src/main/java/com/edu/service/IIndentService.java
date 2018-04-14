@@ -1,5 +1,6 @@
 package com.edu.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.edu.entity.Indent;
@@ -60,4 +61,16 @@ public interface IIndentService {
 	 */
 	public Result<Object> insIndent(Indent insObj);
 
+	/**
+	 * 
+	 * @Title: selIndentCountByEmpId   
+	 * @Description: 根据empInfo获得未处理订单信息  
+	 * @param empId
+	 * @return
+	 * @throws SQLException
+	 * @author: MR.H
+	 * @return: int
+	 *
+	 */
+	public int selIndentCountByEmpInfo(String empInfo, String empPer) throws Exception;
 }
