@@ -18,9 +18,9 @@ public final class Constant {
 	 */
 	public static final String INDENTTAG = "I";
 	/**
-	 * 订单状态
+	 * 通用状态
 	 */
-	public static final String[] INDENTTYPE = { "审核中", "已取消", "已完成" };
+	public static final String[] TYPE = { "审核中", "已取消", "已完成" };
 	/**
 	 * 合同头标识
 	 */

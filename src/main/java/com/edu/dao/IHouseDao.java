@@ -26,9 +26,10 @@ public interface IHouseDao {
 	public int selHouseExist(@Param("houId") String houId, @Param("coId") String coId) throws SQLException;
 
 	// 获得最大房屋Id
-	public String selHouseMaxId(String dateStr) throws SQLException;
-	
-	//根据Emp获得数据行数
-	public int selHouseCountByEmpId(String empId) throws SQLException;
-	
+	public String selHouseMaxId(@Param("dateStr") String dateStr) throws SQLException;
+
+	// 根据Emp获得数据行数
+	public int selHouseCountByEmpId(@Param("empInfo") String empInfo, @Param("empPer") String empPer)
+			throws SQLException;
+
 }

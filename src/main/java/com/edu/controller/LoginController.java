@@ -93,7 +93,8 @@ public class LoginController {
 					empPer));
 			request.setAttribute("indentCount", serviceIndent.selIndentCountByEmpInfo("1".equals(empPer) ? empId : coId,
 					empPer));
-			request.setAttribute("houseCount", serviceHouse.selHouseCountByEmpId(empId));
+			request.setAttribute("houseCount", serviceHouse.selHouseCountByEmpId("1".equals(empPer) ? empId : coId,
+					empPer));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

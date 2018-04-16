@@ -132,7 +132,7 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 				// 添加时间
 				insObj.setIndDate(DateUtil.curDateByStr());
 				// 订单状态
-				insObj.setIndType(Constant.INDENTTYPE[0]);
+				insObj.setIndType(Constant.TYPE[0]);
 				if (indentDao.insIndent(insObj) > 0) {
 					return rtnSuccessResult();
 				} else {

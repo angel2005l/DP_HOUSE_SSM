@@ -180,13 +180,13 @@ public final class StrUtil {
 	 *
 	 */
 	public static final Integer cutStringLeftRtnInteger(String str, int size, boolean isFixed) {
-		return Integer.getInteger(isFixed ? cutStringForLeftFixS(str, size) : cutStringForLeft(str, size), null);
+		return Integer.valueOf(isFixed ? cutStringForLeftFixS(str, size) : cutStringForLeft(str, size));
 	}
 
 	/**
 	 * 
 	 * @Title: cutStringRightRtnInteger   
-	 * @Description: 左边截取字符串 返回一个Integer  默认值为null
+	 * @Description: 右边截取字符串 返回一个Integer  默认值为null
 	 * @param str
 	 * @param size
 	 * @param isFixed
@@ -196,7 +196,7 @@ public final class StrUtil {
 	 *
 	 */
 	public static final Integer cutStringRightRtnInteger(String str, int size, boolean isFixed) {
-		return Integer.getInteger(isFixed ? cutStringForRightFixS(str, size) : cutStringForRight(str, size), null);
+		return Integer.valueOf(isFixed ? cutStringForRightFixS(str, size) : cutStringForRight(str, size));
 	}
 
 	/**
@@ -236,8 +236,8 @@ public final class StrUtil {
 		String result = null;
 		if (isShort(str, fixedHeight)) {
 			result = "";
-		} else {
 			result = str.substring(fixedHeight);
+		} else {
 		}
 		return result;
 	}

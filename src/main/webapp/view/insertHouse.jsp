@@ -5,11 +5,11 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath();
 %>
-<%
+<%-- <%
 	if (session.getAttribute("EmployeewId") == null || session.getAttribute("EmployeewId").toString() == "") {
 		response.sendRedirect("login.jsp");
 	}
-%>
+%> --%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]-->
 <!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]-->
@@ -23,109 +23,17 @@
 <meta charset="utf-8">
 <title>发布房源 - 房屋租赁后台管理系统</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="css/site.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
-<script type="text/javascript">
-	$(function() {
-		var permission = ${sessionScope.EmployeewPer };
-		if (permission == 2) {
-			$("#sellIndex").attr("hidden", "false");
-			$("#indent").attr("hidden", "false");
-			$("#insertHouse").attr("hidden", "false");
-			$("#budget").attr("hidden", "false");
-		}else if(permission == 1){
-			$("#adminIndex").attr("hidden", "false");
-			$("#employee").attr("hidden", "false");
-		}
-	});
-</script>
+<link href="/style/css/bootstrap.min.css" rel="stylesheet">
+<link href="/style/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="/style/css/site.css" rel="stylesheet">
+<link href="/style/css/myStyle.css" rel="stylesheet" />
+<script type="text/javascript" src="/style/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/style/js/jquery.form.js"></script>
+
+<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
 
 <body>
-<script type="text/javascript">
-	$(function() {
-		$("#saveBtn").bind("click", function() {
-			var houseInfo = $("#newHouseInfo").val();
-			var houseAdd = $("#newHouseAdd").val();
-			var houseType = $("#newHouseType").val();
-			var houseSell = $("#newHouseSell").val();
-			var houseFloor = $("#newHouseFloor").val();
-			var houseBuild = $("#newHouseBuild").val();
-			var houseMoney = $("#newHouseMoney").val();
-			var houseBed = $("#newHouseBed").val();
-			var houseBath = $("#newHouseBath").val();
-			var houseLiving = $("#newHouseLiving").val();
-			var flag = true;
-			
-			 //判断房屋信息不为空
-			if (houseInfo == null || houseInfo == "") {
-				$("#houseInfoerr").text("房屋信息不为空").css("font-size", 10)
-						.css("color", "#FF6666");
-				flag = false;
-			}
-			//判断房屋地址不为空
-			if (houseAdd == null || houseAdd == "") {
-				$("#houseAdderr").text("房屋地址不为空").css("font-size", 10)
-						.css("color", "#FF6666");
-				flag = false;
-			}
-			//判断房屋类型不为空
-			if (houseType == null || houseType == "") {
-				$("#houseTypeerr").text("房屋类型不为空").css("font-size", 10)
-						.css("color", "#FF6666");
-				flag = false;
-			}
-			//判断房屋出售方式不为空 select
-			if (houseSell == null || houseSell == "") {
-				$("#houseSellerr").text("未选择出售方式").css("font-size", 10)
-						.css("color", "#FF6666");
-				flag = false;
-			}
-			//判断房屋占地面积不为空
-			if (houseFloor == null || houseFloor == "") {
-				$("#houseFloorerr").text("房屋占地面积不为空").css("font-size",
-						10).css("color", "#FF6666");
-				flag = false;
-			}
-			//判断房屋住宅面积不为空
-			if (houseBuild == null || houseBuild == "") {
-				$("#houseBuilderr").text("房屋住宅面积不为空").css("font-size",
-						10).css("color", "#FF6666");
-				flag = false;
-			}
-			//判断房屋价格不为空
-			if (houseMoney == null || houseMoney == "") {
-				$("#houseMoneyerr").text("房屋出售价格不为空").css("font-size",
-						10).css("color", "#FF6666");
-				flag = false;
-			}
-			//判断卧室数量
-			if (houseBed == null || houseBed == "") {
-				$("#houseBederr").text("未选择卧室数量").css("font-size", 10)
-						.css("color", "#FF6666");
-				flag = false;
-			}
-			//判断浴室数量
-			if (houseBath == null || houseBath == "") {
-				$("#houseBatherr").text("未选择浴室数量").css("font-size", 10)
-						.css("color", "#FF6666");
-				flag = false;
-			}
-			//判断客厅数量
-			if (houseLiving == null || houseLiving == "") {
-				$("#houseLivingerr").text("未选择客厅数量").css("font-size",
-						10).css("color", "#FF6666");
-				flag = false;
-			} 
-			if (flag) {
-				
-				$("#newInHouse").submit();
-			}
-		});
-	});
-</script>
 	<div class="container">
 		<div class="navbar">
 			<div class="navbar-inner">
@@ -186,7 +94,7 @@
 			</div>
 			<div class="span9">
 				<h1>房源发布</h1>
-				<form id="newInHouse" action="<%=basePath%>/houseController?funParam=2" class="form-horizontal" method="post" enctype="multipart/form-data">
+				<form id="newInHouse"  class="form-horizontal" method="post" enctype="multipart/form-data">
 					<fieldset>
 							<legend>发布房源信息</legend>
 					<div class="control-group">
@@ -293,6 +201,7 @@
 			</li>
 		</ul>
 		</div>
+<script type="text/javascript" src="/professionalJs/insertHouse.js"></script>
 </body>
 
 </html>

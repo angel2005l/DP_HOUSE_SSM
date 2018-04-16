@@ -52,13 +52,24 @@
 		house where hou_id = #{houId} and co_id =#{coId}
 	</select>
 
-	<select id="selHouseMaxId" parameterType="string" resultType="string">
-		<bind name="houId" value="'H'+dateStr+'%'" />
+	<select id="selHouseMaxId" resultType="string">
 		select hou_id from house where id = (select max(id) from house
-		where hou_id LIKE #{houId})
+		where instr(hou_id,#{dateStr}) >0)
 	</select>
-	<select id="selHouseCountByEmpId" parameterType="string" resultType="int">
-		select count(1) from house where emp_id = #{empId}
+	<select id="selHouseCountByEmpId" resultType="int">
+		select count(1) from house a
+		<if test="empPer == '2'.toString()">
+			inner join employee b on a.emp_id = b.emp_id inner join
+			company c on b.co_id = c.co_id
+		</if>
+		<where>
+			<if test="empPer == '1'.toString()">
+				and emp_id = #{empInfo}
+			</if>
+			<if test="empPer == '2'.toString()">
+				and b.co_id=#{empInfo}
+			</if>
+		</where>
 	</select>
-	
+
 </mapper>
