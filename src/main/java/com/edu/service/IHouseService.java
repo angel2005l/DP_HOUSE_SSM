@@ -12,7 +12,7 @@ import com.edu.util.Result;
 public interface IHouseService {
 
 	// 查询房屋信息
-	public List<House> selHouse(String empId, String coId) throws Exception;
+	public List<House> selHouse(String empId, String coId,String pageNum, String hid, String type) throws Exception;
 
 	// 收回房屋重置房屋状态
 	public Result<Object> uptChangeHouseSellType(String houId) throws Exception;

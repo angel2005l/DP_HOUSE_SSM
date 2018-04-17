@@ -6,7 +6,7 @@
 		<result column="id" property="id" />
 		<result column="hou_name" property="houName" />
 		<result column="hou_status" property="houStatus" />
-		<result column="hou_type" property="houtype" />
+		<result column="hou_type" property="houType" />
 		<result column="hou_floor" property="houFloor" />
 		<result column="hou_build" property="houBuild" />
 		<result column="hou_money" property="houMoney" />
@@ -25,10 +25,19 @@
 
 
 	<select id="selHouse" resultMap="baseResultMap">
-		select * from house where co_Id= #{coId}
+		select a.* from (select rownum as rn ,t.* from house t where rownum &lt;=(10*#{pageNum}) 
 		<if test="empId !=null and empId !=''">
 			and emp_id = #{empId}
 		</if>
+		<if test="hid !=null and hid !=''">
+			and hou_id = #{hid}
+		</if>
+		
+		<if test="type !=null and type!=''  ">
+			and hou_type = #{type}
+		</if>
+		
+		) a where a.rn &gt;= (10*(#{pageNum}-1))
 	</select>
 
 	<insert id="insHouse" parameterType="com.edu.entity.House">

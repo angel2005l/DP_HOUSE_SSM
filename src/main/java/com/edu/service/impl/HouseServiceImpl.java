@@ -21,9 +21,8 @@ public class HouseServiceImpl extends BaseSevice implements IHouseService {
 	private IHouseDao dao;
 
 	@Override
-	public List<House> selHouse(String empId, String coId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<House> selHouse(String empId, String coId,String pageNum, String hid, String type) throws Exception {
+		return dao.selHouse(empId, coId, Integer.parseInt(pageNum), hid, type);
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class HouseServiceImpl extends BaseSevice implements IHouseService {
 
 	@Override
 	public String selHouseMax() throws Exception {
-		String maxId = dao.selHouseMaxId(Constant.HOUSETAG+DateUtil.curDateYMDForservice());
+		String maxId = dao.selHouseMaxId(Constant.HOUSETAG + DateUtil.curDateYMDForservice());
 		if (StrUtil.isBlank(maxId)) {
 			return Constant.HOUSETAG + DateUtil.curDateYMDForservice() + StrUtil.strAddLeftZero("1", 9);
 		}

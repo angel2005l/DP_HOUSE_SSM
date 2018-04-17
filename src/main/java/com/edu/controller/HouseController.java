@@ -1,6 +1,7 @@
 package com.edu.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,6 +33,26 @@ public class HouseController extends BaseController {
 	@Autowired
 	private IHouseService service;
 
+	@RequestMapping("/index.do")
+	public String index() {
+		return "redirect:/house/selHouse.do";
+	}
+
+	/**
+	 * 
+	 * @Title: addIndex   
+	 * @Description: 返回数据保温
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	@RequestMapping("/addIndex.do")
+	public String addIndex(HttpServletRequest request) {
+		return "view/insertHouse";
+	}
+
 	@RequestMapping("/add.do")
 	@ResponseBody
 	public Result<Object> addHouse(@RequestParam("housephoto") MultipartFile mf, HttpServletRequest request,
@@ -62,12 +83,12 @@ public class HouseController extends BaseController {
 		synchronized (this) {
 			try {
 				String newHouseId = service.selHouseMax();
-					System.err.println(newHouseId);
+				System.err.println(newHouseId);
 				if (StrUtil.isBlank(newHouseId)) {
 					return rtnFailResult("房屋编码格式错误");
 				}
 				String imgName = IOUtil.uploadFile(mf, path, newHouseId);
-				imgName = imgName.substring(imgName.indexOf("\\"));
+				imgName = imgName.substring(imgName.lastIndexOf("\\"));
 				insHouse.setHouId(newHouseId);
 				insHouse.setHouImg(imgName);
 				System.err.println(insHouse.toString());
@@ -77,7 +98,49 @@ public class HouseController extends BaseController {
 				return rtnErrorResult("添加房屋异常,请联系管理员");
 			}
 		}
+	}
 
+	@RequestMapping("/selHouse.do")
+	public String selHouseByPage(HttpServletRequest request, HttpSession session) {
+		String pageSign = request.getParameter("pageSign");
+		String pageNum = request.getParameter("pageNum");
+		String empId = session.getAttribute("userId") + "";
+		String coId = session.getAttribute("coId") + "";
+		String hid = request.getParameter("selectHid");
+		// String wid = request.getParameter("selectWid");
+		String type = request.getParameter("selectHtype");
+		try {
+			List<House> data = service.selHouse(empId, coId, pageNum = StrUtil.isBlank(pageNum) ? "1" : pageNum, hid,
+					type);
+			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);
+			if (StrUtil.notBlank(pageSign)&&null != data && !data.isEmpty() ) {
+				switch (pageSign) {
+				case "add":
+					page++;
+					break;
+				case "minus":
+					if(page >1){
+						page--;
+					}
+					
+					break;
+				}
+			}else{
+				if(page >1){
+					page--;
+				}
+				data = service.selHouse(empId, coId, page+"", hid,
+						type);
+			}
+			request.setAttribute("pageNum", page);
+			request.setAttribute("hid", hid);
+			// request.setAttribute("wid", wid);
+			request.setAttribute("type", type);
+			request.setAttribute("houseList", data);
+		} catch (Exception e) {
+			log.error("查询房屋异常" + e.toString());
+		}
+		return "view/allHouseInfo";
 	}
 
 }
