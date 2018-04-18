@@ -21,14 +21,13 @@ public class HouseServiceImpl extends BaseSevice implements IHouseService {
 	private IHouseDao dao;
 
 	@Override
-	public List<House> selHouse(String empId, String coId,String pageNum, String hid, String type) throws Exception {
+	public List<House> selHouse(String empId, String coId, String pageNum, String hid, String type) throws Exception {
 		return dao.selHouse(empId, coId, Integer.parseInt(pageNum), hid, type);
 	}
 
 	@Override
-	public Result<Object> uptChangeHouseSellType(String houId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Result<Object> uptChangeHouseSellType(String houId, String status) throws Exception {
+		return dao.uptHouseStatus(houId, status) > 0 ? rtnSuccessResult("更新状态成功") : rtnFailResult("更新状态失败");
 	}
 
 	public Result<Object> insHouse(House insHouse) throws Exception {
@@ -49,5 +48,15 @@ public class HouseServiceImpl extends BaseSevice implements IHouseService {
 		Integer numMaxId = StrUtil.cutStringRightRtnInteger(maxId, 9, true);
 		return null != numMaxId ? Constant.HOUSETAG + DateUtil.curDateYMDForservice() + StrUtil.strAddLeftZero(
 				(++numMaxId).toString(), 9) : "";
+	}
+
+	@Override
+	public House selHouseInfoById(String houId) throws Exception {
+		return dao.selHouseById(houId);
+	}
+
+	@Override
+	public Result<Object> delHouse(String houId) throws Exception {
+		return dao.delHouse(houId) > 0 ? rtnSuccessResult("删除房屋信息成功") : rtnFailResult("删除房屋信息失败");
 	}
 }

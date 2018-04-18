@@ -157,7 +157,7 @@
 									<td>${houseInfo.houMoney }</td>
 									<td>${houseInfo.houAdd }</td>
 									<td>${houseInfo.empId }</td>
-									<td><a href="javaScript(0)" class="view-link">详情</a></td>
+									<td><a href="/house/selHouseInfoById.do?houId=${houseInfo.houId }" class="view-link">详情</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -5,11 +5,6 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath();
 %>
-<%
-	if (session.getAttribute("EmployeewId") == null || session.getAttribute("EmployeewId").toString() == "") {
-		response.sendRedirect("login.jsp");
-	}
-%>
 <!DOCTYPE html>
 	<!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]-->
 	<!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]-->
@@ -67,7 +62,7 @@
 							<li><a href=>帮助</a></li>
 						</ul>
 						<ul class="nav pull-right">
-							<li><a>欢迎 ,<span>${sessionScope.EmployeewName }</span></a></li>
+							<li><a>欢迎 ,<span>${userName }</span></a></li>
 							<li><a href="<%=basePath%>/login.jsp">登出</a></li>
 						</ul>
 					</div>
@@ -162,7 +157,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${requestScope.IndentList }" var="indentInfo">
+						<c:forEach items="${IndentList }" var="indentInfo">
 							<tr>
 								<td>
 									${indentInfo.bId }

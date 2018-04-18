@@ -48,12 +48,12 @@
 	</insert>
 	<delete id="delHouse" parameterType="string">
 		delete from house where
-		hou_Id = #{houId}
+		hou_id = #{houId}
 	</delete>
 
-	<update id="uptHouseStatus" parameterType="string">
+	<update id="uptHouseStatus" >
 		update house set
-		hou_status = '未出租' where hou_id = #{houId}
+		hou_status = #{status} where hou_id = #{houId}
 	</update>
 
 	<select id="selHouseExist" resultType="_int">
@@ -79,6 +79,10 @@
 				and b.co_id=#{empInfo}
 			</if>
 		</where>
+	</select>
+	
+	<select id="selHouseById" parameterType="string" resultMap="baseResultMap">
+		select <include refid="baseList"/> from house where hou_id = #{houId} 
 	</select>
 
 </mapper>

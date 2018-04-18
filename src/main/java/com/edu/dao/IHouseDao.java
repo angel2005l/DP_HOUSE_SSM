@@ -21,7 +21,7 @@ public interface IHouseDao {
 	public int delHouse(String houId) throws SQLException;
 
 	// 房屋更新
-	public int uptHouseStatus(String houId) throws SQLException;
+	public int uptHouseStatus(@Param("houId") String houId, @Param("status") String status) throws SQLException;
 
 	// 房屋是否存在
 	public int selHouseExist(@Param("houId") String houId, @Param("coId") String coId) throws SQLException;
@@ -32,5 +32,8 @@ public interface IHouseDao {
 	// 根据Emp获得数据行数
 	public int selHouseCountByEmpId(@Param("empInfo") String empInfo, @Param("empPer") String empPer)
 			throws SQLException;
+
+	// 根据Id查询
+	public House selHouseById(String houId) throws SQLException;
 
 }

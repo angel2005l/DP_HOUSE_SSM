@@ -1,8 +1,10 @@
 package com.edu.controller;
 
 import java.math.BigDecimal;
+import java.net.HttpCookie;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -113,23 +115,23 @@ public class HouseController extends BaseController {
 			List<House> data = service.selHouse(empId, coId, pageNum = StrUtil.isBlank(pageNum) ? "1" : pageNum, hid,
 					type);
 			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);
-			if (StrUtil.notBlank(pageSign)&&null != data && !data.isEmpty() ) {
+			if (StrUtil.notBlank(pageSign) && null != data && !data.isEmpty()) {
 				switch (pageSign) {
 				case "add":
 					page++;
 					break;
 				case "minus":
-					if(page >1){
+					if (page > 1) {
 						page--;
 					}
-					
+
 					break;
 				}
-			}else{
-				if(page >1){
+			} else {
+				if (page > 1) {
 					page--;
 				}
-				data = service.selHouse(empId, coId, page+"", hid,
+				data = service.selHouse(empId, coId, page + "", hid,
 						type);
 			}
 			request.setAttribute("pageNum", page);
@@ -141,6 +143,74 @@ public class HouseController extends BaseController {
 			log.error("查询房屋异常" + e.toString());
 		}
 		return "view/allHouseInfo";
+	}
+
+	/**
+	 * 
+	 * @Title: upHouseStatus   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
+	@RequestMapping("/updateHouStatus.do")
+	@ResponseBody
+	public Result<Object> upHouseStatus(HttpServletRequest request) {
+		String houId = request.getParameter("houId");
+		String status = request.getParameter("status");
+		try {
+			return service.uptChangeHouseSellType(houId, status);
+		} catch (Exception e) {
+			log.error(e.toString());
+			return rtnErrorResult("服务异常");
+		}
+	}
+
+	/**
+	 * 
+	 * @Title: selHouseInfoById   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	@RequestMapping("/selHouseInfoById.do")
+	public String selHouseInfoById(HttpServletRequest request) {
+		String houId = request.getParameter("houId");
+		try {
+			House house = service.selHouseInfoById(houId);
+			request.setAttribute("h", house);
+		} catch (Exception e) {
+			log.error(e.toString());
+			return "view/error";
+		}
+		return "view/houseInfo";
+	}
+
+	/**
+	 * 
+	 * @Title: delHouse   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
+	@RequestMapping("/delHouse.do")
+	@ResponseBody
+	public Result<Object> delHouse(HttpServletRequest request) {
+		String houId = request.getParameter("houId");
+		try {
+			return service.delHouse(houId);
+		} catch (Exception e) {
+			log.error(e.toString());
+			return rtnErrorResult("删除房屋信息异常");
+		}
 	}
 
 }
