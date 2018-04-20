@@ -234,10 +234,9 @@ public final class StrUtil {
 	 */
 	public static final String cutStringForRight(String str, int fixedHeight) {
 		String result = null;
-		if (isShort(str, fixedHeight)) {
+		if (isShort(str, str.length() - fixedHeight)) {
 			result = "";
 			result = str.substring(fixedHeight);
-		} else {
 		}
 		return result;
 	}
@@ -254,7 +253,7 @@ public final class StrUtil {
 	 *
 	 */
 	public static final boolean isShort(String str, int size) {
-		return isBlank(str) ? true : size >= str.length();
+		return isBlank(str) ? true : size <= str.length();
 	}
 
 	/**

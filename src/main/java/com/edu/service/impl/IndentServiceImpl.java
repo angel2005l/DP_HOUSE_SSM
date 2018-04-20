@@ -30,15 +30,15 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 	IBargainService bargainService;
 
 	@Override
-	public List<Indent> selIndent(String permiType, String indId, String empId, String coId) {
+	public List<Indent> selIndent(String permiType, String indId, String empId, String coId, String pageNum) {
 		List<Indent> selData = null;
 		try {
 			switch (permiType) {
 			case "1":
-				selData = indentDao.selIndentForEmp(empId, coId, indId);
+				selData = indentDao.selIndentForEmp(empId, coId, indId, Integer.parseInt(pageNum));
 				break;
 			case "2":
-				selData = indentDao.selIndentForAdmin(coId, indId);
+				selData = indentDao.selIndentForAdmin(coId, indId,Integer.parseInt(pageNum));
 				break;
 			default:
 				log.error("查询订单错误,错误的用户权限");
@@ -52,7 +52,7 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public Result<Object> uptIndent(String indType, String indId, String coId) {
+	public Result<Object> uptIndent(String indType, String indId, String coId) throws Exception {
 		int upNum = 0;
 		boolean isInsBar = true;
 		try {
@@ -66,7 +66,7 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			}
 			switch (indType) {
 			case "enterInd":
-				upNum = indentDao.uptIndentType(indId, "已完成");
+				upNum = indentDao.uptIndentType(indId, "已确认");
 				// 调用合同服务层生成合同；
 				Result<Object> barResult = bargainService.insBargain(indId, coId);
 				if (barResult.getStatus() != 0)

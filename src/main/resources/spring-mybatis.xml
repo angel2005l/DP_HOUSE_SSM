@@ -15,8 +15,9 @@
 
 	
 	<context:property-placeholder location="classpath:jdbc.properties"/>
-	<context:component-scan base-package="com.edu"/>
-	
+	<!-- <context:component-scan base-package="com.edu"/> -->	
+	<context:component-scan base-package="com.edu.dao.*" />
+	<context:component-scan base-package="com.edu.service.*" />
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${driver}" />

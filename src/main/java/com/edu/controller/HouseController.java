@@ -7,6 +7,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.sound.midi.SysexMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +113,7 @@ public class HouseController extends BaseController {
 		// String wid = request.getParameter("selectWid");
 		String type = request.getParameter("selectHtype");
 		try {
+			System.err.println(pageNum);
 			List<House> data = service.selHouse(empId, coId, pageNum = StrUtil.isBlank(pageNum) ? "1" : pageNum, hid,
 					type);
 			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);

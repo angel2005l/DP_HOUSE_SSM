@@ -1,6 +1,12 @@
 package com.edu.entity;
 
-public class FunctionDIY {
+import java.io.Serializable;
+
+public class FunctionDIY implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;// id
 	private String funId;// 功能编号
 	private String funName;// 功能名称

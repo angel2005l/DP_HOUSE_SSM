@@ -32,7 +32,7 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 	ICompanyDao companyDao;
 
 	@Override
-	public List<Bargain> selBargain(String barId, String coId) {
+	public Bargain selBargain(String barId, String coId) {
 		try {
 			// List<Bargain> selBarDatas = bargainDao.selBargain(barId, coId);
 			return bargainDao.selBargain(barId, coId);
@@ -50,9 +50,9 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 				String maxBarId = bargainDao.maxBarId();
 				Indent indent = null;
 				// 获得订单信息
-				List<Indent> indList = indentDao.selIndentForAdmin(coId, indId);
+				List<Indent> indList = indentDao.selIndentForAdmin(coId, indId, 1);
 				if (null == indList || indList.isEmpty() || indList.size() > 1) {
-					return rtnFailResult("合同更新失败");
+					return rtnFailResult("合同生成失败");
 				} else {
 					indent = indList.get(0);
 				}
@@ -72,7 +72,8 @@ public class BargainServiceImpl extends BaseSevice implements IBargainService {
 				// 合同时间
 				barObj.setBarDate(DateUtil.curDateByStr());
 				// 合同内容
-				barObj.setBarContext("	日期：" + DateUtil.curDateYMD() + "房屋信息" + "共计：【" + indent.getIndMoney().toString()+"】元");
+				barObj.setBarContext("	日期：" + DateUtil.curDateYMD() + "房屋编号["+indent.getHouId()+"],会员编号["+indent.getCusId()+"],达成租房协议,交易金额共计：【" + indent.getIndMoney().toString()
+						+ "】元");
 				// 合同租赁时间
 				barObj.setBarEndDate(DateUtil.addDay(indent.getIndDay()));
 				// 合同甲方

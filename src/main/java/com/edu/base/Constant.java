@@ -20,7 +20,11 @@ public final class Constant {
 	/**
 	 * 通用状态
 	 */
-	public static final String[] TYPE = { "审核中", "已取消", "已完成" };
+	public static final String[] TYPE = { "审核中", "已确认", "已取消", "已完成" };
+	/**
+	 * 订单状态 
+	 */
+	public static final String[] INDENTTYPE = { "defaultInd", "enterInd", "cancelInd" };
 	/**
 	 * 合同头标识
 	 */

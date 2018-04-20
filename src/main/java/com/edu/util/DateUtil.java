@@ -189,7 +189,7 @@ public final class DateUtil {
 	 */
 	public static Date addDay(int day) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(curDateByStr(curDateYMD(), DateUtil.YMD));
+		calendar.setTime(curDateByStr(curDateYMDHMS(),DateUtil.YMDHMS));
 		calendar.add(Calendar.DAY_OF_YEAR, day);
 		return calendar.getTime();
 	}

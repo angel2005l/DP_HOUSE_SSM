@@ -1,7 +1,6 @@
 package com.edu.dao;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -23,7 +22,7 @@ public interface IBargainDao {
 	 * @return: List<Bargain>      
 	 *
 	 */
-	public List<Bargain> selBargain(@Param("barId") String barId, @Param("coId") String coId) throws SQLException;
+	public Bargain selBargain(@Param("barId") String barId, @Param("coId") String coId) throws SQLException;
 
 	// 合同删除
 	public int delBargain(String barId) throws SQLException;

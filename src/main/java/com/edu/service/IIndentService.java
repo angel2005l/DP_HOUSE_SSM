@@ -20,7 +20,7 @@ public interface IIndentService {
 	 * @return: List<Indent>      
 	 * @throws
 	 */
-	public List<Indent> selIndent(String permiType, String indId, String empId, String coId);
+	public List<Indent> selIndent(String permiType, String indId, String empId, String coId, String pageNum);
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public interface IIndentService {
 	 * @return: Result<Object>      
 	 * @throws
 	 */
-	public Result<Object> uptIndent(String indType, String indId, String coId);
+	public Result<Object> uptIndent(String indType, String indId, String coId) throws Exception;
 
 	/**
 	 * 

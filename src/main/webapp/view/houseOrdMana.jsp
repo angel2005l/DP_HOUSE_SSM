@@ -1,53 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath();
 %>
 <!DOCTYPE html>
-	<!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]-->
-	<!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]-->
-	<!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]-->
-	<!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]-->
-	<!--[if (gt IE 9)|!(IE)]><!-->
+<!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]-->
+<!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]-->
+<!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]-->
+<!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
 <html lang="en">
-	<!--<![endif]-->
+<!--<![endif]-->
 
-	<head>
-		<meta charset="utf-8">
-		<title>订单管理 - 房屋租赁后台管理系统</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-		<link href="css/site.css" rel="stylesheet">
-		<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
-		<script type="text/javascript">
-			$(function() {
-				var permission = ${sessionScope.EmployeewPer };
-				if (permission == 2) {
-					$("#sellIndex").attr("hidden", "false");
-					$("#indent").attr("hidden", "false");
-					$("#insertHouse").attr("hidden", "false");
-					$("#budget").attr("hidden", "false");
-				}else if(permission == 1){
-					$("#adminIndex").attr("hidden", "false");
-					$("#employee").attr("hidden", "false");
-		}
-	});
+<head>
+<meta charset="utf-8">
+<title>订单管理 - 房屋租赁后台管理系统</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/style/css/bootstrap.min.css" rel="stylesheet">
+<link href="/style/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="/style/css/site.css" rel="stylesheet">
+<script type="text/javascript" src="/style/js/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	
 </script>
-		<style type="text/css">
-			#houseIndentTable th {
-				text-align: center;
-			}
-			#houseIndentTable tfoot td{
-				text-align: center;
-			}
-		</style>
-	</head>
+<style type="text/css">
+#houseIndentTable th {
+	text-align: center;
+}
 
-	<body>
-		<div class="container">
+#houseIndentTable tfoot td {
+	text-align: center;
+}
+</style>
+</head>
+
+<body>
+	<div class="container">
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
@@ -70,49 +61,44 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="span3">
+			<div class="span2">
 				<div class="well" style="padding: 8px 0;">
 					<ul class="nav nav-list">
 						<li class="nav-header">菜单</li>
-							<li id="sellIndex">
-								<a href="<%=basePath%>/houseController?funParam=1"><i class="icon-home"></i> 主页</a>
-							</li>
-							<li id="adminIndex" >
-								<a href="<%=basePath%>/houseController?funParam=5"><i class="icon-home"></i> 主页</a>
-							</li>
-							<li>
-								<a href="<%=basePath%>/houseController?funParam=4"><i class="icon-list-alt"></i> 房源信息</a>
-							</li>
-							<li id="indent">
-								<a href="<%=basePath%>/indentABargainController?funParam=1"><i class="icon-folder-open"></i> 订单信息</a>
-							</li>
-							<li id="insertHouse">
-								<a href="<%=basePath%>/insertHouse.jsp"><i class="icon-check"></i> 发布房源信息</a>
-							</li>
-							<li id="budget">
-								<a href="<%=basePath%>/indentABargainController?funParam=5"><i class="icon-envelope"></i> 收支消息</a>
-							</li>
-							<li>
-								<a href="<%=basePath%>/bargainSearch.jsp"><i class="icon-file"></i> 合同管理</a>
-							</li>
-							<li id="employee">
-								<a href="<%=basePath%>/employeeController?funParam=3"><i class="icon-book"></i> 员工管理</a>
-							</li>
-					<li class="nav-header">账户设置</li>
-						<li>
-							<a href="#"><i class="icon-user"></i> 个人信息</a>
-						</li>
+						<li id="sellIndex"><a
+							href="<%=basePath%>/houseController?funParam=1"><i
+								class="icon-home"></i> 主页</a></li>
+						<li id="adminIndex"><a
+							href="<%=basePath%>/houseController?funParam=5"><i
+								class="icon-home"></i> 主页</a></li>
+						<li><a href="<%=basePath%>/houseController?funParam=4"><i
+								class="icon-list-alt"></i> 房源信息</a></li>
+						<li id="indent"><a
+							href="<%=basePath%>/indentABargainController?funParam=1"><i
+								class="icon-folder-open"></i> 订单信息</a></li>
+						<li id="insertHouse"><a href="<%=basePath%>/insertHouse.jsp"><i
+								class="icon-check"></i> 发布房源信息</a></li>
+						<li id="budget"><a
+							href="<%=basePath%>/indentABargainController?funParam=5"><i
+								class="icon-envelope"></i> 收支消息</a></li>
+						<li><a href="<%=basePath%>/bargainSearch.jsp"><i
+								class="icon-file"></i> 合同管理</a></li>
+						<li id="employee"><a
+							href="<%=basePath%>/employeeController?funParam=3"><i
+								class="icon-book"></i> 员工管理</a></li>
+						<li class="nav-header">账户设置</li>
+						<li><a href="#"><i class="icon-user"></i> 个人信息</a></li>
 					</ul>
 				</div>
 			</div>
-				<div class="span9">
+			<div class="span9">
 				<div id="box_border">
 					<div id="box_center">
-
-						<form id="selectForm" action="<%=basePath%>/indentABargainController?funParam=1" method="post">
+						<form id="selectForm" action="/indent/selIndent.do" method="post">
+							<input type="hidden" name="pageNum" value="${pageNum }">
 							<div style="float: left; padding-left: 20px;">
 								<h4>搜索</h4>
-								<input type="text" id="selectBid" name="indentBid"
+								<input type="text" id="selectBid" name="indentId"
 									class="ui_input_txt02" placeholder="请输入订单编号" />
 								<div style="float: right; padding-left: 20px;">
 									<button type="button" id="selectBtn" class="btn btn-primary"
@@ -123,101 +109,130 @@
 
 					</div>
 				</div>
-				</div>
-				<div class="span9">
-					<h1>
-						订单管理
-					</h1>
-					<table id="houseIndentTable" class="table table-bordered table-striped table-condensed">
-						<thead>
-							<tr>
-								<th>
-									订单编号
-								</th>
-								<th>
-									房屋详情
-								</th>
-								<th>
-									购买者
-								</th>
-								<th>
-									联系方式
-								</th>
-								
-								<th>
-									订单时间
-								</th>
-								<th>
-									订单状态
-								</th>
-								<th>
-								操作
-								</th>
-								
-							</tr>
-						</thead>
-						<tbody>
-						<c:forEach items="${IndentList }" var="indentInfo">
-							<tr>
-								<td>
-									${indentInfo.bId }
-								</td>
-								<td>
-									${indentInfo.hInfo }
-								</td>
-								<td>
-									${indentInfo.vName }
-								</td>
-								<td>
-									${indentInfo.vPhone }
-								</td>
-								<td>
-									${indentInfo.bDate }
-								</td>
-								<td name="iType" >
-									${indentInfo.bType }
-								</td>
-								<td>
-									<button name="confirmBtn" class="btn btn-primary" onclick="window.location.href='<%=basePath%>/indentABargainController?funParam=3&Bid=${indentInfo.bId }'">确认</button>
-									<button name="deleteBtn" class="btn btn-danger" onclick="window.location.href='<%=basePath%>/indentABargainController?funParam=2&Bid=${indentInfo.bId }'">删除</button>
-								</td>
-							</tr>
-							</c:forEach>
-						</tbody>
-						<tfoot >
-							<tr>
-								<td colspan="3" ><a href="<%=basePath %>/indentABargainController?funParam=1&pageSign=minus">上一页</a></td>
-								<td colspan="4" ><a href="<%=basePath %>/indentABargainController?funParam=1&pageSign=add">下一页</a></td>
-							</tr>
-						</tfoot>
-					</table>
-				</div>
 			</div>
-			<ul class="pager">
+			<div class="span9">
+				<h1>订单管理</h1>
+				<table id="houseIndentTable"
+					class="table table-bordered table-striped table-condensed">
+					<thead>
+						<tr>
+							<th>订单编号</th>
+							<th>订单信息</th>
+							<th>房屋价格</th>
+							<th>订单价格</th>
+							<th>折扣</th>
+							<th>天数</th>
+							<th>顾客编码</th>
+							<th>订单时间</th>
+							<th>订单状态</th>
+							<th>操作</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${IndentList }" var="b">
+							<tr>
+								<td>${b.indId }</td>
+								<td>${b.indInfo }</td>
+								<td>￥${b.houMoney }</td>
+								<td>￥${b.indMoney }</td>
+								<td>${b.indDiscount }</td>
+								<td>${b.indDay }</td>
+								<td>${b.cusId }</td>
+								<td><fmt:formatDate value="${b.indDate }"
+										pattern="yyyy-MM-dd HH:mm:ss" /></td>
+								<td>${b.indType }</td>
+								<td>
+									<button name="confirmBtn" class="btn btn-primary"
+										<c:if test="${b.indType != '审核中' }">disabled</c:if>
+										onclick="entryBtn('${b.indId }')">确认</button>
+									<button name="deleteBtn" class="btn btn-danger"
+										<c:if test="${b.indType != '审核中' }">disabled</c:if>
+										onclick="delBtn('${b.indId }')">删除</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="4"><a
+								href="/indent/selIndent.do?pageSign=minus&pageNum=${pageNum }">上一页</a></td>
+							<td colspan="6"><a
+								href="/indent/selIndent.do?pageSign=add&pageNum=${pageNum }">下一页</a></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+		<ul class="pager">
 			<li class="next">
 				<h4>房屋租赁后台管理系统1.0</h4>
 			</li>
 		</ul>
-		</div>
+	</div>
 	<script>
 		$(function() {
-			var confirmButton = document.getElementsByName('confirmBtn');
+			/* var confirmButton = document.getElementsByName('confirmBtn');
 			var thvalue = document.getElementsByName('iType');
 			var deleteButton = document.getElementsByName('deleteBtn');
 			for (var i = 0; i < confirmButton.length; i++) {
-				if (thvalue[i].innerText =="已确认") {
+				if (thvalue[i].innerText == "已确认") {
 					confirmButton[i].disabled = true;
-					deleteButton [i].disabled = true;
+					deleteButton[i].disabled = true;
 				}
-			}
-			$("#selectBtn").bind("click",function(){
+			} */
+			$("#selectBtn").bind("click", function() {
 				var selectValue = $("#selectBid").val();
-				if(selectValue!=null){
+				if (selectValue != null) {
 					$("#selectForm").submit();
 				}
 			});
 		});
+
+		function entryBtn(indentNum) {
+			$.ajax({
+				url : "/indent/updateIndent.do",
+				type : 'post',
+				data : {
+					"indId" : indentNum,"inx":"1"
+				},
+				success : function(data) {
+					var result = eval("(" + data + ")");
+					alert(result.msg);
+					if (result.status == 0) {
+						location.reload();
+					} else {
+						return;
+					}
+				},
+				error : function() {
+					alert("服务器异常");
+				}
+
+			});
+		}
+		function delBtn(indentNum) {
+			$.ajax({
+				url : "/indent/delIndent.do",
+				type : "post",
+				data : {
+					"indId" : indentNum,"inx":"2"
+				},
+				success : function(data) {
+					var result = eval("(" + data + ")");
+					alert(result.msg);
+					if (result.status == 0) {
+						location.reload();
+					} else {
+						return;
+					}
+				},
+				error : function() {
+					alert("服务器异常");
+				}
+			})
+		}
 	</script>
-	</body>
+</body>
 
 </html>

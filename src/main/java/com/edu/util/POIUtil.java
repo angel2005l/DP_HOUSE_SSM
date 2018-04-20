@@ -21,7 +21,7 @@ import com.edu.base.Constant;
 public class POIUtil {
 	private static final Logger log = LoggerFactory.getLogger(POIUtil.class);
 
-	// 路口方法
+	// 入口方法
 	// 需要 是否有头标题 标题所占的行数
 	// 有效数据列数
 	// 数据列所占的字段数组

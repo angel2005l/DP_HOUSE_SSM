@@ -1,7 +1,5 @@
 package com.edu.service;
 
-import java.util.List;
-
 import com.edu.entity.Bargain;
 import com.edu.util.Result;
 
@@ -17,7 +15,7 @@ public interface IBargainService {
 	 * @return: List<Bargain>      
 	 *
 	 */
-	public List<Bargain> selBargain(String barId, String coId);
+	public Bargain selBargain(String barId, String coId);
 
 	/**
 	 * 
