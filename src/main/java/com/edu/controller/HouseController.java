@@ -1,13 +1,10 @@
 package com.edu.controller;
 
 import java.math.BigDecimal;
-import java.net.HttpCookie;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.sound.midi.SysexMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,7 +105,7 @@ public class HouseController extends BaseController {
 		String pageSign = request.getParameter("pageSign");
 		String pageNum = request.getParameter("pageNum");
 		String empId = session.getAttribute("userId") + "";
-		String coId = session.getAttribute("coId") + "";
+		String coId = session.getAttribute("userCoId") + "";
 		String hid = request.getParameter("selectHid");
 		// String wid = request.getParameter("selectWid");
 		String type = request.getParameter("selectHtype");

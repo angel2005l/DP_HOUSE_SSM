@@ -34,6 +34,22 @@ public class POIUtil {
 	// 创建Excel文件的输入流对象
 	//// 生成文件内容
 	// 入口方法
+	/**
+	 * 
+	 * @Title: readExcel   
+	 * @Description: 入口方法 
+	 * @param filePath
+	 * @param colCount
+	 * @param rowNum
+	 * @param rowCodes
+	 * @return
+	 * @throws IOException
+	 * @throws NullPointerException
+	 * @throws Exception
+	 * @author: MR.H
+	 * @return: List<Map<String,String>>
+	 *
+	 */
 	public static final List<Map<String, String>> readExcel(String filePath, int colCount, int rowNum,
 			String[] rowCodes)
 			throws IOException, NullPointerException, Exception {
@@ -62,7 +78,7 @@ public class POIUtil {
 	 * @Description: 2017及以上版本的excel文件操作
 	 * @param filePath
 	 * @param rowCount
-	 * @param rowNum
+	 * @param rowNum 第一行数据结构
 	 * @param rowCodes
 	 * @return
 	 * @author: MR.H
@@ -97,7 +113,7 @@ public class POIUtil {
 			for (int rowIndex = rowNum; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 				XSSFRow row = sheet.getRow(rowIndex);
 
-				if (row == null)
+				if (null == row)
 					throw new IOException("Excel文件第" + (rowIndex + 1) + "行数据为空");
 				// 根据传入的columnCount与实际excel中读到的列数量进行比较
 				if (row.getLastCellNum() < colCount)
@@ -153,7 +169,8 @@ public class POIUtil {
 	 */
 	@SuppressWarnings("deprecation")
 	private static Boolean isCellNull(XSSFRow row) {
-		if (row == null) {
+		// 进行row对象是否为空
+		if (null == row) {
 			return false;
 		}
 		// if(row.getPhysicalNumberOfCells()>0){

@@ -11,7 +11,7 @@ import com.edu.entity.Employee;
 @Repository
 public interface IEmployeeDao {
 
-	public List<Employee> selEmployee(@Param("empId") String empId, @Param("coId") String coId) throws SQLException;
+	public List<Employee> selEmployee(@Param("empId") String empId, @Param("coId") String coId,@Param("pageNum") int pageNum) throws SQLException;
 
 	public int uptEmployee(@Param("empName") String empName, @Param("empId") String empId) throws SQLException;
 

@@ -57,7 +57,7 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public Result<Object> uptCompany(String coId, String simpleName) {
+	public Result<Object> uptCompany(String coId, String simpleName)  {
 		// 是否存在
 		try {
 			simpleName = StrUtil.strToUpper(simpleName);

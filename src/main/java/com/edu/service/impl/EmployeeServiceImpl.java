@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.edu.base.BaseSevice;
 import com.edu.dao.IEmployeeDao;
@@ -40,47 +41,50 @@ public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService 
 	}
 
 	@Override
-	@Transactional
-	public Result<Object> insEmployee(String coId, List<Employee> datas) {
+	@Transactional(rollbackFor = { Exception.class })
+	public Result<Object> insEmployee(String coId, List<Employee> datas) throws Exception {
 		if (datas == null || datas.isEmpty())
 			return rtnFailResult("添加员工数据集为空,请检查文件");
 		synchronized (this) {
-			try {
-				String maxEmpId = employeeDao.selMaxEmpId(coId);
-				if (StrUtil.isBlank(maxEmpId))
-					return rtnFailResult("未找到相关公司信息");
-				Integer maxId = StrUtil.cutStringLeftRtnInteger(maxEmpId, 5, true);
-				String comSimpleCode = StrUtil.cutStringForRight(coId, 5);
-				if (null == maxId || StrUtil.isBlank(comSimpleCode))
-					return rtnFailResult("插入失败,无法获得当前最大值");
-				// 进行加密和自增列添加
-				for (Employee empObj : datas) {
-					empObj.setEmpId(comSimpleCode + StrUtil.strAddLeftZero((++maxId) + "", 5));
-					// 随机盐
-					String salt = MD5Util.getRandomSalt();
-					// 加密密码
-					empObj.setEmpSalt(salt);
-					empObj.setEmpPass(MD5Util.getMD5EncryptPass(empObj.getEmpPass().trim(), salt.getBytes()));
-					empObj.setCoId(coId);
-				}
-				// 保存数据
-				int insNum = employeeDao.insEmployees(datas);
-				if (insNum == datas.size()) {
-					return rtnSuccessResult("员工批量插入成功");
-				} else {
-					return rtnFailResult("员工批量操作失败");
-				}
-			} catch (SQLException e) {
-				log.error("员工批量插入异常,异常信息：" + e.getMessage());
-				return rtnFailResult("员工批量插入异常");
+			String maxEmpId = employeeDao.selMaxEmpId(coId);
+			if (StrUtil.isBlank(maxEmpId))
+				return rtnFailResult("未找到相关公司信息");
+			Integer maxId = StrUtil.cutStringRightRtnInteger(maxEmpId, 5, false);
+			String comSimpleCode = StrUtil.cutStringForLeftFixS(maxEmpId, 5);
+			if (null == maxId || StrUtil.isBlank(comSimpleCode))
+				return rtnFailResult("插入失败,无法获得当前最大值");
+			// 进行加密和自增列添加
+			for (Employee empObj : datas) {
+				empObj.setEmpPermission("1");
+				empObj.setEmpId(comSimpleCode + StrUtil.strAddLeftZero((++maxId) + "", 5));
+				// 随机盐
+				String salt = MD5Util.getRandomSalt();
+				// 加密密码
+				empObj.setEmpSalt(salt);
+				empObj.setEmpPass(MD5Util.getMD5EncryptPass("123456", salt.getBytes()));
+				empObj.setCoId(coId);
+				System.err.println(empObj);
 			}
+			// 保存数据
+			int insNum = employeeDao.insEmployees(datas);
+			if (insNum == datas.size()) {
+				return rtnSuccessResult("员工批量插入成功");
+			} else {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();// 回手动滚
+				return rtnFailResult("员工批量操作失败");
+			}
+			// } catch (SQLException e) {
+			// log.error("员工批量插入异常,异常信息：" + e.getMessage());
+			// throw e;
+			// // return rtnFailResult("员工批量插入异常");
+			// }
 		}
 	}
 
 	@Override
 	public Result<Employee> selEmployeeByFirst(String empId, String coId) {
 		try {
-			List<Employee> employees = employeeDao.selEmployee(empId, coId);
+			List<Employee> employees = employeeDao.selEmployee(empId, coId, 1);
 			if (null == employees || employees.isEmpty())
 				return rtnFailResultWithData("查找对象不存在,请检查查询条件", null);
 			else
@@ -92,9 +96,9 @@ public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService 
 	}
 
 	@Override
-	public Result<List<Employee>> selEmployee(String empId, String coId) {
+	public Result<List<Employee>> selEmployee(String empId, String coId, String pageNum) {
 		try {
-			List<Employee> employees = employeeDao.selEmployee(empId, coId);
+			List<Employee> employees = employeeDao.selEmployee(empId, coId, Integer.parseInt(pageNum));
 			if (null == employees || employees.isEmpty())
 				return rtnFailResultWithData("查找对象不存在,请检查查询条件", null);
 			else
@@ -122,7 +126,7 @@ public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService 
 	@Override
 	public Result<Object> uptEmployeePass(String oldPass, String newPass, String empId, String coId) {
 		try {
-			List<Employee> uptEmpObj = employeeDao.selEmployee(empId, coId);
+			List<Employee> uptEmpObj = employeeDao.selEmployee(empId, coId, 1);
 			if (null != uptEmpObj && !uptEmpObj.isEmpty()) {
 				Employee employee = uptEmpObj.get(0);
 				String salt = employee.getEmpSalt();

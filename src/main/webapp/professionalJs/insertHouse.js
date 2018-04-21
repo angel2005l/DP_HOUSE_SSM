@@ -5,11 +5,17 @@ $(function() {
 				url : "/house/add.do",
 				type : 'post',
 				success : function(result) {
+					var data = eavl("("+result+")");
 					/*
 					 * if(resulu.status==0){ alert() }
 					 */
+					alert(data.msg);
+					if(data.status == 0){
+						location.reload();
+					}else{
+						return ;
+					}
 					console.log(result)
-					alert(result.msg);
 				},
 				error : function() {
 					alert("未获得服务器响应")

@@ -82,7 +82,9 @@ public final class Constant {
 	 * 员工导入列对应字段
 	 * （顺序不可随意改动）
 	 */
-	public static final String[] EMPEXCELCOL = { "empAccount", "empName", "empPhone", "empEmail", "empPass" };
+	// public static final String[] EMPEXCELCOL = { "empAccount", "empName",
+	// "empPhone", "empEmail", "empPass" };
+	public static final String[] EMPEXCELCOL = { "empAccount", "empName", "empPhone", "empEmail" };
 
 	/**
 	 *	EXCEL2007及以上后缀名

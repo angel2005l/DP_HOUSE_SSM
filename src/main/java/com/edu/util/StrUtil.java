@@ -159,7 +159,7 @@ public final class StrUtil {
 	 */
 	public static final String cutStringForLeft(String str, int fixedHeight) {
 		String result = null;
-		if (isShort(str, fixedHeight)) {
+		if (isShort(str, str.length() - fixedHeight)) {
 			result = "";
 		} else {
 			result = str.substring(0, str.length() - fixedHeight);
@@ -199,6 +199,13 @@ public final class StrUtil {
 		return Integer.valueOf(isFixed ? cutStringForRightFixS(str, size) : cutStringForRight(str, size));
 	}
 
+	public static void main(String[] arg) {
+		String comSimpleCode = StrUtil.cutStringForRightFixS(StrUtil.cutStringForLeftFixS("EGYSY00001", 5), 4);
+		System.err.println(comSimpleCode);
+		 
+//		String comSimpleCode = StrUtil.cutStringForLeftFixS("GYSY00001", 4);
+	}
+
 	/**
 	 * 
 	 * @Title: cutStringForRightFixS   
@@ -233,9 +240,10 @@ public final class StrUtil {
 	 *
 	 */
 	public static final String cutStringForRight(String str, int fixedHeight) {
-		String result = null;
+		String result = "";
 		if (isShort(str, str.length() - fixedHeight)) {
 			result = "";
+		} else {
 			result = str.substring(fixedHeight);
 		}
 		return result;
@@ -253,7 +261,7 @@ public final class StrUtil {
 	 *
 	 */
 	public static final boolean isShort(String str, int size) {
-		return isBlank(str) ? true : size <= str.length();
+		return isBlank(str) ? true : size > str.length();
 	}
 
 	/**

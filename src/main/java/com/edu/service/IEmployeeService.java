@@ -30,7 +30,7 @@ public interface IEmployeeService {
 	 * @return: Result<Object>      
 	 *
 	 */
-	public Result<Object> insEmployee(String coId, List<Employee> datas);
+	public Result<Object> insEmployee(String coId, List<Employee> datas) throws Exception;
 
 	/**
 	 * 
@@ -53,10 +53,11 @@ public interface IEmployeeService {
 	 * @param coId
 	 * @return 
 	 * @author: MR.H
+	 * @param pageNum 
 	 * @return: List<Employee>      
 	 *
 	 */
-	public Result<List<Employee>> selEmployee(String empId, String coId);
+	public Result<List<Employee>> selEmployee(String empId, String coId, String pageNum);
 
 	/**
 	 * 

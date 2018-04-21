@@ -18,15 +18,16 @@
 	</sql>
 
 	<select id="selEmployee" resultMap="baseResultMap">
-		select
+		select a.* from(select rownum as rn ,
 		<include refid="baseList" />
 		from employee
 		<where>
+			rownum &lt;=(10*#{pageNum})
 			<if test="empId !=null and empId !=''">
-				empId = #{empId}
+				and empId = #{empId}
 			</if>
 			and co_id = #{coId}
-		</where>
+		</where>) a where a.rn &gt;= (10*(#{pageNum}-1))
 	</select>
 	<update id="uptEmployee">
 		update employee
@@ -39,13 +40,12 @@
 	delete from employee
 	where emp_id =#{empId} and co_id = #{coId}
 	</delete>
-	<insert id="insEmployees">
-		insert into employee values
-		<foreach collection="insObjs" item="obj" separator=",">
-			(emp_seq.nextval,#{obj.empId},#{obj.empAccount},#{obj.empName}
-			,#{obj.empPhone},#{obj.empEmail},#{obj.empPass},#{obj.empSalt},#{obj.empPermission},#{obj.coId}
-			)
-		</foreach>
+	<insert id="insEmployees" parameterType="list" >
+		insert into employee 
+		select emp_seq.nextval,cd.* from(
+		<foreach collection="list" item="obj" separator="UNION ALL">
+			 select #{obj.empId},#{obj.empAccount},#{obj.empName},#{obj.empPhone},#{obj.empEmail},#{obj.empPass},#{obj.empSalt},#{obj.empPermission},#{obj.coId} from dual
+		</foreach>) cd 
 	</insert>
 	<select id="selMaxEmpId" parameterType="string" resultType="string">
 		select emp_id from employee where id = 
