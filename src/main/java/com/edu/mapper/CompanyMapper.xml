@@ -25,17 +25,19 @@
 		</if> </where> </select> -->
 
 	<select id="selCompany" resultMap="baseResultMap">
-		select
+		select a.* from(select rownum as rn,
 		<include refid="baseList" />
 		from company
 		<where>
+			rownum &lt;=(10*#{pageNum})
 			<if test="coId != null and coId != ''">
-				co_id = #{coId}
+				and co_id = #{coId}
 			</if>
 			<if test="simpleName !=null and simpleName != ''">
 				and co_simple_name = #{simpleName}
 			</if>
-		</where>
+		</where>)
+		a where a.rn &gt;= (10*(#{pageNum}-1))
 	</select>
 
 	<!-- <update id="uptCompany" parameterType="com.edu.entity.Company"> update 
@@ -53,12 +55,12 @@
 	<!-- <delete id="delCompany"> delete from company where <trim prefixOverrides="and 
 		"> <if test="id !=0"> id = #{id} </if> <if test="coId !=null and coId !=''"> 
 		and co_id = #{coId} </if> </trim> </delete> -->
-	<delete id="delCompany">
+	<delete id="delCompany" parameterType="string">
 		delete from company where co_id = #{coId}
 	</delete>
 	<insert id="insCompany" parameterType="com.edu.entity.Company">
 		insert into company values
-		(com_seq.nextval,
+		(co_seq.nextval,
 		#{coId},
 		#{coSimpleName},
 		#{coName},
@@ -67,7 +69,7 @@
 		#{coUniqueId},
 		<choose>
 			<when test="coAdd !=null ">
-				#{obj.coAdd}
+				#{coAdd}
 			</when>
 			<otherwise>
 				''
@@ -82,11 +84,11 @@
 	<select id="selCompanyName" parameterType="string" resultType="string">
 		select co_name from company where co_id = #{coId}
 	</select>
-	<select id="isCompanyExist" parameterType="string" resultType="_int">
+	<select id="isCompanyExist" resultType="_int">
 		select count(co_id) from company
 		<where>
 			<if test="coId !=null and coId != ''">
-				co_id = coId
+				co_id = #{coId}
 			</if>
 			<if test="simpleName != null and simpleName !=''">
 				and co_simple_name = #{simpleName}

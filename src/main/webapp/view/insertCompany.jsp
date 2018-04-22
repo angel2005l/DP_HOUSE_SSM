@@ -49,7 +49,7 @@
 							<li><a href=>帮助</a></li>
 						</ul>
 						<ul class="nav pull-right">
-							<li><a>欢迎 ,<span>${sessionScope.EmployeewName }</span></a></li>
+							<li><a>欢迎 ,<span>${userName }</span></a></li>
 							<li><a href="<%=basePath%>/login.jsp">登出</a></li>
 						</ul>
 					</div>
@@ -93,100 +93,48 @@
 				</div>
 			</div>
 			<div class="span9">
-				<h1>房源发布</h1>
-				<form id="newInHouse"  class="form-horizontal" method="post" enctype="multipart/form-data">
+				<h1>公司注册模拟</h1>
+				<form id="newInHouse" class="form-horizontal" method="post">
 					<fieldset>
-							<legend>发布房源信息</legend>
+							<legend>发布公司信息</legend>
 					<div class="control-group">
-						<label class="control-label" for="newHouse">房屋信息</label>
+						<label class="control-label" for="newCoName">公司名称</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="newHouseInfo" name="Hinfo"
-								placeholder="请输入房屋信息" /><span id="houseInfoerr"></span>
+							<input type="text" class="input-xlarge" id="newCoName" name="coName"
+								placeholder="请输入公单位名称" /><span id="coNameerr"></span>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="newHouseAdd">房屋地址</label>
+						<label class="control-label" for="newCoAddCode">单位所属地区编号</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="newHouseAdd" name="Hadd"
-								placeholder="请输入房源地址" /><span id="houseAdderr"></span>
+							<input type="text" class="input-xlarge" id="newCoAddCode" name="coAddCode"
+								placeholder="请输入单位所属地区编号" /><span id="coAddCodeerr"></span>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="newHouseType">房屋类型</label>
+						<label class="control-label" for="newCoType">单位类型</label>
 						<div class="controls">
-								<select id="newHouseType" name="Htype" >
-									<option value="">--请选择房屋类型--</option>
-									<option value="公寓">公寓</option>
-									<option value="民房">民房</option>
-									<option value="别墅">别墅</option>
-								</select><span id="houseTypeerr"></span>
+							<select id="newCoType" name="coType">
+								<option value="">请选择单位类型</option>
+								<option value="个人">个人</option>
+								<option value="企业">企业</option>
+							</select><span id="coTypeerr"></span>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="newHouseSell">房屋出售方式</label>
+						<label class="control-label" for="newCoUniqueId">单位唯一识别码</label>
 						<div class="controls">
-							<select id="newHouseSell" name="Hsell">
-								<option value="">请选择售卖方式</option>
-								<option value="出售">出售</option>
-								<option value="出租">出租</option>
-								<option value="转售">转售</option>
-							</select><span id="houseSellerr"></span>
+							<input type="text" class="input-xlarge" id="newCoUniqueId" name="coUniqueId"
+								placeholder="请输入单位唯一识别码" /><span id="coUniqueIderr"></span>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="newHouse">房屋相关面积</label>
+						<label class="control-label" for="newCoAdd">单位地址</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="newHouseFloor" name="Hfloor"
-								placeholder="请输入占地面积" /><span id="houseFloorerr"></span>
-						</div>
-						<br />
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="newHouseBuild" name="Hbuild"
-								placeholder="请输入住宅面积" /><span id="houseBuilderr"></span>
+							<input type="text" class="input-xlarge" id="newCoAdd" name="coAdd"
+								placeholder="请输入单位地址" /><span id="coAdderr"></span>
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="newHouseType">房屋售卖金额</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="newHouseMoney" name="Hmoney"
-								placeholder="请输入售卖金额" /><span id="houseMoneyerr"></span>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="newHouseNum">房间数量</label>
-						<div class="controls">
-							卧室&nbsp;&nbsp;<select id="newHouseBed" name="Hbed">
-								<option value="">请选择卧室数</option>
-								<option value="0">0</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5及以上</option>
-							</select><span id="houseBederr" ></span> <br /> <br />
-							 浴室&nbsp;&nbsp;<select id="newHouseBath" name="Hbath">
-								<option value="">请选择浴室数</option>
-								<option value="0">0</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4及以上</option>
-							</select><span id="houseBatherr"></span> <br /> <br />
-							客厅&nbsp;&nbsp;<select id="newHouseLiving" name="Hliving">
-								<option value="">请选择客厅数</option>
-								<option value="0">0</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3及以上</option>
-							</select><span id="houseLivingerr"></span>
-						</div>
-						</div>
-					<div class="control-group">
-							<label class="control-label" for="newHousePhoto">房屋图片</label>
-							<div class="controls">
-								<input class="input-file" id="newHousePhoto" type="file" name="housephoto"/>
-							</div>
-						</div>
 						</fieldset>
 					</form>
 					<div class="form-actions">
@@ -201,7 +149,7 @@
 			</li>
 		</ul>
 		</div>
-<script type="text/javascript" src="/professionalJs/insertHouse.js"></script>
+<script type="text/javascript" src="/professionalJs/insertCompany.js"></script>
 </body>
 
 </html>

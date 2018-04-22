@@ -83,8 +83,8 @@
 		and ind_date &lt; trunc(sysdate)+1)
 	</select>
 
-	<select id="selIndentType" resultType="string">
-		select ind_type from
+	<select id="selIndentByIds" resultType="com.edu.entity.Indent">
+		select <include refid="baseList" /> from
 		indent where ind_id = #{indId} and co_id = #{coId}
 	</select>
 	<select id="selIndentCountByEmpInfo" resultType="int">

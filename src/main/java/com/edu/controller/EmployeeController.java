@@ -1,5 +1,6 @@
 package com.edu.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +83,6 @@ public class EmployeeController extends BaseController {
 		// service.selEmployee(empId, coId);
 
 		try {
-			System.err.println(pageNum);
 			Result<List<Employee>> selEmployee = service.selEmployee(empId, coId, pageNum = StrUtil.isBlank(pageNum)
 					? "1" : pageNum);
 			List<Employee> data = selEmployee.getData();
@@ -106,6 +106,11 @@ public class EmployeeController extends BaseController {
 				data = service.selEmployee(empId, coId, page + "").getData();
 
 			}
+
+			int empNum = service.selEmpCount(coId);
+			BigDecimal moneyNum = service.selMoneyCount(coId);
+			request.setAttribute("empNum", empNum);
+			request.setAttribute("moneyNum", moneyNum.toString());
 			request.setAttribute("pageNum", page);
 			request.setAttribute("empList", data);
 		} catch (Exception e) {

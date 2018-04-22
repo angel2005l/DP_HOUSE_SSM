@@ -15,6 +15,7 @@ import com.edu.base.Constant;
 import com.edu.dao.IIndentDao;
 import com.edu.entity.Indent;
 import com.edu.service.IBargainService;
+import com.edu.service.IFinanceService;
 import com.edu.service.IIndentService;
 import com.edu.util.DateUtil;
 import com.edu.util.Result;
@@ -24,10 +25,12 @@ import com.edu.util.StrUtil;
 public class IndentServiceImpl extends BaseSevice implements IIndentService {
 	private static final Logger log = LoggerFactory.getLogger(IndentServiceImpl.class);
 	@Autowired
-	IIndentDao indentDao;
+	private IIndentDao indentDao;
 
 	@Autowired
-	IBargainService bargainService;
+	private IBargainService bargainService;
+	@Autowired
+	private IFinanceService financeService;
 
 	@Override
 	public List<Indent> selIndent(String permiType, String indId, String empId, String coId, String pageNum) {
@@ -38,7 +41,8 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 				selData = indentDao.selIndentForEmp(empId, coId, indId, Integer.parseInt(pageNum));
 				break;
 			case "2":
-				selData = indentDao.selIndentForAdmin(coId, indId,Integer.parseInt(pageNum));
+			case "4":
+				selData = indentDao.selIndentForAdmin(coId, indId, Integer.parseInt(pageNum));
 				break;
 			default:
 				log.error("查询订单错误,错误的用户权限");
@@ -58,10 +62,10 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 		try {
 			// 之前确认 订单是否存在
 			// 检查 订单状态是否是已完成
-			String upIndType = indentDao.selIndentType(indId, coId);
-			if (StrUtil.isBlank(upIndType)) {
+			Indent checkObj = indentDao.selIndentByIds(indId, coId);
+			if (null == checkObj) {
 				return rtnFailResult("更新订单状态失败,订单不存在");
-			} else if (!"审核中".equals(upIndType)) {
+			} else if (!"审核中".equals(checkObj.getIndType())) {
 				return rtnFailResult("更新订单状态失败,订单状态不正确");
 			}
 			switch (indType) {
@@ -69,7 +73,8 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 				upNum = indentDao.uptIndentType(indId, "已确认");
 				// 调用合同服务层生成合同；
 				Result<Object> barResult = bargainService.insBargain(indId, coId);
-				if (barResult.getStatus() != 0)
+				int insFinance = financeService.insFinance(coId, indId, "收入", checkObj.getIndMoney());
+				if (barResult.getStatus() != 0 && !(insFinance > 0))
 					isInsBar = false;
 				break;
 			case "cancelInd":
@@ -95,11 +100,11 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 	public Result<Object> delIndent(String indId, String coId) {
 		try {
 			// 首先判断是否存在
-			String delIndType = indentDao.selIndentType(indId, coId);
-			if (StrUtil.isBlank(delIndType)) {
+			Indent checkObj = indentDao.selIndentByIds(indId, coId);
+			if (null == checkObj) {
 				return rtnFailResult("订单删除失败,找不到相关订单");
 			} else {
-				if ("审核中".equals(delIndType))
+				if ("审核中".equals(checkObj.getIndType()))
 					return indentDao.delIndent(indId, coId) > 0 ? rtnSuccessResult("订单删除成功") : rtnFailResult("订单删除失败");
 				return rtnFailResult("订单删除失败,订单状态不正确");
 			}

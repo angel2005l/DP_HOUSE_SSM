@@ -1,5 +1,6 @@
 package com.edu.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.edu.entity.Employee;
@@ -86,4 +87,9 @@ public interface IEmployeeService {
 	 *
 	 */
 	public Result<Object> uptEmployeePass(String oldPass, String newPass, String empId, String coId);
+
+	public int selEmpCount(String coId) throws Exception;
+
+	public BigDecimal selMoneyCount(String coId) throws Exception;
+
 }

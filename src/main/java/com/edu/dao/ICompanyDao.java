@@ -12,7 +12,7 @@ import com.edu.entity.Company;
 public interface ICompanyDao {
 
 	// 查询公司信息
-	public List<Company> selCompany(@Param("coId") String coId, @Param("simpleName") String simpleName)
+	public List<Company> selCompany(@Param("coId") String coId, @Param("simpleName") String simpleName,@Param("pageNum") int pageNum )
 			throws SQLException;
 
 	// 更新公司

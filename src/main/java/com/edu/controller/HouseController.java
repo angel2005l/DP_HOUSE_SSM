@@ -107,7 +107,6 @@ public class HouseController extends BaseController {
 		String empId = session.getAttribute("userId") + "";
 		String coId = session.getAttribute("userCoId") + "";
 		String hid = request.getParameter("selectHid");
-		// String wid = request.getParameter("selectWid");
 		String type = request.getParameter("selectHtype");
 		try {
 			System.err.println(pageNum);
@@ -135,7 +134,6 @@ public class HouseController extends BaseController {
 			}
 			request.setAttribute("pageNum", page);
 			request.setAttribute("hid", hid);
-			// request.setAttribute("wid", wid);
 			request.setAttribute("type", type);
 			request.setAttribute("houseList", data);
 		} catch (Exception e) {
@@ -210,6 +208,23 @@ public class HouseController extends BaseController {
 			log.error(e.toString());
 			return rtnErrorResult("删除房屋信息异常");
 		}
+	}
+
+	@RequestMapping("/confirmIndex.do")
+	public String indexConfirm() {
+		return "redirect:/house/selComfirmHouse.do";
+	}
+@RequestMapping("/selComfirmHouse.do")
+	public String selHouseConfirm(HttpServletRequest request) {
+		String pageNum = request.getParameter("pageNum");
+		String houId = request.getParameter("houId");
+		try {
+			List<House> data = service.selHouseConfirm(houId, pageNum);
+			request.setAttribute("confirmHouse", data);
+		} catch (Exception e) {
+			log.error("查询未审核房屋异常，异常原因：" + e.getMessage());
+		}
+		return "/view/confirmHouse";
 	}
 
 }

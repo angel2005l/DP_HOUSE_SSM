@@ -1,5 +1,6 @@
 package com.edu.service.impl;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -147,5 +148,15 @@ public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService 
 			log.error("员工密码修改异常,异常信息：" + e.getMessage());
 			return rtnFailResult("员工密码修改异常");
 		}
+	}
+
+	@Override
+	public int selEmpCount(String coId) throws Exception {
+		return employeeDao.selEmpCount(coId);
+	}
+
+	@Override
+	public BigDecimal selMoneyCount(String coId) throws Exception {
+		return employeeDao.selMoneyCount(coId);
 	}
 }

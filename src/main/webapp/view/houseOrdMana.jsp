@@ -144,7 +144,7 @@
 								<td>${b.indType }</td>
 								<td>
 									<button name="confirmBtn" class="btn btn-primary"
-										<c:if test="${b.indType != '审核中' }">disabled</c:if>
+										
 										onclick="entryBtn('${b.indId }')">确认</button>
 									<button name="deleteBtn" class="btn btn-danger"
 										<c:if test="${b.indType != '审核中' }">disabled</c:if>
@@ -190,7 +190,11 @@
 		});
 
 		function entryBtn(indentNum) {
-			$.ajax({
+/* 			<c:if test="${b.indType != '审核中' }">disabled</c:if>
+ */			
+ var a= JQuery.parent();
+			alert(a);
+			/* $.ajax({
 				url : "/indent/updateIndent.do",
 				type : 'post',
 				data : {
@@ -209,7 +213,7 @@
 					alert("服务器异常");
 				}
 
-			});
+			}); */
 		}
 		function delBtn(indentNum) {
 			$.ajax({

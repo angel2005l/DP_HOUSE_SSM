@@ -25,18 +25,19 @@
 
 
 	<select id="selHouse" resultMap="baseResultMap">
-		select a.* from (select rownum as rn ,t.* from house t where rownum &lt;=(10*#{pageNum}) 
+		select a.* from (select rownum as rn ,t.* from house t where rownum
+		&lt;=(10*#{pageNum})
 		<if test="empId !=null and empId !=''">
 			and emp_id = #{empId}
 		</if>
 		<if test="hid !=null and hid !=''">
 			and hou_id = #{hid}
 		</if>
-		
+
 		<if test="type !=null and type!=''  ">
 			and hou_type = #{type}
 		</if>
-		
+
 		) a where a.rn &gt;= (10*(#{pageNum}-1))
 	</select>
 
@@ -51,9 +52,10 @@
 		hou_id = #{houId}
 	</delete>
 
-	<update id="uptHouseStatus" >
+	<update id="uptHouseStatus">
 		update house set
-		hou_status = #{status} where hou_id = #{houId}
+		hou_status =
+		#{status} where hou_id = #{houId}
 	</update>
 
 	<select id="selHouseExist" resultType="_int">
@@ -62,8 +64,10 @@
 	</select>
 
 	<select id="selHouseMaxId" resultType="string">
-		select hou_id from house where id = (select max(id) from house
-		where instr(hou_id,#{dateStr}) >0)
+		select hou_id from house
+		where id = (select max(id) from house
+		where instr(hou_id,#{dateStr})
+		>0)
 	</select>
 	<select id="selHouseCountByEmpId" resultType="int">
 		select count(1) from house a
@@ -80,9 +84,22 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<select id="selHouseById" parameterType="string" resultMap="baseResultMap">
-		select <include refid="baseList"/> from house where hou_id = #{houId} 
+		select
+		<include refid="baseList" />
+		from house where hou_id = #{houId}
+	</select>
+
+	<select id="selHouseConfirm" resultMap="baseResultMap">
+		select a.* from(select rownum as rn,
+		<include refid="" />
+		from house where hou_status='审核中'
+		<if test="houId!=null and houId !=''">
+			and hou_id =#{houId}
+		</if>
+		and rownum &lt;=(10*#{pageNum}) ) a where a.rn
+		&gt;=(10*(#{pageNum}-1))
 	</select>
 
 </mapper>

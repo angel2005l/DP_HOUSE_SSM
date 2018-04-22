@@ -36,4 +36,6 @@ public interface IHouseDao {
 	// 根据Id查询
 	public House selHouseById(String houId) throws SQLException;
 
+	public List<House> selHouseConfirm(@Param("houId") String houId,@Param("pageNum") int pageNum) throws SQLException;
+
 }

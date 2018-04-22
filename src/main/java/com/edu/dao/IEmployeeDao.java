@@ -1,5 +1,6 @@
 package com.edu.dao;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import com.edu.entity.Employee;
 @Repository
 public interface IEmployeeDao {
 
-	public List<Employee> selEmployee(@Param("empId") String empId, @Param("coId") String coId,@Param("pageNum") int pageNum) throws SQLException;
+	public List<Employee> selEmployee(@Param("empId") String empId, @Param("coId") String coId,
+			@Param("pageNum") int pageNum) throws SQLException;
 
 	public int uptEmployee(@Param("empName") String empName, @Param("empId") String empId) throws SQLException;
 
@@ -27,8 +29,12 @@ public interface IEmployeeDao {
 
 	public int uptEmployeeByPass(@Param("pass") String pass, @Param("empId") String empId, @Param("coId") String coId)
 			throws SQLException;
-	
+
 	public int selEmpNum(@Param("coId") String coId) throws SQLException;
-	
+
 	public Employee loginEmp(String empAccount) throws SQLException;
+
+	public int selEmpCount(String coId) throws SQLException;
+
+	public BigDecimal selMoneyCount(String coId) throws SQLException;
 }

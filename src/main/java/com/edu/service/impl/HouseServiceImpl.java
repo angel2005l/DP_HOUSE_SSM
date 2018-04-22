@@ -59,4 +59,9 @@ public class HouseServiceImpl extends BaseSevice implements IHouseService {
 	public Result<Object> delHouse(String houId) throws Exception {
 		return dao.delHouse(houId) > 0 ? rtnSuccessResult("删除房屋信息成功") : rtnFailResult("删除房屋信息失败");
 	}
+
+	@Override
+	public List<House> selHouseConfirm(String houId, String pageNum) throws Exception {
+		return dao.selHouseConfirm(houId,Integer.parseInt(pageNum));
+	}
 }

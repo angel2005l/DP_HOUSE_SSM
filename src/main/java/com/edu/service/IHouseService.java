@@ -107,4 +107,6 @@ public interface IHouseService {
 	 */
 	public Result<Object> delHouse(String houId) throws Exception;
 
+	public List<House> selHouseConfirm(String houId, String pageNum) throws Exception;
+
 }

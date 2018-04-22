@@ -39,7 +39,7 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 			if (StrUtil.isBlank(maxCoId)) {
 				maxId = 0;
 			} else {
-				maxId = StrUtil.cutStringLeftRtnInteger(maxCoId, 8, true);
+				maxId = StrUtil.cutStringRightRtnInteger(maxCoId, 8, true);
 			}
 			insObj.setCoAddCode(coAddCode);
 			insObj.setCoId(Constant.COMPANYTAG + coAddCode + StrUtil.strAddLeftZero((++maxId) + "", 8));
@@ -51,13 +51,13 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 			}
 		} catch (SQLException e) {
 			log.error("公司添加异常,异常原因:" + e.getMessage());
-			return rtnErrorResult("公司添加异常。");
+			return rtnErrorResult("公司添加异常");
 		}
 	}
 
 	@Override
 	@Transactional(rollbackFor = { Exception.class })
-	public Result<Object> uptCompany(String coId, String simpleName)  {
+	public Result<Object> uptCompany(String coId, String simpleName) {
 		// 是否存在
 		try {
 			simpleName = StrUtil.strToUpper(simpleName);
@@ -67,7 +67,7 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 			if (companyDao.isCompanyExist("", simpleName) > 0) {
 				return rtnFailResult("已存在使用该公司简称的公司信息");
 			} else {
-				companyList = companyDao.selCompany(coId, "");
+				companyList = companyDao.selCompany(coId, "",1);
 				if (null != companyList && !companyList.isEmpty()) {
 					if (companyList.size() > 1) {
 						return rtnFailResult("公司查询错误，请检查查询条件");
@@ -88,13 +88,14 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 			insEmp.setEmpName(comObj.getCoName());
 			insEmp.setEmpPhone("");
 			insEmp.setEmpEmail("");
-			insEmp.setEmpPass(MD5Util.getMD5EncryptPass(Constant.PASSWORDDEFAULT[(int) (Math.random() * 3)], salt
+			String pass = Constant.PASSWORDDEFAULT[(int) (Math.random() * 3)];
+			insEmp.setEmpPass(MD5Util.getMD5EncryptPass(pass, salt
 					.getBytes()));
 			insEmp.setEmpSalt(salt);
-			insEmp.setEmpPermission("个人".equals(comObj.getCoType()) ? "1" : "2");
+			insEmp.setEmpPermission("个人".equals(comObj.getCoType()) ? "4" : "2");
 			insEmp.setCoId(coId);
 			if (companyDao.uptCompany(coId, simpleName) > 0 && employeeDao.insEmployee(insEmp) > 0) {
-				return rtnSuccessResult("公司审核成功");
+				return rtnSuccessResult("公司审核成功，管理员密码：" + pass);
 			} else {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();// 回手动滚
 				return rtnFailResult("公司审核失败");
@@ -102,7 +103,7 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 		} catch (SQLException e) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();// 回手动滚
 			log.error("公司审核异常,异常原因:" + e.getMessage());
-			return rtnErrorResult("公司审异常");
+			return rtnErrorResult("公司审核异常");
 		}
 	}
 
@@ -125,9 +126,9 @@ public class CompanyServiceImpl extends BaseSevice implements ICompanyService {
 	}
 
 	@Override
-	public List<Company> selCompany(String coId, String simpleName) {
+	public List<Company> selCompany(String coId, String simpleName,String pageNum) {
 		try {
-			return companyDao.selCompany(coId, simpleName);
+			return companyDao.selCompany(coId, simpleName,Integer.parseInt(pageNum));
 		} catch (SQLException e) {
 			log.error("公司查询异常");
 			return null;
