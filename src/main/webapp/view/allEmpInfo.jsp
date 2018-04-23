@@ -208,9 +208,7 @@
 						error : function() {
 							alert("服务器异常");
 						}
-
 					})
-
 				}
 			});
 			$("#selectBtn").bind("click", function() {
@@ -243,5 +241,4 @@
 		}
 	</script>
 </body>
-
 </html>

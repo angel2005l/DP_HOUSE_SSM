@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +18,22 @@ import com.edu.util.StrUtil;
 @Controller
 @RequestMapping("/company")
 public class CompanyController extends BaseController {
-	private static Logger log = LoggerFactory.getLogger(CompanyController.class);
+	// private static Logger log =
+	// LoggerFactory.getLogger(CompanyController.class);
 
 	@Autowired
 	private ICompanyService service;
 
-	// 注册公司
+	/**
+	 * 
+	 * @Title: insCompany   
+	 * @Description: 注册公司
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/insCompany.do")
 	@ResponseBody
 	public Result<Object> insCompany(HttpServletRequest request) {
@@ -34,9 +42,7 @@ public class CompanyController extends BaseController {
 		String coType = request.getParameter("coType");
 		String coUniqueId = request.getParameter("coUniqueId");
 		String coAdd = request.getParameter("coAdd");
-
 		Company insObj = new Company();
-
 		insObj.setCoSimpleName("");
 		insObj.setCoName(coName);
 		insObj.setCoAddCode(coAddCode);
@@ -46,7 +52,16 @@ public class CompanyController extends BaseController {
 		return service.insCompany(insObj);
 	}
 
-	// 确认公司
+	/**
+	 * 
+	 * @Title: uptCompany   
+	 * @Description: 确认公司 
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/uptCompany.do")
 	@ResponseBody
 	public Result<Object> uptCompany(HttpServletRequest request) {
@@ -55,6 +70,16 @@ public class CompanyController extends BaseController {
 		return service.uptCompany(coId, simpleName);
 	}
 
+	/**
+	 * 
+	 * @Title: delCompany   
+	 * @Description: 删除公司
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/delCompany.do")
 	@ResponseBody
 	public Result<Object> delCompany(HttpServletRequest request) {
@@ -62,12 +87,30 @@ public class CompanyController extends BaseController {
 		return service.delCompany(coId);
 	}
 
+	/**
+	 * 
+	 * @Title: index   
+	 * @Description: 公司主页
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/index.do")
 	public String index() {
 		return "redirect:/company/selCompany.do";
 	}
 
-	// 查询公司
+	/**
+	 * 
+	 * @Title: selCompany   
+	 * @Description: 查询公司
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/selCompany.do")
 	public String selCompany(HttpServletRequest request) {
 		String coId = request.getParameter("coId");
@@ -94,7 +137,6 @@ public class CompanyController extends BaseController {
 				page--;
 			}
 			data = service.selCompany(coId, simpleName, page + "");
-
 		}
 		request.setAttribute("companyList", data);
 		request.setAttribute("pageNum", page);

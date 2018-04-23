@@ -34,12 +34,32 @@ public class EmployeeController extends BaseController {
 	@Autowired
 	private IEmployeeService service;
 
+	/**
+	 * 
+	 * @Title: index   
+	 * @Description: 跳转员工信息主页
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/index.do")
 	public String index() {
 		return "redirect:/employee/selEmployee.do";
 	}
 
-	// 批量注册员工信息
+	/**
+	 * 
+	 * @Title: batchInsEmpInfo   
+	 * @Description: 批量注册员工信息
+	 * @param mf
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/insEmpInfo.do")
 	@ResponseBody
 	public Result<Object> batchInsEmpInfo(@RequestParam("employeeInfo") MultipartFile mf, HttpServletRequest request,
@@ -64,7 +84,6 @@ public class EmployeeController extends BaseController {
 			return rtnErrorResult("批量保存用户读取excel文件异常" + e.getMessage());
 		}
 		String coId = session.getAttribute("userCoId") + "";
-
 		try {
 			return service.insEmployee(coId, empDatas);
 		} catch (Exception e) {
@@ -73,15 +92,23 @@ public class EmployeeController extends BaseController {
 		}
 	}
 
-	// 查询所有员工信息
+	/**
+	 * 
+	 * @Title: selEmployee   
+	 * @Description: 查询所有员工信息
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/selEmployee.do")
 	public String selEmployee(HttpServletRequest request, HttpSession session) {
 		String pageSign = request.getParameter("pageSign");
 		String pageNum = request.getParameter("pageNum");
 		String empId = request.getParameter("empId");
 		String coId = session.getAttribute("userCoId") + "";
-		// service.selEmployee(empId, coId);
-
 		try {
 			Result<List<Employee>> selEmployee = service.selEmployee(empId, coId, pageNum = StrUtil.isBlank(pageNum)
 					? "1" : pageNum);
@@ -96,7 +123,6 @@ public class EmployeeController extends BaseController {
 					if (page > 1) {
 						page--;
 					}
-
 					break;
 				}
 			} else {
@@ -104,9 +130,7 @@ public class EmployeeController extends BaseController {
 					page--;
 				}
 				data = service.selEmployee(empId, coId, page + "").getData();
-
 			}
-
 			int empNum = service.selEmpCount(coId);
 			BigDecimal moneyNum = service.selMoneyCount(coId);
 			request.setAttribute("empNum", empNum);
@@ -116,11 +140,20 @@ public class EmployeeController extends BaseController {
 		} catch (Exception e) {
 			log.error("查询员工异常" + e.toString());
 		}
-
 		return "view/allEmpInfo";
 	}
 
-	// 删除员工信息
+	/**
+	 * 
+	 * @Title: delEmployee   
+	 * @Description: 删除员工信息
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/delEmp.do")
 	@ResponseBody
 	public Result<Object> delEmployee(HttpServletRequest request, HttpSession session) {
@@ -129,8 +162,8 @@ public class EmployeeController extends BaseController {
 		return service.delEmployee(empId, coId);
 
 	}
-	// 编辑员工信息
-
-	// 数据统计的接口
+	// 编辑员工信息 未开发
+	
+	// 数据统计的接口 已在别处实现
 
 }

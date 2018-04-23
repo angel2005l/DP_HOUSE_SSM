@@ -33,6 +33,15 @@ public class HouseController extends BaseController {
 	@Autowired
 	private IHouseService service;
 
+	/**
+	 * 
+	 * @Title: index   
+	 * @Description: 跳转房屋主页
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/index.do")
 	public String index() {
 		return "redirect:/house/selHouse.do";
@@ -41,7 +50,7 @@ public class HouseController extends BaseController {
 	/**
 	 * 
 	 * @Title: addIndex   
-	 * @Description: 返回数据保温
+	 * @Description: 跳转发布房源页面
 	 * @param request
 	 * @return
 	 * @author: MR.H
@@ -53,6 +62,18 @@ public class HouseController extends BaseController {
 		return "view/insertHouse";
 	}
 
+	/**
+	 * 
+	 * @Title: addHouse   
+	 * @Description: 添加房屋数据
+	 * @param mf
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/add.do")
 	@ResponseBody
 	public Result<Object> addHouse(@RequestParam("housephoto") MultipartFile mf, HttpServletRequest request,
@@ -66,9 +87,7 @@ public class HouseController extends BaseController {
 		String bed = request.getParameter("Hbed");// bed
 		String bath = request.getParameter("Hbath");// bath
 		String living = request.getParameter("Hliving");// living
-
 		House insHouse = new House();
-
 		insHouse.setHouName(info);
 		insHouse.setHouStatus(Constant.TYPE[0]);
 		insHouse.setHouType(type);
@@ -80,7 +99,7 @@ public class HouseController extends BaseController {
 		insHouse.setHouBath(Integer.parseInt(bath));
 		insHouse.setHouLiving(Integer.parseInt(living));
 		insHouse.setEmpId(session.getAttribute("userId").toString());
-		synchronized (this) {
+		synchronized (this) {// 使用同步锁
 			try {
 				String newHouseId = service.selHouseMax();
 				System.err.println(newHouseId);
@@ -100,6 +119,17 @@ public class HouseController extends BaseController {
 		}
 	}
 
+	/**
+	 * 
+	 * @Title: selHouseByPage   
+	 * @Description: 查询房屋
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/selHouse.do")
 	public String selHouseByPage(HttpServletRequest request, HttpSession session) {
 		String pageSign = request.getParameter("pageSign");
@@ -109,7 +139,6 @@ public class HouseController extends BaseController {
 		String hid = request.getParameter("selectHid");
 		String type = request.getParameter("selectHtype");
 		try {
-			System.err.println(pageNum);
 			List<House> data = service.selHouse(empId, coId, pageNum = StrUtil.isBlank(pageNum) ? "1" : pageNum, hid,
 					type);
 			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);
@@ -122,7 +151,6 @@ public class HouseController extends BaseController {
 					if (page > 1) {
 						page--;
 					}
-
 					break;
 				}
 			} else {
@@ -145,7 +173,7 @@ public class HouseController extends BaseController {
 	/**
 	 * 
 	 * @Title: upHouseStatus   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @Description: 更新房屋状态 审核房屋/出租房屋
 	 * @param request
 	 * @return
 	 * @author: MR.H
@@ -168,7 +196,7 @@ public class HouseController extends BaseController {
 	/**
 	 * 
 	 * @Title: selHouseInfoById   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @Description: 跳转房屋详细信息
 	 * @param request
 	 * @return
 	 * @author: MR.H
@@ -191,7 +219,7 @@ public class HouseController extends BaseController {
 	/**
 	 * 
 	 * @Title: delHouse   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @Description: 删除房屋 
 	 * @param request
 	 * @return
 	 * @author: MR.H
@@ -210,11 +238,31 @@ public class HouseController extends BaseController {
 		}
 	}
 
+	/**
+	 * 
+	 * @Title: indexConfirm   
+	 * @Description: 跳转审核房屋界面
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/confirmIndex.do")
 	public String indexConfirm() {
 		return "redirect:/house/selComfirmHouse.do";
 	}
-@RequestMapping("/selComfirmHouse.do")
+
+	/**
+	 * 
+	 * @Title: selHouseConfirm   
+	 * @Description: 查询未审核房屋信息
+	 * @param request
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	@RequestMapping("/selComfirmHouse.do")
 	public String selHouseConfirm(HttpServletRequest request) {
 		String pageNum = request.getParameter("pageNum");
 		String houId = request.getParameter("houId");

@@ -16,19 +16,36 @@ public class BargainController {
 
 	@Autowired
 	private IBargainService service;
-
-	
+	/**
+	 * 
+	 * @Title: index   
+	 * @Description: 跳转合同主页
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/index.do")
 	public String index() {
 		return "view/bargainSearch";
 	}
 
-
-	@RequestMapping("/bargain.do")
+	/**
+	 * 
+	 * @Title: selBargain   
+	 * @Description: 查询合同信息 
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	@RequestMapping("/selBargain.do")
 	public String selBargain(HttpServletRequest request, HttpSession session) {
 		String barId = request.getParameter("bargainNo");
 		String coId = session.getAttribute("userCoId") + "";
-		Bargain bargain = service.selBargain("B" + barId, coId);
+		Bargain bargain = service.selBargain(barId, coId);
 		request.setAttribute("bargain", bargain);
 		return "view/bargainSearch";
 	}

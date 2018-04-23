@@ -33,12 +33,31 @@ public class IndentController extends BaseController {
 	@Autowired
 	private IHouseService houseService;
 
+	/**
+	 * 
+	 * @Title: index   
+	 * @Description: 跳转查询定点页面
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/index.do")
 	public String index() {
 		return "redirect:/indent/selIndent.do";
 	}
 
-	// 生成订单
+	/**
+	 * 
+	 * @Title: addIndent   
+	 * @Description: 生成订单 
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/insIndent.do")
 	@ResponseBody
 	public Result<Object> addIndent(HttpServletRequest request, HttpSession session) {
@@ -72,7 +91,17 @@ public class IndentController extends BaseController {
 
 	}
 
-	// 查询订单
+	/**
+	 * 
+	 * @Title: selIndent   
+	 * @Description:查询订单
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/selIndent.do")
 	public String selIndent(HttpServletRequest request, HttpSession session) {
 		String pageSign = request.getParameter("pageSign");
@@ -112,7 +141,17 @@ public class IndentController extends BaseController {
 		return "view/houseOrdMana";
 	}
 
-	// 删除订单
+	/**
+	 * 
+	 * @Title: delIndent   
+	 * @Description: 删除订单
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/delIndent.do")
 	@ResponseBody
 	public Result<Object> delIndent(HttpServletRequest request, HttpSession session) {
@@ -121,7 +160,17 @@ public class IndentController extends BaseController {
 		return service.delIndent(indId, coId);
 	}
 
-	// 确认订单
+	/**
+	 * 
+	 * @Title: upIndent   
+	 * @Description: 确认订单   
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: Result<Object>
+	 *
+	 */
 	@RequestMapping("/updateIndent.do")
 	@ResponseBody
 	public Result<Object> upIndent(HttpServletRequest request, HttpSession session) {

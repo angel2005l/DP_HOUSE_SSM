@@ -81,6 +81,19 @@ public class LoginController {
 		return "login";
 	}
 
+	/**
+	 * 
+	 * @Title: index   
+	 * @Description: 跳转首页
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/index.do")
 	public String index(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws IOException {

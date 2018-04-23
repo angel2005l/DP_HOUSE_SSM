@@ -23,13 +23,31 @@ public class FinanceController extends BaseController {
 
 	@Autowired
 	private IFinanceService service;
-
+	/**
+	 * 
+	 * @Title: index   
+	 * @Description: 跳转财务主页 
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("index.do")
 	public String index() {
 		return "";
 	}
 
-	// 查询订单信息
+	/**
+	 * 
+	 * @Title: selFinance   
+	 * @Description: 查询订单信息
+	 * @param request
+	 * @param session
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/selFinance.do")
 	public String selFinance(HttpServletRequest request, HttpSession session) {
 		String userPer = session.getAttribute("permission") + "";

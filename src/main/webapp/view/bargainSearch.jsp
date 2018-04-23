@@ -113,12 +113,12 @@
 					<div id="box_center">
 
 						<form id="selectForm"
-							action="/bargain/bargain.do"
+							action="/bargain/selBargain.do"
 							method="post">
 							<div style="float: left; padding-left: 20px;">
 								<h4>搜索</h4>
 								<input type="text" id="selectBid" name="bargainNo"
-									class="ui_input_txt02" placeholder="请输入订单编号" />
+									class="ui_input_txt02" placeholder="请输入合同单号" />
 								<div style="float: right; padding-left: 20px;">
 									<button type="button" id="selectBtn" class="btn btn-primary"
 										style="width: 100px;">搜索</button>
@@ -137,7 +137,6 @@
 							<tr>
 								<th>合同编号</th>
 								<th>合同名称</th>
-
 								<th>合同内容</th>
 								<th>签订时间</th>
 								<th>甲方</th>
@@ -160,7 +159,6 @@
 								<td>${bargain.indId }</td>
 								<td><fmt:formatDate value="${bargain.barEndDate }"	pattern="yyyy-MM-dd HH:mm:ss" /></td>
 							</tr>
-
 						</tbody>
 					</table>
 				</c:if>
