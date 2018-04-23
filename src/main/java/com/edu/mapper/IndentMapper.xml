@@ -10,7 +10,7 @@
 		<result column="hou_id" property="houId" />
 		<result column="hou_money" property="houMoney" />
 		<result column="ind_money" property="indMoney" />
-		<result column="ind_discount" property="indDiscount"/>
+		<result column="ind_discount" property="indDiscount" />
 		<result column="cus_id" property="cusId" />
 		<result column="co_id" property="coId" />
 		<result column="ind_day" property="indDay" />
@@ -84,23 +84,23 @@
 	</select>
 
 	<select id="selIndentByIds" resultType="com.edu.entity.Indent">
-		select <include refid="baseList" /> from
+		select
+		<include refid="baseList" />
+		from
 		indent where ind_id = #{indId} and co_id = #{coId}
 	</select>
 	<select id="selIndentCountByEmpInfo" resultType="int">
 		select count(1) from indent a
-		<if test="empPer!='3'.toString()">
-			inner join company b on a.co_id = b.co_id
-			<if test="empPer == '1'.toString()">
-				inner join employee c on b.co_id = c.co_id
-			</if>
+		inner join company b on a.co_id = b.co_id
+		<if test="empPer == '1'.toString()">
+			inner join employee c on b.co_id = c.co_id
 		</if>
 		<where>
 			and a.ind_type = '审核中'
 			<if test="empPer == '1'.toString()">
 				and c.emp_id = #{empInfo}
 			</if>
-			<if test="empPer == '2'.toString()">
+			<if test="empPer != '1'.toString()">
 				and b.co_id=#{empInfo}
 			</if>
 		</where>

@@ -26,6 +26,20 @@ public class CompanyController extends BaseController {
 
 	/**
 	 * 
+	 * @Title: insCompanyIndex   
+	 * @Description: 跳转模拟添加公司界面
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	@RequestMapping("/insComIndex.do")
+	public String insCompanyIndex() {
+		return "view/insertCompany";
+	}
+
+	/**
+	 * 
 	 * @Title: insCompany   
 	 * @Description: 注册公司
 	 * @param request
@@ -129,7 +143,6 @@ public class CompanyController extends BaseController {
 				if (page > 1) {
 					page--;
 				}
-
 				break;
 			}
 		} else {
@@ -142,5 +155,4 @@ public class CompanyController extends BaseController {
 		request.setAttribute("pageNum", page);
 		return "view/allCompany";
 	}
-
 }

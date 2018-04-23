@@ -101,6 +101,8 @@ public class LoginController {
 			String empId = session.getAttribute("userId") + "";
 			String coId = session.getAttribute("userCoId") + "";
 			String empPer = session.getAttribute("permission") + "";
+			
+			
 			request.setAttribute("financeCount", serviceFinance.selFinanceCountByEmpInfo("1".equals(empPer) ? empId
 					: coId,
 					empPer));

@@ -21,8 +21,8 @@ public class HouseServiceImpl extends BaseSevice implements IHouseService {
 	private IHouseDao dao;
 
 	@Override
-	public List<House> selHouse(String empId, String coId, String pageNum, String hid, String type) throws Exception {
-		return dao.selHouse(empId, coId, Integer.parseInt(pageNum), hid, type);
+	public List<House> selHouse(String empId, String coId, String pageNum, String hid, String type,String userPer) throws Exception {
+		return dao.selHouse(empId, coId, Integer.parseInt(pageNum), hid, type,userPer);
 	}
 
 	@Override

@@ -23,11 +23,9 @@ public interface IFinanceService {
 	/**
 	 * 
 	 * @Title: selFinance   
-	 * @Description: 查询财物记录
-	 * @param empId
+	 * @Description: 查询财物记录 
 	 * @param coId
 	 * @param pageNum
-	 * @param userPer
 	 * @param finId
 	 * @return
 	 * @throws Exception
@@ -35,7 +33,7 @@ public interface IFinanceService {
 	 * @return: List<Finance>
 	 *
 	 */
-	public List<Finance> selFinance(String empId, String coId, String pageNum, String userPer, String finId)
+	public List<Finance> selFinance(String coId, String pageNum, String finId)
 			throws Exception;
 
 	/**

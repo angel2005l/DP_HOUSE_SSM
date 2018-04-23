@@ -66,9 +66,7 @@ public class IndentController extends BaseController {
 			String discount = request.getParameter("indDiscount");
 			String coId = session.getAttribute("userCoId") + "";
 			String day = request.getParameter("day");
-
 			House house = houseService.selHouseInfoById(houId);
-
 			Indent insObj = new Indent();
 			insObj.setIndInfo("顾客：" + Constant.CUSNAME[(int) (Math.random() * 3)] + "-房屋：【" + house.getHouName()
 					+ "】租赁订单");
@@ -88,7 +86,6 @@ public class IndentController extends BaseController {
 			log.error(e.toString());
 			return rtnErrorResult("生成订单异常");
 		}
-
 	}
 
 	/**
@@ -113,7 +110,6 @@ public class IndentController extends BaseController {
 		try {
 			List<Indent> data = service.selIndent(permiType, indId, empId, coId, pageNum = StrUtil.isBlank(pageNum)
 					? "1" : pageNum);
-
 			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);
 			if (StrUtil.notBlank(pageSign) && null != data && !data.isEmpty()) {
 				switch (pageSign) {
@@ -124,7 +120,6 @@ public class IndentController extends BaseController {
 					if (page > 1) {
 						page--;
 					}
-
 					break;
 				}
 			} else {

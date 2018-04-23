@@ -106,12 +106,8 @@
 							<input type="hidden" name="pageNum" value="${pageNum }">
 							<div style="float: left; padding-left: 20px;">
 								<h4>搜索</h4>
-								<c:if test="${permission!='1' }">
-									<input type="text" id="selectBid" name="empId"
-										class="ui_input_txt02" placeholder="请输入员工编号" value="${empId }" />
-								</c:if>
-								<input type="text" id="selectBid" name="simpleName"
-									class="ui_input_txt02" placeholder="请输入财务编号" />
+									<input type="text" id="selectBid" name="finId"
+										class="ui_input_txt02" placeholder="请输入财务编号" />
 								<div style="float: right; padding-left: 20px;">
 									<button type="button" id="selectBtn" class="btn btn-primary"
 										style="width: 100px;">搜索</button>

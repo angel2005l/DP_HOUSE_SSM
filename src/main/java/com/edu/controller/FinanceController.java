@@ -32,7 +32,7 @@ public class FinanceController extends BaseController {
 	 * @return: String
 	 *
 	 */
-	@RequestMapping("index.do")
+	@RequestMapping("/index.do")
 	public String index() {
 		return "";
 	}
@@ -50,15 +50,12 @@ public class FinanceController extends BaseController {
 	 */
 	@RequestMapping("/selFinance.do")
 	public String selFinance(HttpServletRequest request, HttpSession session) {
-		String userPer = session.getAttribute("permission") + "";
 		String coId = session.getAttribute("userCoId") + "";
 		String pageSign = request.getParameter("pageSign");
 		String pageNum = request.getParameter("pageNum");
-		String empId = "1".equals(userPer) ? session.getAttribute("userId") + "" : request.getParameter("empId");
 		String finId = request.getParameter("finId");
 		try {
-			List<Finance> data = service.selFinance(empId, coId, pageNum = StrUtil.isBlank(pageNum) ? "1" : pageNum,
-					userPer,finId);
+			List<Finance> data = service.selFinance( coId, pageNum = StrUtil.isBlank(pageNum) ? "1" : pageNum,finId);
 			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);
 			if (StrUtil.notBlank(pageSign) && null != data && !data.isEmpty()) {
 				switch (pageSign) {
@@ -75,9 +72,8 @@ public class FinanceController extends BaseController {
 				if (page > 1) {
 					page--;
 				}
-				data = service.selFinance(empId, coId, page + "", userPer,finId);
+				data = service.selFinance( coId, page + "", finId);
 			}
-			request.setAttribute("empId", empId);
 			request.setAttribute("pageNum", page);
 			request.setAttribute("finList", data);
 		} catch (Exception e) {

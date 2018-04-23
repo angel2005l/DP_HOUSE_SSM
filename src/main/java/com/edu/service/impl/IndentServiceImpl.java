@@ -16,6 +16,7 @@ import com.edu.dao.IIndentDao;
 import com.edu.entity.Indent;
 import com.edu.service.IBargainService;
 import com.edu.service.IFinanceService;
+import com.edu.service.IHouseService;
 import com.edu.service.IIndentService;
 import com.edu.util.DateUtil;
 import com.edu.util.Result;
@@ -26,7 +27,8 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 	private static final Logger log = LoggerFactory.getLogger(IndentServiceImpl.class);
 	@Autowired
 	private IIndentDao indentDao;
-
+	@Autowired
+	private IHouseService houseService;
 	@Autowired
 	private IBargainService bargainService;
 	@Autowired
@@ -72,9 +74,10 @@ public class IndentServiceImpl extends BaseSevice implements IIndentService {
 			case "enterInd":
 				upNum = indentDao.uptIndentType(indId, "已确认");
 				// 调用合同服务层生成合同；
+				Result<Object> houResult = houseService.uptChangeHouseSellType(checkObj.getHouId(), "交易中");
 				Result<Object> barResult = bargainService.insBargain(indId, coId);
 				int insFinance = financeService.insFinance(coId, indId, "收入", checkObj.getIndMoney());
-				if (barResult.getStatus() != 0 && !(insFinance > 0))
+				if (houResult.getStatus() != 0 && barResult.getStatus() != 0 && !(insFinance > 0))
 					isInsBar = false;
 				break;
 			case "cancelInd":

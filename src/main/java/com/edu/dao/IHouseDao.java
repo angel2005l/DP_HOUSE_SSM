@@ -12,7 +12,7 @@ import com.edu.entity.House;
 public interface IHouseDao {
 	// 房屋查询
 	public List<House> selHouse(@Param("empId") String empId, @Param("coId") String coId, @Param("pageNum") int pageNum,
-			@Param("hid") String hid, @Param("type") String type) throws SQLException;
+			@Param("hid") String hid, @Param("type") String type,@Param("userPer") String userPer) throws SQLException;
 
 	// 房屋添加
 	public int insHouse(House house) throws SQLException;

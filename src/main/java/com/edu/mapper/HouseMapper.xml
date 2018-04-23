@@ -25,9 +25,15 @@
 
 
 	<select id="selHouse" resultMap="baseResultMap">
-		select a.* from (select rownum as rn ,t.* from house t where rownum
-		&lt;=(10*#{pageNum})
-		<if test="empId !=null and empId !=''">
+		select a.* from (select rownum as rn ,t.* from house t
+		<if test="userPer != '1'.toString() ">
+			inner join house b t.emp_id =b.emp_id
+		</if>
+		where rownum &lt;=(10*#{pageNum})
+		<if test="userPer! = '1'.toString()">
+			and b.co_id = #{coId}
+		</if>
+		<if test="userPer == '1'.toString()">
 			and emp_id = #{empId}
 		</if>
 		<if test="hid !=null and hid !=''">
@@ -37,7 +43,6 @@
 		<if test="type !=null and type!=''  ">
 			and hou_type = #{type}
 		</if>
-
 		) a where a.rn &gt;= (10*(#{pageNum}-1))
 	</select>
 
@@ -55,9 +60,9 @@
 	<update id="uptHouseStatus">
 		update house set
 		hou_status =
-		#{status} where hou_id = #{houId}
+		#{status} where hou_id =
+		#{houId}
 	</update>
-
 	<select id="selHouseExist" resultType="_int">
 		select count(hou_id) from
 		house where hou_id = #{houId} and co_id =#{coId}
@@ -71,7 +76,7 @@
 	</select>
 	<select id="selHouseCountByEmpId" resultType="int">
 		select count(1) from house a
-		<if test="empPer == '2'.toString()">
+		<if test="empPer != '1'.toString() ">
 			inner join employee b on a.emp_id = b.emp_id inner join
 			company c on b.co_id = c.co_id
 		</if>
@@ -79,12 +84,19 @@
 			<if test="empPer == '1'.toString()">
 				and emp_id = #{empInfo}
 			</if>
-			<if test="empPer == '2'.toString()">
+			<if test="empPer != '1'.toString() and empPer != '3'.toString()">
 				and b.co_id=#{empInfo}
 			</if>
+			<choose>
+				<when test="empPer != '3'.toString()">
+					and a.hou_status &lt;&gt; '审核中'
+				</when>
+				<otherwise>
+					and a.hou_status = '审核中'
+				</otherwise>
+			</choose>
 		</where>
 	</select>
-
 	<select id="selHouseById" parameterType="string" resultMap="baseResultMap">
 		select
 		<include refid="baseList" />

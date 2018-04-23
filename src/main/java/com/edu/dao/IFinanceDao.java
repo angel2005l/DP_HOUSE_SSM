@@ -12,7 +12,7 @@ public interface IFinanceDao {
 	public int selFinanceCountByEmpInfo(@Param("empInfo") String empInfo, @Param("empPer") String empPer)
 			throws SQLException;
 
-	public List<Finance> selFinance(@Param("empId") String empId,@Param("coId") String coId,@Param("pageNum") int pageNum,@Param("userPer") String userPer,@Param("finId") String finId) throws SQLException;
+	public List<Finance> selFinance(@Param("coId") String coId,@Param("pageNum") int pageNum,@Param("finId") String finId) throws SQLException;
 
 	public String maxFinId() throws SQLException;
 

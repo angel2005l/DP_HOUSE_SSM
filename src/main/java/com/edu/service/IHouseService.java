@@ -26,7 +26,7 @@ public interface IHouseService {
 	 * @return: List<House>
 	 *
 	 */
-	public List<House> selHouse(String empId, String coId, String pageNum, String hid, String type) throws Exception;
+	public List<House> selHouse(String empId, String coId, String pageNum, String hid, String type,String userPer) throws Exception;
 
 	/**
 	 * 

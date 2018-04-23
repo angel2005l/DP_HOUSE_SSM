@@ -12,18 +12,16 @@
 	</resultMap>
 	<sql id="baseList">id,fin_id,fin_type,fin_date,fin_money,co_id,ind_id</sql>
 	<select id="selFinanceCountByEmpInfo" resultType="int">
-		select count(1) from finance a 
-		<if test="empPer!='3'.toString()">
-			inner join company b on a.co_id = b.co_id
-			<if test="empPer=='1'.toString()">
-				inner join employee c on b.co_id = c.co_id
-			</if>
+		select count(1) from finance a
+		inner join company b on a.co_id = b.co_id
+		<if test="empPer=='1'.toString()">
+			inner join employee c on b.co_id = c.co_id
 		</if>
 		<where>
 			<if test="empPer=='1'.toString()">
 				and c.emp_id = #{empInfo}
 			</if>
-			<if test="empPer=='2'.toString() or empPer=='4'.toString()">
+			<if test="empPer!='1'.toString()">
 				and b.co_id = #{empInfo}
 			</if>
 			and a.fin_date = trunc(sysdate)
@@ -31,32 +29,30 @@
 	</select>
 	<select id="selFinance" resultMap="baseResult">
 		select a.* form (
-		select rownum as rn, a.id,fin_id,fin_type,fin_date,fin_money,a.co_id,a.ind_id
-		from finance a inner join company b on a.co_id = b.co_id inner 
-		<if test="userPer =='1'.toString()">
-			inner join employee c on b.co_id = c.co_id
-		</if>
+		select rownum as rn,
+		a.id,fin_id,fin_type,fin_date,fin_money,a.co_id,a.ind_id
+		from finance a
 		<where>
 			rownum &lt;=(10*#{pageNum})
-			and b.co_id =#{coId}
+			and co_id =#{coId}
 			<if test="finId!=null and finId !=''">
-			amd a.fin_id = #{finId}
-			</if>
-			<if test="userPer =='1'.toString()">
-			and c.emp_id = #{empId}
+				and a.fin_id = #{finId}
 			</if>
 		</where>
 		) a where a.rn &gt;= (10*(#{pageNum}-1))
 	</select>
-	
+
 	<select id="maxFinId" resultType="string">
-		select fin_id from finance where id = (select max(id) from finance where fin_date>=trunc(sysdate) and fin_date &lt;
+		select fin_id from finance
+		where id = (select max(id) from finance where fin_date>=trunc(sysdate)
+		and fin_date &lt;
 		trunc(sysdate)+1)
 	</select>
-	
+
 	<insert id="insFinace" parameterType="com.edu.entity.Finance">
-		insert into finance values(fin_seq.nextval,#{finId},#{finType},#{finDate},#{finMoney},#{coId},#{indId})
+		insert into finance
+		values(fin_seq.nextval,#{finId},#{finType},#{finDate},#{finMoney},#{coId},#{indId})
 	</insert>
-	
-	
+
+
 </mapper>

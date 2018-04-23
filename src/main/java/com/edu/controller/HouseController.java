@@ -102,7 +102,6 @@ public class HouseController extends BaseController {
 		synchronized (this) {// 使用同步锁
 			try {
 				String newHouseId = service.selHouseMax();
-				System.err.println(newHouseId);
 				if (StrUtil.isBlank(newHouseId)) {
 					return rtnFailResult("房屋编码格式错误");
 				}
@@ -110,7 +109,7 @@ public class HouseController extends BaseController {
 				imgName = imgName.substring(imgName.lastIndexOf("\\"));
 				insHouse.setHouId(newHouseId);
 				insHouse.setHouImg(imgName);
-				System.err.println(insHouse.toString());
+				// System.err.println(insHouse.toString());
 				return service.insHouse(insHouse);
 			} catch (Exception e) {
 				log.error("添加房屋异常,异常原因:" + e.getMessage());
@@ -134,13 +133,15 @@ public class HouseController extends BaseController {
 	public String selHouseByPage(HttpServletRequest request, HttpSession session) {
 		String pageSign = request.getParameter("pageSign");
 		String pageNum = request.getParameter("pageNum");
-		String empId = session.getAttribute("userId") + "";
 		String coId = session.getAttribute("userCoId") + "";
+		String userPer = session.getAttribute("permission") + "";
+		String empId = session.getAttribute("userId") + "";
 		String hid = request.getParameter("selectHid");
 		String type = request.getParameter("selectHtype");
+
 		try {
 			List<House> data = service.selHouse(empId, coId, pageNum = StrUtil.isBlank(pageNum) ? "1" : pageNum, hid,
-					type);
+					type, userPer);
 			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);
 			if (StrUtil.notBlank(pageSign) && null != data && !data.isEmpty()) {
 				switch (pageSign) {
@@ -158,7 +159,7 @@ public class HouseController extends BaseController {
 					page--;
 				}
 				data = service.selHouse(empId, coId, page + "", hid,
-						type);
+						type, userPer);
 			}
 			request.setAttribute("pageNum", page);
 			request.setAttribute("hid", hid);

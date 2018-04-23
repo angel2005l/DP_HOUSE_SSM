@@ -91,8 +91,7 @@
 							<div style="float: left; padding-left: 20px;">
 								<h4>房屋编号</h4>
 								<input type="text" id="selectHid" name="selectHid"
-									class="ui_input_txt02" placeholder="请输入房屋编号" value="${hid }" />
-
+									class="ui_input_txt02" placeholder="请输入房屋编号" value="" />
 							</div>
 
 							<div style="float: left; padding-left: 30px;">

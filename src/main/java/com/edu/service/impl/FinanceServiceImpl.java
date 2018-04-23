@@ -26,12 +26,12 @@ public class FinanceServiceImpl implements IFinanceService {
 	}
 
 	@Override
-	public List<Finance> selFinance(String empId, String coId, String pageNum, String userPer,String finId) throws Exception {
-		return financeDao.selFinance(empId, coId, Integer.parseInt(pageNum), userPer,finId);
+	public List<Finance> selFinance(String coId, String pageNum, String finId) throws Exception {
+		return financeDao.selFinance(coId, Integer.parseInt(pageNum), finId);
 	}
 
 	@Override
-	public int insFinance(String coId, String indId, String finType,BigDecimal finMoney) throws Exception {
+	public int insFinance(String coId, String indId, String finType, BigDecimal finMoney) throws Exception {
 		String maxFinId = financeDao.maxFinId();
 		int maxId = 0;
 		if (StrUtil.isBlank(maxFinId)) {
