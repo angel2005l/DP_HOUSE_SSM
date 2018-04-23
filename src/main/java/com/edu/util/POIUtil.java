@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -183,17 +182,26 @@ public class POIUtil {
 		}
 		return false;
 	}
-
-	@SuppressWarnings({ "static-access", "deprecation" })
-	private static String getValue(HSSFCell hssfCell) {
-		if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
-			return String.valueOf(hssfCell.getBooleanCellValue());
-		} else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
-			return String.valueOf(hssfCell.getNumericCellValue());
-		} else {
-			return String.valueOf(hssfCell.getStringCellValue());
-		}
-	}
+	/**
+	 * 
+	 * @Title: getValue   
+	 * @Description: 待启用 用于2007一下版本获得数据
+	 * @param hssfCell
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	// @SuppressWarnings({ "static-access", "deprecation" })
+	// private static String getValue(HSSFCell hssfCell) {
+	// if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
+	// return String.valueOf(hssfCell.getBooleanCellValue());
+	// } else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
+	// return String.valueOf(hssfCell.getNumericCellValue());
+	// } else {
+	// return String.valueOf(hssfCell.getStringCellValue());
+	// }
+	// }
 
 	@SuppressWarnings({ "static-access", "deprecation" })
 	private static String getValue(XSSFCell xssfCell) {
