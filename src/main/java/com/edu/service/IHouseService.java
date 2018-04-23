@@ -107,6 +107,18 @@ public interface IHouseService {
 	 */
 	public Result<Object> delHouse(String houId) throws Exception;
 
+	/**
+	 * 
+	 * @Title: selHouseConfirm   
+	 * @Description: 查询所有待审核的订单
+	 * @param houId
+	 * @param pageNum
+	 * @return
+	 * @throws Exception
+	 * @author: MR.H
+	 * @return: List<House>
+	 *
+	 */
 	public List<House> selHouseConfirm(String houId, String pageNum) throws Exception;
 
 }
