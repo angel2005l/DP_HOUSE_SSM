@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -21,7 +20,7 @@ import com.edu.base.Constant;
 public class POIUtil {
 	private static final Logger log = LoggerFactory.getLogger(POIUtil.class);
 
-	// 路口方法
+	// 入口方法
 	// 需要 是否有头标题 标题所占的行数
 	// 有效数据列数
 	// 数据列所占的字段数组
@@ -34,6 +33,22 @@ public class POIUtil {
 	// 创建Excel文件的输入流对象
 	//// 生成文件内容
 	// 入口方法
+	/**
+	 * 
+	 * @Title: readExcel   
+	 * @Description: 入口方法 
+	 * @param filePath
+	 * @param colCount
+	 * @param rowNum
+	 * @param rowCodes
+	 * @return
+	 * @throws IOException
+	 * @throws NullPointerException
+	 * @throws Exception
+	 * @author: MR.H
+	 * @return: List<Map<String,String>>
+	 *
+	 */
 	public static final List<Map<String, String>> readExcel(String filePath, int colCount, int rowNum,
 			String[] rowCodes)
 			throws IOException, NullPointerException, Exception {
@@ -62,7 +77,7 @@ public class POIUtil {
 	 * @Description: 2017及以上版本的excel文件操作
 	 * @param filePath
 	 * @param rowCount
-	 * @param rowNum
+	 * @param rowNum 第一行数据结构
 	 * @param rowCodes
 	 * @return
 	 * @author: MR.H
@@ -97,7 +112,7 @@ public class POIUtil {
 			for (int rowIndex = rowNum; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 				XSSFRow row = sheet.getRow(rowIndex);
 
-				if (row == null)
+				if (null == row)
 					throw new IOException("Excel文件第" + (rowIndex + 1) + "行数据为空");
 				// 根据传入的columnCount与实际excel中读到的列数量进行比较
 				if (row.getLastCellNum() < colCount)
@@ -153,7 +168,8 @@ public class POIUtil {
 	 */
 	@SuppressWarnings("deprecation")
 	private static Boolean isCellNull(XSSFRow row) {
-		if (row == null) {
+		// 进行row对象是否为空
+		if (null == row) {
 			return false;
 		}
 		// if(row.getPhysicalNumberOfCells()>0){
@@ -166,17 +182,26 @@ public class POIUtil {
 		}
 		return false;
 	}
-
-	@SuppressWarnings({ "static-access", "deprecation" })
-	private static String getValue(HSSFCell hssfCell) {
-		if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
-			return String.valueOf(hssfCell.getBooleanCellValue());
-		} else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
-			return String.valueOf(hssfCell.getNumericCellValue());
-		} else {
-			return String.valueOf(hssfCell.getStringCellValue());
-		}
-	}
+	/**
+	 * 
+	 * @Title: getValue   
+	 * @Description: 待启用 用于2007一下版本获得数据
+	 * @param hssfCell
+	 * @return
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
+	// @SuppressWarnings({ "static-access", "deprecation" })
+	// private static String getValue(HSSFCell hssfCell) {
+	// if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
+	// return String.valueOf(hssfCell.getBooleanCellValue());
+	// } else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
+	// return String.valueOf(hssfCell.getNumericCellValue());
+	// } else {
+	// return String.valueOf(hssfCell.getStringCellValue());
+	// }
+	// }
 
 	@SuppressWarnings({ "static-access", "deprecation" })
 	private static String getValue(XSSFCell xssfCell) {

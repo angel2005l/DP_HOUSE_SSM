@@ -1,5 +1,6 @@
 package com.edu.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.edu.entity.Employee;
@@ -30,7 +31,7 @@ public interface IEmployeeService {
 	 * @return: Result<Object>      
 	 *
 	 */
-	public Result<Object> insEmployee(String coId, List<Employee> datas);
+	public Result<Object> insEmployee(String coId, List<Employee> datas) throws Exception;
 
 	/**
 	 * 
@@ -53,10 +54,11 @@ public interface IEmployeeService {
 	 * @param coId
 	 * @return 
 	 * @author: MR.H
+	 * @param pageNum 
 	 * @return: List<Employee>      
 	 *
 	 */
-	public Result<List<Employee>> selEmployee(String empId, String coId);
+	public Result<List<Employee>> selEmployee(String empId, String coId, String pageNum);
 
 	/**
 	 * 
@@ -85,4 +87,31 @@ public interface IEmployeeService {
 	 *
 	 */
 	public Result<Object> uptEmployeePass(String oldPass, String newPass, String empId, String coId);
+
+	/**
+	 * 
+	 * @Title: selEmpCount   
+	 * @Description: 查询员工数
+	 * @param coId
+	 * @return
+	 * @throws Exception
+	 * @author: MR.H
+	 * @return: int
+	 *
+	 */
+	public int selEmpCount(String coId) throws Exception;
+
+	/**
+	 * 
+	 * @Title: selMoneyCount   
+	 * @Description: 查询公司营业额
+	 * @param coId
+	 * @return
+	 * @throws Exception
+	 * @author: MR.H
+	 * @return: BigDecimal
+	 *
+	 */
+	public BigDecimal selMoneyCount(String coId) throws Exception;
+
 }

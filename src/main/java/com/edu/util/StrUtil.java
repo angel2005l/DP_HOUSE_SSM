@@ -159,7 +159,7 @@ public final class StrUtil {
 	 */
 	public static final String cutStringForLeft(String str, int fixedHeight) {
 		String result = null;
-		if (isShort(str, fixedHeight)) {
+		if (isShort(str, str.length() - fixedHeight)) {
 			result = "";
 		} else {
 			result = str.substring(0, str.length() - fixedHeight);
@@ -180,13 +180,13 @@ public final class StrUtil {
 	 *
 	 */
 	public static final Integer cutStringLeftRtnInteger(String str, int size, boolean isFixed) {
-		return Integer.getInteger(isFixed ? cutStringForLeftFixS(str, size) : cutStringForLeft(str, size), null);
+		return Integer.valueOf(isFixed ? cutStringForLeftFixS(str, size) : cutStringForLeft(str, size));
 	}
 
 	/**
 	 * 
 	 * @Title: cutStringRightRtnInteger   
-	 * @Description: 左边截取字符串 返回一个Integer  默认值为null
+	 * @Description: 右边截取字符串 返回一个Integer  默认值为null
 	 * @param str
 	 * @param size
 	 * @param isFixed
@@ -196,7 +196,14 @@ public final class StrUtil {
 	 *
 	 */
 	public static final Integer cutStringRightRtnInteger(String str, int size, boolean isFixed) {
-		return Integer.getInteger(isFixed ? cutStringForRightFixS(str, size) : cutStringForRight(str, size), null);
+		return Integer.valueOf(isFixed ? cutStringForRightFixS(str, size) : cutStringForRight(str, size));
+	}
+
+	public static void main(String[] arg) {
+		String comSimpleCode = StrUtil.cutStringForRightFixS(StrUtil.cutStringForLeftFixS("EGYSY00001", 5), 4);
+		System.err.println(comSimpleCode);
+		 
+//		String comSimpleCode = StrUtil.cutStringForLeftFixS("GYSY00001", 4);
 	}
 
 	/**
@@ -233,8 +240,8 @@ public final class StrUtil {
 	 *
 	 */
 	public static final String cutStringForRight(String str, int fixedHeight) {
-		String result = null;
-		if (isShort(str, fixedHeight)) {
+		String result = "";
+		if (isShort(str, str.length() - fixedHeight)) {
 			result = "";
 		} else {
 			result = str.substring(fixedHeight);
@@ -254,7 +261,7 @@ public final class StrUtil {
 	 *
 	 */
 	public static final boolean isShort(String str, int size) {
-		return isBlank(str) ? true : size >= str.length();
+		return isBlank(str) ? true : size > str.length();
 	}
 
 	/**

@@ -22,7 +22,7 @@
 		from bargain a inner join indent b on a.ind_id = b.ind_id
 		<where>
 			<if test="barId != null and barId != ''">
-				bar_id = #{barId}
+				bar_id = #{barId} or a.ind_id = #{barId}
 			</if>
 			and b.co_id = #{coId}
 		</where>
@@ -36,11 +36,11 @@
 
 	<insert id="insBargain" parameterType="com.edu.entity.Bargain">
 		insert into bargain values(
-		bar_seq.nextval,#{barId},#{barName},#{barDate},#{barContext},#{cusName},#{coName},#{indId}
+		bar_seq.nextval,#{barId},#{barName},#{barDate},#{barContext},#{cusName},#{coName},#{indId},#{barEndDate}
 		)
 	</insert>
 
-	<select id="maxBarId">
+	<select id="maxBarId" resultType="string">
 		select bar_id from bargain where id = (select max(id)
 		from bargain where bar_date>=trunc(sysdate) and bar_date &lt;
 		trunc(sysdate)+1)

@@ -6,6 +6,7 @@
 		<result column="id" property="id" />
 		<result column="fun_name" property="funName" />
 		<result column="fun_url" property="funUrl" />
+		<result column="fun_icon" property="funIcon" />
 	</resultMap>
 
 

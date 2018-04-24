@@ -12,11 +12,11 @@ import com.edu.entity.Indent;
 public interface IIndentDao {
 	// 查询该用户所有订单
 	public List<Indent> selIndentForEmp(@Param("empId") String empId, @Param("coId") String coId,
-			@Param("indId") String indId) throws SQLException;
+			@Param("indId") String indId, @Param("pageNum") int pageNum) throws SQLException;
 
 	// 管理者查询多有订单
 	public List<Indent> selIndentForAdmin(@Param("coId") String coId,
-			@Param("indId") String indId) throws SQLException;
+			@Param("indId") String indId, @Param("pageNum") int pageNum) throws SQLException;
 
 	// 订单是否存在
 	public int indentExist(@Param("indId") String indId, @Param("coId") String coId) throws SQLException;
@@ -34,7 +34,7 @@ public interface IIndentDao {
 	public String maxIndentId() throws SQLException;
 
 	// 获得订单的状态
-	public String selIndentType(@Param("indId") String indId, @Param("coId") String coId) throws SQLException;
+	public Indent selIndentByIds(@Param("indId") String indId, @Param("coId") String coId) throws SQLException;
 
 	// 根据empId获得未处理的订单
 	public int selIndentCountByEmpInfo(@Param("empInfo") String empInfo, @Param("empPer") String empPer)

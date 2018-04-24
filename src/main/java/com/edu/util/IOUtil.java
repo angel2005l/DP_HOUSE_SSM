@@ -53,6 +53,7 @@ public final class IOUtil {
 			default:
 				return "";
 			}
+			System.err.println("文件路径"+realPath + filePath);
 			File fileObj = new File(realPath + filePath, newFileName);
 			if (!fileObj.getParentFile().exists()) {
 				fileObj.getParentFile().mkdirs();

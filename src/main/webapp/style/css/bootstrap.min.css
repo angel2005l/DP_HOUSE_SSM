@@ -159,12 +159,12 @@ textarea {
 }
 
 body {
-	margin: 0;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	line-height: 20px;
-	color: #333;
-	background-color: #fff
+	 margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  background-color: #ffffff;
 }
 
 a {
@@ -225,55 +225,67 @@ a:hover {
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-	width: 940px
+	width: 100%
 }
 
 .span12 {
-	width: 940px
+	width: 100%;
+	*width: 100%
 }
 
 .span11 {
-	width: 860px
+	width: 91.6%;
+	*width:91.6%
 }
 
 .span10 {
-	width: 780px
+	width: 83.3%;
+	*width:83.3%
 }
 
 .span9 {
-	width: 700px
+	width: 75%;
+	*width:75%
 }
 
 .span8 {
-	width: 620px
+	width: 66.7%;
+	*width:66.7%
 }
 
 .span7 {
-	width: 540px
+	width: 58.3%;
+	*width:58.3%
 }
 
 .span6 {
-	width: 460px
+	width: 50%;
+	*width:50%
 }
 
 .span5 {
-	width: 380px
+	width: 41.7%;
+	*width:41.7%
 }
 
 .span4 {
-	width: 300px
+	width: 33.3%;
+	*width:33.3%
 }
 
 .span3 {
-	width: 220px
+	width: 25%;
+	*width:25%
 }
 
 .span2 {
-	width: 140px
+	width: 16.7%;
+	*width:16.7%
 }
 
 .span1 {
-	width: 60px
+	width: 8.3%;
+	*width:8.3%
 }
 
 .offset12 {
@@ -551,8 +563,8 @@ a:hover {
 }
 
 .container {
-	margin-right: auto;
-	margin-left: auto;
+	margin-right: 0;
+	margin-left: 0;
 	*zoom: 1
 }
 
@@ -4894,7 +4906,10 @@ input[type="submit"].btn.btn-mini {
 	margin: 20px 0;
 	text-align: center;
 	list-style: none;
-	*zoom: 1
+	*zoom: 1;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
 }
 
 .pager:before,

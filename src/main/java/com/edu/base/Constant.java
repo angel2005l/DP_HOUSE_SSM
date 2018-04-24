@@ -18,9 +18,13 @@ public final class Constant {
 	 */
 	public static final String INDENTTAG = "I";
 	/**
-	 * 订单状态
+	 * 通用状态
 	 */
-	public static final String[] INDENTTYPE = { "审核中", "已取消", "已完成" };
+	public static final String[] TYPE = { "审核中", "已确认", "已取消", "已完成" };
+	/**
+	 * 订单状态 
+	 */
+	public static final String[] INDENTTYPE = { "defaultInd", "enterInd", "cancelInd" };
 	/**
 	 * 合同头标识
 	 */
@@ -78,7 +82,9 @@ public final class Constant {
 	 * 员工导入列对应字段
 	 * （顺序不可随意改动）
 	 */
-	public static final String[] EMPEXCELCOL = { "empAccount", "empName", "empPhone", "empEmail", "empPass" };
+	// public static final String[] EMPEXCELCOL = { "empAccount", "empName",
+	// "empPhone", "empEmail", "empPass" };
+	public static final String[] EMPEXCELCOL = { "empAccount", "empName", "empPhone", "empEmail" };
 
 	/**
 	 *	EXCEL2007及以上后缀名

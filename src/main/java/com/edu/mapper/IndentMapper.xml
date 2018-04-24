@@ -10,6 +10,7 @@
 		<result column="hou_id" property="houId" />
 		<result column="hou_money" property="houMoney" />
 		<result column="ind_money" property="indMoney" />
+		<result column="ind_discount" property="indDiscount" />
 		<result column="cus_id" property="cusId" />
 		<result column="co_id" property="coId" />
 		<result column="ind_day" property="indDay" />
@@ -23,34 +24,39 @@
 		b on a.co_id = b.co_id inner join employee c on c. </select> -->
 
 	<select id="selIndentForEmp" resultMap="baseResultMap">
-		select
-		a.id,ind_id,ind_date,ind_type,ind_info,hou_id,hou_money,
+		select a.* from(select rownum as rn,
+		a.id,ind_id,ind_date,ind_type,ind_info,b.hou_id,b.hou_money,
 		ind_money,ind_discount,cus_id,a.co_id,ind_day
 		from indent a
 		inner join
-		house b on a.hou_id and b.hou_id
+		house b on a.hou_id = b.hou_id
 		inner join
-		employee c
+		employee c on
 		b.emp_id =
 		c.emp_id and a.co_id = c.co_id
 		<where>
-			c.emp_id = #{emp_id}
-			and c.co_id = #{co_id}
+			rownum &lt;=(10*#{pageNum})
+			and c.emp_id = #{empId}
+			and c.co_id =
+			#{coId}
 			<if test="indId != null and indId != ''">
 				and ind_id = #{indId}
 			</if>
-		</where>
+		</where>)
+		a where a.rn &gt;= (10*(#{pageNum}-1))
 	</select>
 	<select id="selIndentForAdmin" resultMap="baseResultMap">
-		select
+		select a.* from(select rownum as rn,
 		<include refid="baseList" />
 		from indent
 		<where>
-			co_id =#{co_id}
+			rownum &lt;=(10*#{pageNum})
+			and co_id =#{coId}
 			<if test="indId != null and indId != ''">
 				and ind_id = #{indId}
 			</if>
-		</where>
+		</where>)
+		a where a.rn &gt;= (10*(#{pageNum}-1))
 	</select>
 	<select id="indentExist">
 		select count(ind_id) from indent where ind_id =
@@ -62,39 +68,39 @@
 	</update>
 	<delete id="delIndent">
 		delete indent where ind_id = #{indId} and co_id =
-		#{coId} and int_type =
+		#{coId} and ind_type =
 		'审核中'
 	</delete>
 	<insert id="insIndent" parameterType="com.edu.entity.Indent">
 		insert into indent values
 		(ind_seq.nextval,#{indId},#{indDate},#{indType},#{indInfo},#{houId},#{houMoney},#{indMoney},
-		#{indDiscount},#{barId},#{cusId},#{coId})
+		#{indDiscount},#{cusId},#{coId},#{indDay})
 	</insert>
-	<select id="maxIndentId" resultType="_int">
+	<select id="maxIndentId" resultType="string">
 		select ind_id from indent
 		where id = (
-		select max(id) from indent where ind_date>=trunc(sysdate)
+		select max(id) from indent where ind_date &gt;=trunc(sysdate)
 		and ind_date &lt; trunc(sysdate)+1)
 	</select>
 
-	<select id="selIndentType" resultType="string">
-		select ind_type from
+	<select id="selIndentByIds" resultMap="baseResultMap">
+		select
+		<include refid="baseList" />
+		from
 		indent where ind_id = #{indId} and co_id = #{coId}
 	</select>
 	<select id="selIndentCountByEmpInfo" resultType="int">
 		select count(1) from indent a
-		<if test="empPer!='3'.toString()">
-			inner join company b on a.co_id = b.co_id
-			<if test="empPer == '1'.toString()">
-				inner join employee c on b.co_id = c.co_id
-			</if>
+		inner join company b on a.co_id = b.co_id
+		<if test="empPer == '1'.toString()">
+			inner join employee c on b.co_id = c.co_id
 		</if>
 		<where>
 			and a.ind_type = '审核中'
 			<if test="empPer == '1'.toString()">
 				and c.emp_id = #{empInfo}
 			</if>
-			<if test="empPer == '2'.toString()">
+			<if test="empPer != '1'.toString()">
 				and b.co_id=#{empInfo}
 			</if>
 		</where>

@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%-- <%
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ request.getContextPath();
-%>
 <%
-	if (session.getAttribute("EmployeewId") == null || session.getAttribute("EmployeewId").toString() == "") {
-		response.sendRedirect("login.jsp");
+	if (session.getAttribute("userId") == null || session.getAttribute("userId").toString() == "") {
+		response.sendRedirect("/login.jsp");
 	}
-%> --%>
+%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]-->
 <!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]-->
@@ -29,26 +25,9 @@
 <link href="/style/css/myStyle.css" rel="stylesheet" />
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 <script type="text/javascript" src="/style/js/jquery-3.1.1.js"></script>
-<!-- <script type="text/javascript">
-	$(function() {
-		var permission = ${sessionScope.EmployeewPer };
-		if (permission == 2) {
-			$("#sellIndex").attr("hidden", "false");
-			$("#indent").attr("hidden", "false");
-			$("#insertHouse").attr("hidden", "false");
-			$("#budget").attr("hidden", "false");
-			$("#sellPanelh2").attr("hidden", "false");
-			$("#sellPanel").hide();
-		}else if(permission == 1){
-			$("#adminIndex").attr("hidden", "false");
-			$("#employee").attr("hidden", "false");
-		}
-	});
-</script> -->
 </head>
-
 <body>
-	<div class="container">
+	<div  class="container">
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
@@ -70,41 +49,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="span3">
+			<div class="span2">
 				<div class="well" style="padding: 8px 0;">
 					<ul class="nav nav-list">
 						<li class="nav-header">菜单</li>
 						<c:forEach items="${funcs.data }" var="b" varStatus="s">
-							<li><a href="${b.funUrl }"><i class="${b.funIcon }"></i>
-									${b.funName }</a></li>
+							<li><a href="${b.funUrl }"><i class="${b.funIcon }"></i>${b.funName }</a></li>
 						</c:forEach>
-
-						<%-- <li id="sellIndex">
-								<a href="<%=basePath%>/houseController?funParam=1">C</a>
-							</li>
-							<li id="adminIndex" >
-								<a href="<%=basePath%>/houseController?funParam=5"><i class="icon-home"></i> 主页</a>
-							</li>
-							<li>
-								<a href="<%=basePath%>/houseController?funParam=4"><i class="icon-list-alt"></i> 房源信息</a>
-							</li>
-							<li id="indent">
-								<a href="<%=basePath%>/indentABargainController?funParam=1"><i class="icon-folder-open"></i> 订单信息</a>
-							</li>
-							<li id="insertHouse">
-								<a href="<%=basePath%>/insertHouse.jsp"><i class="icon-check"></i> 发布房源信息</a>
-							</li>
-							<li id="budget">
-								<a href="<%=basePath%>/indentABargainController?funParam=5"><i class="icon-envelope"></i> 收支消息</a>
-							</li>
-							<li>
-								<a href="<%=basePath%>/bargainSearch.jsp"><i class="icon-file"></i> 合同管理</a>
-							</li>
-							<li id="employee">
-								<a href="<%=basePath%>/employeeController?funParam=3"><i class="icon-book"></i> 员工管理</a>
-							</li> --%>
-						<li class="nav-header">账户设置</li>
-						<li><a href="#"><i class="icon-user"></i> 个人信息</a></li>
 					</ul>
 				</div>
 			</div>
@@ -130,7 +81,7 @@
 
 					</ul>
 				</div>
-				<h2>房源信息</h2>
+				<%-- <h2>房源信息</h2>
 				<table class="table table-bordered table-striped">
 					<thead>
 						<tr>
@@ -155,7 +106,7 @@
 				</table>
 				<ul class="pager">
 					<li class="next"><a href="">更多 &rarr;</a></li>
-				</ul>
+				</ul> --%>
 
 			</div>
 		</div>

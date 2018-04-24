@@ -6,7 +6,7 @@
 		<result column="id" property="id" />
 		<result column="hou_name" property="houName" />
 		<result column="hou_status" property="houStatus" />
-		<result column="hou_type" property="houtype" />
+		<result column="hou_type" property="houType" />
 		<result column="hou_floor" property="houFloor" />
 		<result column="hou_build" property="houBuild" />
 		<result column="hou_money" property="houMoney" />
@@ -25,10 +25,24 @@
 
 
 	<select id="selHouse" resultMap="baseResultMap">
-		select * from house where co_Id= #{coId}
-		<if test="empId !=null and empId !=''">
+		select a.* from (select rownum as rn ,t.* from house t
+		<if test="userPer != '1'.toString()">
+			inner join employee b on t.emp_id =b.emp_id
+		</if>
+		where rownum &lt;=(10*#{pageNum})
+		<if test="userPer != '1'.toString()">
+			and b.co_id = #{coId}
+		</if>
+		<if test="userPer == '1'.toString()">
 			and emp_id = #{empId}
 		</if>
+		<if test="hid !=null and hid !=''">
+			and hou_id = #{hid}
+		</if>
+		<if test="type !=null and type!=''">
+			and hou_type = #{type}
+		</if>
+		) a where a.rn &gt;=(10*(#{pageNum}-1))
 	</select>
 
 	<insert id="insHouse" parameterType="com.edu.entity.House">
@@ -39,26 +53,64 @@
 	</insert>
 	<delete id="delHouse" parameterType="string">
 		delete from house where
-		hou_Id = #{houId}
+		hou_id = #{houId}
 	</delete>
 
-	<update id="uptHouseStatus" parameterType="string">
+	<update id="uptHouseStatus">
 		update house set
-		hou_status = '未出租' where hou_id = #{houId}
+		hou_status =
+		#{status} where hou_id =
+		#{houId}
 	</update>
-
 	<select id="selHouseExist" resultType="_int">
 		select count(hou_id) from
 		house where hou_id = #{houId} and co_id =#{coId}
 	</select>
 
-	<select id="selHouseMaxId" parameterType="string" resultType="string">
-		<bind name="houId" value="'H'+dateStr+'%'" />
-		select hou_id from house where id = (select max(id) from house
-		where hou_id LIKE #{houId})
+	<select id="selHouseMaxId" resultType="string">
+		select hou_id from house
+		where id = (select max(id) from house
+		where instr(hou_id,#{dateStr})
+		>0)
 	</select>
-	<select id="selHouseCountByEmpId" parameterType="string" resultType="int">
-		select count(1) from house where emp_id = #{empId}
+	<select id="selHouseCountByEmpId" resultType="int">
+		select count(1) from house a
+		<if test="empPer != '1'.toString() ">
+			inner join employee b on a.emp_id = b.emp_id inner join
+			company c on b.co_id = c.co_id
+		</if>
+		<where>
+			<if test="empPer == '1'.toString()">
+				and emp_id = #{empInfo}
+			</if>
+			<if test="empPer != '1'.toString() and empPer != '3'.toString()">
+				and b.co_id=#{empInfo}
+			</if>
+			<choose>
+				<when test="empPer != '3'.toString()">
+					and a.hou_status &lt;&gt; '审核中'
+				</when>
+				<otherwise>
+					and a.hou_status = '审核中'
+				</otherwise>
+			</choose>
+		</where>
 	</select>
-	
+	<select id="selHouseById" parameterType="string" resultMap="baseResultMap">
+		select
+		<include refid="baseList" />
+		from house where hou_id = #{houId}
+	</select>
+
+	<select id="selHouseConfirm" resultMap="baseResultMap">
+		select a.* from(select rownum as rn,
+		<include refid="baseList" />
+		from house where hou_status='审核中'
+		<if test="houId!=null and houId !=''">
+			and hou_id =#{houId}
+		</if>
+		and rownum &lt;=(10*#{pageNum}) ) a where a.rn
+		&gt;=(10*(#{pageNum}-1))
+	</select>
+
 </mapper>

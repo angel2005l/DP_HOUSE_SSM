@@ -55,6 +55,6 @@ public interface ICompanyService {
 	 * @return: List<Company>
 	 *
 	 */
-	public List<Company> selCompany(String coId, String simpleName);
+	public List<Company> selCompany(String coId, String simpleName,String pageNum);
 
 }

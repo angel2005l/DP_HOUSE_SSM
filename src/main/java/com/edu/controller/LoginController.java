@@ -81,6 +81,19 @@ public class LoginController {
 		return "login";
 	}
 
+	/**
+	 * 
+	 * @Title: index   
+	 * @Description: 跳转首页
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 * @author: MR.H
+	 * @return: String
+	 *
+	 */
 	@RequestMapping("/index.do")
 	public String index(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws IOException {
@@ -88,12 +101,15 @@ public class LoginController {
 			String empId = session.getAttribute("userId") + "";
 			String coId = session.getAttribute("userCoId") + "";
 			String empPer = session.getAttribute("permission") + "";
+			
+			
 			request.setAttribute("financeCount", serviceFinance.selFinanceCountByEmpInfo("1".equals(empPer) ? empId
 					: coId,
 					empPer));
 			request.setAttribute("indentCount", serviceIndent.selIndentCountByEmpInfo("1".equals(empPer) ? empId : coId,
 					empPer));
-			request.setAttribute("houseCount", serviceHouse.selHouseCountByEmpId(empId));
+			request.setAttribute("houseCount", serviceHouse.selHouseCountByEmpId("1".equals(empPer) ? empId : coId,
+					empPer));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

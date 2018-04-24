@@ -1,19 +1,24 @@
 package com.edu.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class House {
+public class House implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String houId;
 	private String houName;
 	private String houStatus;
-	private String houtype;
+	private String houType;
 	private BigDecimal houFloor;
 	private BigDecimal houBuild;
 	private BigDecimal houMoney;
 	private String houAdd;
 	private String houImg;
-	private Integer houBed;
+	private int houBed;
 	private int houBath;
 	private int houLiving;
 	private String empId;
@@ -56,12 +61,12 @@ public class House {
 		this.houStatus = houStatus;
 	}
 
-	public String getHoutype() {
-		return houtype;
+	public String getHouType() {
+		return houType;
 	}
 
-	public void setHoutype(String houtype) {
-		this.houtype = houtype;
+	public void setHouType(String houType) {
+		this.houType = houType;
 	}
 
 	public BigDecimal getHouFloor() {
@@ -104,11 +109,11 @@ public class House {
 		this.houImg = houImg;
 	}
 
-	public Integer getHouBed() {
+	public int getHouBed() {
 		return houBed;
 	}
 
-	public void setHouBed(Integer houBed) {
+	public void setHouBed(int houBed) {
 		this.houBed = houBed;
 	}
 
@@ -139,7 +144,7 @@ public class House {
 	@Override
 	public String toString() {
 		return "House [id=" + id + ", houId=" + houId + ", houName=" + houName + ", houStatus=" + houStatus
-				+ ", houtype=" + houtype + ", houFloor=" + houFloor + ", houBuild=" + houBuild + ", houMoney="
+				+ ", houtype=" + houType + ", houFloor=" + houFloor + ", houBuild=" + houBuild + ", houMoney="
 				+ houMoney + ", houAdd=" + houAdd + ", houImg=" + houImg + ", houBed=" + houBed + ", houBath=" + houBath
 				+ ", houLiving=" + houLiving + ", empId=" + empId + "]";
 	}
