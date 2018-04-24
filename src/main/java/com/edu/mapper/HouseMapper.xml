@@ -26,11 +26,11 @@
 
 	<select id="selHouse" resultMap="baseResultMap">
 		select a.* from (select rownum as rn ,t.* from house t
-		<if test="userPer != '1'.toString() ">
-			inner join house b t.emp_id =b.emp_id
+		<if test="userPer != '1'.toString()">
+			inner join employee b on t.emp_id =b.emp_id
 		</if>
 		where rownum &lt;=(10*#{pageNum})
-		<if test="userPer! = '1'.toString()">
+		<if test="userPer != '1'.toString()">
 			and b.co_id = #{coId}
 		</if>
 		<if test="userPer == '1'.toString()">
@@ -39,11 +39,10 @@
 		<if test="hid !=null and hid !=''">
 			and hou_id = #{hid}
 		</if>
-
-		<if test="type !=null and type!=''  ">
+		<if test="type !=null and type!=''">
 			and hou_type = #{type}
 		</if>
-		) a where a.rn &gt;= (10*(#{pageNum}-1))
+		) a where a.rn &gt;=(10*(#{pageNum}-1))
 	</select>
 
 	<insert id="insHouse" parameterType="com.edu.entity.House">
@@ -105,7 +104,7 @@
 
 	<select id="selHouseConfirm" resultMap="baseResultMap">
 		select a.* from(select rownum as rn,
-		<include refid="" />
+		<include refid="baseList" />
 		from house where hou_status='审核中'
 		<if test="houId!=null and houId !=''">
 			and hou_id =#{houId}

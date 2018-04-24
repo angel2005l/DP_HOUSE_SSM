@@ -3,14 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ request.getContextPath();
-%>
-<%-- <%
-	if (session.getAttribute("EmployeewId") == null || session.getAttribute("EmployeewId").toString() == "") {
+	if (session.getAttribute("userId") == null || session.getAttribute("userId").toString() == "") {
 		response.sendRedirect("/login.jsp");
 	}
-%> --%>
+%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]-->
 <!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]-->
@@ -62,16 +58,15 @@
 					<a class="btn btn-navbar" data-toggle="collapse"
 						data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
-					</a> <a class="brand" href="<%=basePath%>/houseController?funParam=1">Admin</a>
+					</a> <a class="brand" href="/index.do">Admin</a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li><a href="<%=basePath%>/houseController?funParam=1">主页</a>
-							</li>
+							<li><a href="/index.do">主页</a></li>
 							<li><a href=>帮助</a></li>
 						</ul>
 						<ul class="nav pull-right">
-							<li><a>欢迎 ,<span>${sessionScope.EmployeewName }</span></a></li>
-							<li><a href="<%=basePath%>/login.jsp">登出</a></li>
+							<li><a>欢迎 ,<span>${userName }</span></a></li>
+							<li><a href="/logout.do">登出</a></li>
 						</ul>
 					</div>
 				</div>
@@ -82,29 +77,9 @@
 				<div class="well" style="padding: 8px 0;">
 					<ul class="nav nav-list">
 						<li class="nav-header">菜单</li>
-						<li id="sellIndex"><a
-							href="<%=basePath%>/houseController?funParam=1"><i
-								class="icon-home"></i> 主页</a></li>
-						<li id="adminIndex"><a
-							href="<%=basePath%>/houseController?funParam=5"><i
-								class="icon-home"></i> 主页</a></li>
-						<li><a href="<%=basePath%>/houseController?funParam=4"><i
-								class="icon-list-alt"></i> 房源信息</a></li>
-						<li id="indent"><a
-							href="<%=basePath%>/indentABargainController?funParam=1"><i
-								class="icon-folder-open"></i> 订单信息</a></li>
-						<li id="insertHouse"><a href="<%=basePath%>/insertHouse.jsp"><i
-								class="icon-check"></i> 发布房源信息</a></li>
-						<li id="budget"><a
-							href="<%=basePath%>/indentABargainController?funParam=5"><i
-								class="icon-envelope"></i> 收支消息</a></li>
-						<li><a href="<%=basePath%>/bargainSearch.jsp"><i
-								class="icon-file"></i> 合同管理</a></li>
-						<li id="employee"><a
-							href="<%=basePath%>/employeeController?funParam=3"><i
-								class="icon-book"></i> 员工管理</a></li>
-						<li class="nav-header">账户设置</li>
-						<li><a href="#"><i class="icon-user"></i> 个人信息</a></li>
+						<c:forEach items="${funcs.data }" var="b" varStatus="s">
+							<li><a href="${b.funUrl }"><i class="${b.funIcon }"></i>${b.funName }</a></li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
@@ -118,7 +93,7 @@
 							<div style="float: left; padding-left: 20px;">
 								<h4>搜索</h4>
 								<input type="text" id="selectBid" name="bargainNo"
-									class="ui_input_txt02" placeholder="请输入合同单号" />
+									class="ui_input_txt02" placeholder="请输入合同或订单号" />
 								<div style="float: right; padding-left: 20px;">
 									<button type="button" id="selectBtn" class="btn btn-primary"
 										style="width: 100px;">搜索</button>

@@ -5,7 +5,7 @@ $(function() {
 				url : "/house/add.do",
 				type : 'post',
 				success : function(result) {
-					var data = eavl("("+result+")");
+					var data = eval("("+result+")");
 					/*
 					 * if(resulu.status==0){ alert() }
 					 */

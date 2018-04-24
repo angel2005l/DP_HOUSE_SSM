@@ -5,7 +5,7 @@
 		<id column="fin_id" property="finId" />
 		<result column="id" property="id" />
 		<result column="fin_type" property="finType" />
-		<result column="fin_date" property="funDate" />
+		<result column="fin_date" property="finDate" />
 		<result column="fin_money" property="finMoney" javaType="java.math.BigDecimal" />
 		<result column="co_id" property="coId" />
 		<result column="ind_id" property="indId" />
@@ -24,11 +24,12 @@
 			<if test="empPer!='1'.toString()">
 				and b.co_id = #{empInfo}
 			</if>
-			and a.fin_date = trunc(sysdate)
+			and a.fin_date  &gt;=trunc(sysdate)
+		and a.fin_date &lt; trunc(sysdate)+1
 		</where>
 	</select>
 	<select id="selFinance" resultMap="baseResult">
-		select a.* form (
+		select a.* from (
 		select rownum as rn,
 		a.id,fin_id,fin_type,fin_date,fin_money,a.co_id,a.ind_id
 		from finance a

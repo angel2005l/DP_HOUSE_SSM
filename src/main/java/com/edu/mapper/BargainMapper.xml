@@ -22,7 +22,7 @@
 		from bargain a inner join indent b on a.ind_id = b.ind_id
 		<where>
 			<if test="barId != null and barId != ''">
-				bar_id = #{barId}
+				bar_id = #{barId} or a.ind_id = #{barId}
 			</if>
 			and b.co_id = #{coId}
 		</where>

@@ -266,9 +266,29 @@ public class HouseController extends BaseController {
 	@RequestMapping("/selComfirmHouse.do")
 	public String selHouseConfirm(HttpServletRequest request) {
 		String pageNum = request.getParameter("pageNum");
+		String pageSign = request.getParameter("pageSign");
 		String houId = request.getParameter("houId");
 		try {
-			List<House> data = service.selHouseConfirm(houId, pageNum);
+			List<House> data = service.selHouseConfirm(houId, pageNum = StrUtil.isBlank(pageNum) ? "1" : pageNum);
+			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);
+			if (StrUtil.notBlank(pageSign) && null != data && !data.isEmpty()) {
+				switch (pageSign) {
+				case "add":
+					page++;
+					break;
+				case "minus":
+					if (page > 1) {
+						page--;
+					}
+					break;
+				}
+			} else {
+				if (page > 1) {
+					page--;
+				}
+				data = service.selHouseConfirm(houId, page + "");
+			}
+			request.setAttribute("pageNum", page);
 			request.setAttribute("confirmHouse", data);
 		} catch (Exception e) {
 			log.error("查询未审核房屋异常，异常原因：" + e.getMessage());

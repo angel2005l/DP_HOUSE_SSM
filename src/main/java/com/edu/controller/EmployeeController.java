@@ -112,7 +112,9 @@ public class EmployeeController extends BaseController {
 		try {
 			Result<List<Employee>> selEmployee = service.selEmployee(empId, coId, pageNum = StrUtil.isBlank(pageNum)
 					? "1" : pageNum);
+			System.err.println(selEmployee);
 			List<Employee> data = selEmployee.getData();
+			System.err.println(data);
 			int page = StrUtil.isBlank(pageNum) ? 1 : Integer.parseInt(pageNum);
 			if (StrUtil.notBlank(pageSign) && null != data && !data.isEmpty()) {
 				switch (pageSign) {
@@ -128,16 +130,17 @@ public class EmployeeController extends BaseController {
 			} else {
 				if (page > 1) {
 					page--;
+					data = service.selEmployee(empId, coId, page + "").getData();
 				}
-				data = service.selEmployee(empId, coId, page + "").getData();
 			}
 			int empNum = service.selEmpCount(coId);
 			BigDecimal moneyNum = service.selMoneyCount(coId);
 			request.setAttribute("empNum", empNum);
-			request.setAttribute("moneyNum", moneyNum.toString());
+			request.setAttribute("moneyNum", moneyNum+"");
 			request.setAttribute("pageNum", page);
 			request.setAttribute("empList", data);
 		} catch (Exception e) {
+			System.err.println("sadas");
 			log.error("查询员工异常" + e.toString());
 		}
 		return "view/allEmpInfo";

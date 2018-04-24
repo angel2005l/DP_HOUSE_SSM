@@ -100,6 +100,7 @@ public class EmployeeServiceImpl extends BaseSevice implements IEmployeeService 
 	public Result<List<Employee>> selEmployee(String empId, String coId, String pageNum) {
 		try {
 			List<Employee> employees = employeeDao.selEmployee(empId, coId, Integer.parseInt(pageNum));
+			System.err.println(employees);
 			if (null == employees || employees.isEmpty())
 				return rtnFailResultWithData("查找对象不存在,请检查查询条件", null);
 			else

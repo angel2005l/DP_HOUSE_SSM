@@ -76,14 +76,14 @@
 		(ind_seq.nextval,#{indId},#{indDate},#{indType},#{indInfo},#{houId},#{houMoney},#{indMoney},
 		#{indDiscount},#{cusId},#{coId},#{indDay})
 	</insert>
-	<select id="maxIndentId" resultType="_int">
+	<select id="maxIndentId" resultType="string">
 		select ind_id from indent
 		where id = (
-		select max(id) from indent where ind_date>=trunc(sysdate)
+		select max(id) from indent where ind_date &gt;=trunc(sysdate)
 		and ind_date &lt; trunc(sysdate)+1)
 	</select>
 
-	<select id="selIndentByIds" resultType="com.edu.entity.Indent">
+	<select id="selIndentByIds" resultMap="baseResultMap">
 		select
 		<include refid="baseList" />
 		from

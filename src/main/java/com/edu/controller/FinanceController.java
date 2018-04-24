@@ -34,7 +34,7 @@ public class FinanceController extends BaseController {
 	 */
 	@RequestMapping("/index.do")
 	public String index() {
-		return "";
+		return "redirect:/finance/selFinance.do";
 	}
 
 	/**
